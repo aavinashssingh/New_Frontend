@@ -1,0 +1,251 @@
+<section class="surgery-section">
+  <div class="surgery-wrapper">
+    <div class="breadcrumbs d-flex align-items-center">
+      <span routerLink="/" class="text-dark cursor-pointer">Home</span>&nbsp;&nbsp;>&nbsp;&nbsp;
+      <span *ngIf="city_id != ''">
+        <span routerLink="/surgeries" class="text-dark cursor-pointer">
+          {{ city_id| titlecase }}</span>
+        &nbsp;&nbsp;>&nbsp;&nbsp;
+      </span>
+      <span routerLink="/surgeries" class="text-dark cursor-pointer">
+        Surgeries</span>
+      &nbsp;&nbsp;>&nbsp;&nbsp;
+      <span>{{ surgeryDetail?.title }}</span>
+    </div>
+    <div class="d-flex gap-4 sm-flex-col justify-content-between">
+      <div class="py-4" style="width: -webkit-fill-available;">
+        <div class=" gap-2 align-items-center font-600 surgery-image">
+          <!-- <h1 class="m-0 text-32">{{ surgeryDetail?.title }}</h1> -->
+        </div>
+        <div *ngFor="let component of surgeryDetail?.components">
+          <div class="mt-4">
+            <div *ngIf="component?.sno == 1 && component?.image.length" class="mb-3">
+              <div class="row col_md_charts g-0">
+                <!-- col-md-8 for the cost details -->
+                <div class="col-md-8 d-flex flex-column ">
+                  <div class="text">
+                    <h1 class="m-0 fw-bold">{{ surgeryDetail?.title }} Cost in {{ city_id ? (city_id | titlecase) :
+                      'India' }}- Get Cost</h1>
+                    <p>Discover the Latest in Surgical Procedures and Recovery. Discover the Latest in Surgical
+                      Procedures and
+                      Recovery.</p>
+                  </div>
+                  <div class="d-flex col-graf-chart">
+                    <div class="first-box">
+                      <p><strong>$1,25,500</strong></p>
+                      <div class="first">
+                        <h3 class="m-0 fw-bold">Lowest Cost</h3>
+                        <p>(approx.)</p>
+                      </div>
+                    </div>
+                    <div class="second-box">
+                      <p><strong>$1,25,500</strong></p>
+                      <div class="Second">
+                        <h3 class="m-0 fw-bold">Average Cost</h3>
+                        <p>(approx.)</p>
+                      </div>
+                    </div>
+                    <div class="third-box">
+                      <p><strong>$1,25,500</strong></p>
+                      <div class="third">
+                        <h3 class="m-0 fw-bold">Highest Cost</h3>
+                        <p>(approx.)</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- col-md-4 for the consult section -->
+                <div class="col-md-4 consult-section p-0">
+                  <nectar-enquiry [city]="city_id" [surgeryTitle]="surgeryDetail?.title"></nectar-enquiry>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+    <!-----------reviewand ratting list------------>
+    <div class="row mt-3 g-0">
+      <div class="Rewview_ratting_web">
+        <div class="ratting_boxes_content" *ngFor="let item of reviewratting">
+          <h1 class="m-0"><strong>{{item.rating}}</strong></h1>
+          <p>{{item.title}}</p>
+        </div>
+      </div>
+    </div>
+    <!----------------doctaors-listing----------------->
+    <doctor-surgerdetails-list [id]="surgeryId" [city]="city_id"></doctor-surgerdetails-list>
+
+    <!--------Cost factor----->
+    <div class="conteiner-fluid mt-5">
+      <div class="row">
+        <h1 class="title_cost_fator">{{ surgeryDetail?.title }} Cost Factors in {{ city_id ? (city_id | titlecase) :
+          'India' }}</h1>
+        <p class="subtitle_cost_fator">Understanding the various factors that influence the cost of {{
+          surgeryDetail?.title }} treatment can help you make an informed decision. Here are some key elements:</p>
+        <div *ngFor="let component of surgeryDetail?.components " style="margin-top: -20px;">
+          <!-- <h2 class="font-600 text-32" [innerHTML]="sanitizedDescription(component?.title)"
+            *ngIf="component?.sno !== 1">
+          </h2> -->
+          <div class="font-400 text-18 mt-2" style="line-height: 1.5 !important"
+            [innerHTML]="sanitizedDescription(component?.description)"></div>
+          <div *ngIf="component.sno !== 1">
+            <div class="d-flex flex-wrap gap-3 mt-2" *ngIf="component?.image.length">
+              <img [src]="item" (click)="viewImage(item)" alt="image" *ngFor="let item of component?.image"
+                class="items-image cursor-pointer" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="whatsapp-logo">
+      <a [href]="whatsappLink" target="_blank" (click)="setdigitalSCript()">
+        <img loading="lazy" src="assets/images/svg/whatsapp.svg" alt="" /></a>
+    </div>
+  </div>
+  <!-----Overview section-->
+  faqOverviewArray
+  <div *ngIf="faqOverviewArray.length > 0" class="row g-0">
+    <!-- <nectar-surgery-overview-faq [type]="'surgery'" [id]="surgeryId"></nectar-surgery-overview-faq> -->
+    <section class="faq">
+      <div class="faq__wrapper">
+
+        <div class="faq__wrapper__content">
+          <div class="content_section mt-3">
+            <h2 class="fw-bold">Overview</h2>
+          </div>
+          <div class="faq__wrapper__content__questions">
+            <mat-accordion *ngFor="let item of faqOverviewArray; let i = index">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>{{ item?.question }}</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>
+                  {{ item.answer | slice: 0:(isExpanded[i] ? undefined : 150) }}
+                  <span *ngIf="item.answer.length > 150">
+                    ...
+                    <button color="primary" (click)="toggleReadMore(i)">
+                      {{ isExpanded[i] ? 'Read Less' : 'Read More' }}
+                    </button>
+                  </span>
+                </p>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+
+  <!--------overview section faq-->
+  <div class="row mt-5  g-0">
+    <div class="Nectar_overivew_provider">
+      <h2 class="fw-bold">Nectar Plus vs Others </h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col-6">Service/Factor</th>
+            <th scope="col-3">Description</th>
+            <th scope="col-3">Estimated Cost (INR)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let compersions of compersion">
+            <td> {{ compersions.Servicefactor}}</td>
+            <td>{{compersions.Description }}</td>
+            <td>{{ compersions.EstimatedCostINR }} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-------features our list------------>
+  <div class="row mt-5 g-0">
+    <div class="Nectar_overivew_provider">
+      <h2 class="fw-bold">Nectar Plus vs Others </h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col-6">Features</th>
+            <th scope="col-3">Nectar Plus</th>
+            <th scope="col-3">Other Providers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let surgery of surgeries">
+            <td>{{ surgery.feature }}</td>
+            <td><img loading="lazy" class="me-2" src="assets/images/svg/write.svg" alt="" />{{ surgery.nectarPlus }}
+            </td>
+            <td> <img loading="lazy" class="me-2" src="assets/images/svg/Close.svg" alt="" />{{ surgery.otherProviders}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<!------Cardsection-->
+<div class="conatiner-fluid">
+  <div class="row nectar_choose_conatiner g-0">
+    <div class="container-tittle">
+      <h1>Why Choose NectarPlus Health?</h1>
+      <p>Is composed of bones and cartilage that form the face and the cranium, which surrounds the brain. You can feel
+        the bones of the cranium on top of the skull. The 5 bones that form the bottom, or base, of the cranium also
+        form the eye socket, roof of the nasal cavity,</p>
+    </div>
+    <div class="cards_conatiner_nectar">
+      <div class="card_section_nectar" *ngFor="let a of cardscontent">
+        <img src="{{a.Image}}" alt="">
+        <h1 class="m-0 mt-3">{{a.title}}</h1>
+        <p class="m-0 text-center">{{a.SubTitle}}</p>
+      </div>
+    </div>
+    <div class="button_section">
+      <a class="btn-white" (click)="myformroute()">Enquire Now</a>
+    </div>
+  </div>
+</div>
+<div class="footer" (click)="openBottomSheet()">Enquire Now</div>
+<nectar-surgery-faq [type]="'surgery'" [id]="surgeryId" class="web-faq"></nectar-surgery-faq>
+<!-- accordian for fAQ's mobile -->
+<div class="mobile-accordians">
+  <div class="text-24 font-600 text-center mb-3">
+    <div class="content_section">
+      <h2 class="text-center fw-bold">Frequently Asked Questions</h2>
+      <p class="w-75 text-center">Is composed of bones and cartilage that form the face and the cranium, which surrounds
+        the brain. You can feel
+        the bones of the cranium on top of the skull. The 5 bones that form the bottom, or base, of the cranium also
+        form the eye socket, roof of the nasal cavity,</p>
+    </div>
+  </div>
+  <mat-accordion *ngFor="let item of faqArray let i = index">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title class="text-18 font-600 text-purple">
+          {{ item?.question }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>
+        {{ item.answer | slice: 0:(isExpanded[i] ? undefined : 100) }}
+        <span *ngIf="item.answer.length > 100">
+          ...
+          <button color="primary" (click)="toggleReadMore(i)">
+            {{ isExpanded[i] ? 'Read Less' : 'Read More' }}
+          </button>
+        </span>
+      </p>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</div>
+<p *ngFor="let a of linkArray">
+  <a [href]="a.url">{{a.title}}</a>
+</p>

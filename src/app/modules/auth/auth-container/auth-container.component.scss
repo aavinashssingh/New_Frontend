@@ -1,0 +1,108 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+.auth-landing__wrapper__container__tab-section__details {
+  background-color: transparent !important;
+}
+
+.auth-landing {
+  // background-color: $bright-gray;
+  background-color: #def6f6;
+  border-top: 1px solid #00000040;
+  min-height: calc(100vh - 108px);
+
+  @media screen and (max-width: 576px) {
+    background-color: $white;
+    min-height: calc(100vh - 65px);
+  }
+
+  &__wrapper {
+    max-width: 1090px;
+    margin: auto;
+    padding: 20px 20px 60px;
+
+    @media screen and (max-width: 576px) {
+      padding: 20px 0;
+    }
+
+    h1 {
+      text-align: center;
+      @include font-sans_pro-semibold($size: 22px);
+    }
+
+    &__container {
+      padding-top: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+
+      @media screen and (max-width: 767px) {
+        grid-template-columns: 1fr;
+        padding-top: 0px;
+        gap: 0px;
+      }
+
+      &__image-section {
+        @media screen and (max-width: 767px) {
+          display: flex;
+          justify-content: center;
+        }
+      }
+
+      &__tab-section {
+        &__details {
+          // max-width: 484px;
+          width: 100%;
+          background: $white;
+
+          .px-15 {
+            padding: 0px 32px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.mobile-logo-image {
+  display: none;
+
+  @media screen and (max-width: 767px) {
+    display: block;
+    max-height: 360px;
+    object-fit: cover;
+  }
+}
+
+.patient-logo {
+  @media screen and (max-width: 767px) {
+    width: 340px;
+  }
+}
+
+.doctor-background-image {
+  background-image: url("../../../../assets/images/auth/Doctor Desktop.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @media screen and (max-width: 767px) {
+    background: none;
+  }
+}
+
+.hospital-background-image {
+  background-image: url("../../../../assets/images/auth/Hospital Desktop.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @media screen and (max-width: 767px) {
+    background: none;
+  }
+}

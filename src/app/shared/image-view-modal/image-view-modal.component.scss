@@ -1,0 +1,27 @@
+.image {
+  img {
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.main {
+  max-width: 50vw;
+  @media screen and (max-width: 991px) {
+    max-width: 75vw;
+  }
+  @media screen and (max-width: 576px) {
+    max-width: 90vw;
+  }
+}
+
+.error {
+  width: 80vw;
+  height: 80vh;
+  max-width: -webkit-fill-available !important;
+}

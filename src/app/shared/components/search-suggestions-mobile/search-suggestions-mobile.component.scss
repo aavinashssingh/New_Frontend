@@ -1,0 +1,73 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.main {
+  //   margin: 16px;
+
+  .input-box {
+    margin-top: 18px;
+    border-radius: 25px;
+    border: 1px solid $border-color;
+    padding: 13px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    input {
+      outline: none;
+      border: none;
+      @include font-sans_pro-regular(16px);
+      width: 100%;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+// ::ng-deep {
+//   .mat-bottom-sheet-container {
+//     max-height: 100vh !important;
+//     height: 100vh;
+//     padding: 0 !important;
+//   }
+// }
+
+.profile-icon {
+  border-radius: 500px;
+  height: 36px;
+  width: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $bright-gray;
+  border: 1px solid $border-color;
+  font-size: 12px;
+}
+
+.item {
+  min-height: 48px;
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  padding: 0 18px;
+}
+
+.item-location {
+  min-height: 64px;
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  margin: 0 18px;
+}
+
+.label {
+  @include font-sans_pro-semibold(14px);
+  background: rgba(238, 238, 238, 0.93);
+  height: 24px;
+  padding: 0 18px;
+}

@@ -1,0 +1,21 @@
+<section
+  class="videos-wrapper"
+  *ngIf="!(tab == 0 && !apiData.length)"
+  [ngClass]="{ 'border-bottom-style': tab == 0, 'pt-6': tab == 0 }"
+>
+  <h2 *ngIf="apiData.length && type !== 'doctor'">Latest Videos</h2>
+  <h2 *ngIf="apiData.length && type == 'doctor'">Recent Videos</h2>
+  <div class="videos">
+    <div *ngFor="let slide of apiData; let i = index" class="video-wrapper">
+      <iframe
+        width="100%"
+        [src]="slide?.url | sanitize | async"
+        allowfullscreen
+        title="videos"
+      ></iframe>
+    </div>
+  </div>
+  <div class="noData" *ngIf="apiData.length < 1 && apiHit">
+    <h2 class="text-danger text-18 text-center">No Videos Found</h2>
+  </div>
+</section>

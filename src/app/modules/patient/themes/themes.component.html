@@ -1,0 +1,115 @@
+<div class="" *ngIf="deviceWIdth > 767">
+  <nectar-header></nectar-header>
+  <router-outlet></router-outlet>
+  <nectar-footer></nectar-footer>
+</div>
+
+<mat-drawer-container [hasBackdrop]="true" *ngIf="deviceWIdth < 767">
+  <mat-drawer [autoFocus]="false" #matdrawer [mode]="'over'" class="w-60" style="max-height: 100vh; min-height: 100vh">
+    <div class="m-3">
+      <div class="py-3 d-flex align-items-center justify-content-between">
+        <div class="d-flex gap-2 align-items-center">
+          <div class="hamber">
+            <svg-icon src="assets/images/svg/hamber.svg" class="cursor-pointer"></svg-icon>
+          </div>
+          <svg-icon src="assets/images/svg/logo.svg" routerLink="/" class="d-flex cursor-pointer" (click)="onClose(1)"
+            style="width: 155px"></svg-icon>
+        </div>
+        <svg-icon src="assets/images/svg/back.svg" (click)="onClose(1)" class="cursor-pointer"></svg-icon>
+      </div>
+      <div class="my-2">
+        <!-- <button type="button" class="offcanva_login_button"
+          [routerLink]="['auth/patient/login']">Login/Signup</button> -->
+          <ng-container *ngFor="let i of menus; let j = index">
+            <!-- Other Tabs -->
+            <div class="d-flex gap-2 align-items-center tabs" *ngIf="j != 3 && j != 4">
+              <img loading="lazy" [src]="i?.icon" alt="" />
+              <div [routerLink]="i?.route" (click)="onClose(1)" class="cursor-pointer">
+                {{ i?.name }}
+              </div>
+            </div>
+          
+            <!-- Blog/News Tab -->
+            <div class="d-flex gap-2 align-items-center tabs" *ngIf="j == 3">
+              <img loading="lazy" [src]="i?.icon" alt="" />
+              <div class="cursor-pointer">
+                <a href="https://blog.nectarplus.health/" target="_blank" rel="noopener noreferrer">
+                  {{ i?.name }}
+                </a>
+              </div>
+            </div>
+          
+            <!-- List Your Practice -->
+            <ng-container *ngIf="j == 4">
+              <div class="d-flex justify-content-between align-items-center tabs"
+                [ngClass]="{'highlight-practice': i?.name === 'List your practice for Free'}">
+                <div class="d-flex gap-2">
+                  <img loading="lazy" [src]="i?.icon" alt="" />
+                  <div class="cursor-pointer" [routerLink]="i?.route" (click)="onClose(1)">
+                    {{ i?.name }}
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+          
+          
+      </div>
+    </div>
+  </mat-drawer>
+  <mat-drawer [autoFocus]="false" #matdrawer1 [mode]="'over'" class="w-60" [position]="'end'">
+    <div class="logged-items">
+      <div class="d-flex align-items-center gap-3 p-3">
+        <img src="assets/images/svg/back.svg" (click)="onClose(2)" alt="" class="cursor-pointer"
+          style="transform: rotate(180deg)" />
+        <div class="profile-icon border-grey" *ngIf="!userData?.patient?.profilePic">
+          {{ userData?.fullName | nameInitial | async | uppercase }}
+        </div>
+        <img [src]="userData?.patient?.profilePic" alt="" height="52" width="52"
+          class="rounded-circle img-fit-contain border-grey" *ngIf="userData?.patient?.profilePic" />
+        <div class="d-flex flex-column gap-2">
+          <div class="text-18 font-600">
+            {{ (userData?.fullName | titlecase) || "" }}
+          </div>
+          <div class="text-18">+91{{ userData?.phone || 0 }}</div>
+        </div>
+      </div>
+
+      <div style="border: 1px solid rgba(0, 0, 0, 0.3)"></div>
+      <div class="p-3">
+        <div class="d-flex gap-2 py-2 cursor-pointer" (click)="onClose(2)" routerLink="/profile">
+          <img src="assets/images/svg/appointments.svg" alt="" height="20" width="20" />
+          <div class="text-18">My Appointments</div>
+        </div>
+
+        <div class="d-flex gap-2 py-2 cursor-pointer" routerLink="/profile/medical-reports" (click)="onClose(2)">
+          <img src="assets/images/svg/medical-report 1.svg" alt="" height="20" width="20" />
+          <div class="text-18">My Medical Reports</div>
+        </div>
+        <div class="d-flex gap-2 py-2 cursor-pointer" routerLink="/profile/feedbacks" (click)="onClose(2)">
+          <img src="assets/images/svg/feedback 1.svg" alt="" height="20" width="20" />
+          <div class="text-18">My Feedback</div>
+        </div>
+        <div class="d-flex gap-2 py-2 cursor-pointer" routerLink="/profile/personal-info" (click)="onClose(2)">
+          <img src="assets/images/svg/person.svg" alt="" height="20" width="20" />
+          <div class="text-18">Personal Information</div>
+        </div>
+        <div class="d-flex gap-2 py-2 cursor-pointer" routerLink="/profile/settings" (click)="onClose(2)">
+          <img src="assets/images/svg/settings.svg" alt="" height="20" width="20" />
+          <div class="text-18">Settings</div>
+        </div>
+        <div class="d-flex gap-2 py-2 cursor-pointer" (click)="logout(); onClose(2)">
+          <img src="assets/images/svg/Logout.svg" alt="" height="20" width="20" />
+          <div class="text-18 text-red">Logout</div>
+        </div>
+      </div>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content class="drawer-container">
+    <div class="">
+      <nectar-header></nectar-header>
+      <router-outlet></router-outlet>
+      <nectar-footer></nectar-footer>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

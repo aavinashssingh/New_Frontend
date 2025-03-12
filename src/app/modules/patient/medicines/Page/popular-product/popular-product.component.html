@@ -1,0 +1,383 @@
+<div class="container-fluid mb-5 g-0" *ngIf="currentUrl !== '/medicines'">
+    <div class="row">
+
+
+        <div class="Bredcrum">
+            <div class="breadcrum_section">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" viewBox="0 0 14 12" fill="none">
+                        <path
+                            d="M5.66661 10.6667V7.33334H8.33328V10.6667C8.33328 11.0333 8.63328 11.3333 8.99994 11.3333H10.9999C11.3666 11.3333 11.6666 11.0333 11.6666 10.6667V6.00001H12.7999C13.1066 6.00001 13.2533 5.62001 13.0199 5.42001L7.44661 0.400011C7.19328 0.173344 6.80661 0.173344 6.55328 0.400011L0.979943 5.42001C0.753277 5.62001 0.893277 6.00001 1.19994 6.00001H2.33328V10.6667C2.33328 11.0333 2.63328 11.3333 2.99994 11.3333H4.99994C5.36661 11.3333 5.66661 11.0333 5.66661 10.6667Z"
+                            fill="black" />
+                    </svg>
+                </span>
+                <p [routerLink]="['/']">Home</p>
+            </div>
+            <div class="breadcrum_section">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <g clip-path="url(#clip0_522_1727)">
+                            <path
+                                d="M7.15833 13.825L10.975 10L7.15833 6.175L8.33333 5L13.3333 10L8.33333 15L7.15833 13.825Z"
+                                fill="black" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_522_1727">
+                                <rect width="20" height="20" fill="white" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </span>
+                <p [routerLink]="['../../all-medicines']">All Categories</p>
+            </div>
+            <div class="breadcrum_section">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <g clip-path="url(#clip0_522_1727)">
+                            <path
+                                d="M7.15833 13.825L10.975 10L7.15833 6.175L8.33333 5L13.3333 10L8.33333 15L7.15833 13.825Z"
+                                fill="black" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_522_1727">
+                                <rect width="20" height="20" fill="white" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </span>
+                <p>{{ categoryPath | capitalize}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="continer-fluid g-0">
+    <div class="row">
+        <div class="main_conatiner_flexbox">
+            <div class="aside d-none d-md-none d-lg-block shadow-sm" *ngIf="    currentUrl !== '/medicines'">
+                <div class="hedding py-1">
+                    <h3 class="filter_text">Filter by</h3>
+                    <button (click)="fetchData()" class="Show_product">Apply Filter</button>
+                </div>
+                <div class="filter_catragory">
+                    <ul>
+                        <ng-container *ngFor="let cat of categories">
+                            <li>
+                                <div class="item-container">
+                                    <input type="checkbox" id="desktop-cat-{{ cat.category_id }}"
+                                        [checked]="selectedCategoryIds.includes(cat.category_id)"
+                                        (change)="selectCategory(cat.category_id, cat.name_en)" class="checkbox">
+                                    <label for="desktop-cat-{{ cat.category_id }}">{{ cat.name_en | truncate:25
+                                        }}</label>
+
+                                    <!-- Toggle button: Display only if there are children categories -->
+                                    <button *ngIf="cat.children && cat.children.length > 0"
+                                        (click)="toggleChildrenVisibility(cat.category_id, 'desktop')"
+                                        class="Toogle_button"
+                                        [ngClass]="{'btn-toggle': true, 'btn-toggle-expanded': isCategoryExpanded(cat.category_id)}"
+                                        [attr.data-bs-toggle]="'collapse'"
+                                        [attr.data-bs-target]="'#desktop-collapse-' + cat.category_id"
+                                        aria-expanded="isCategoryExpanded(cat.category_id)">
+                                        {{ isCategoryExpanded(cat.category_id) ? '-' : '+' }}
+                                    </button>
+
+                                    <!-- Child categories -->
+                                    <div class="collapse" id="desktop-collapse-{{ cat.category_id }}">
+                                        <ul id="desktop-category-{{ cat.category_id }}"
+                                            class="hidden btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                            <ng-container *ngFor="let child of cat.children">
+                                                <ng-template [ngTemplateOutlet]="recursiveList"
+                                                    [ngTemplateOutletContext]="{ $implicit: child }"></ng-template>
+                                            </ng-container>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ng-container>
+                    </ul>
+
+                    <!-- Recursive template for nested children -->
+                    <ng-template #recursiveList let-cat>
+                        <li>
+                            <input type="checkbox" id="desktop-cat-{{ cat.category_id }}"
+                                [checked]="selectedCategoryIds.includes(cat.category_id)"
+                                (change)="selectCategory(cat.category_id, cat.name_en)" class="checkbox">
+                            <label for="desktop-cat-{{ cat.category_id }}">{{ cat.name_en | truncate:20 }}</label>
+
+                            <!-- Show toggle button only if there are further child categories -->
+                            <button *ngIf="cat.children && cat.children.length > 0"
+                                (click)="toggleChildrenVisibility(cat.category_id, 'desktop')" class="Toogle_button"
+                                [ngClass]="{'btn-toggle': true, 'btn-toggle-expanded': isCategoryExpanded(cat.category_id)}">
+                                {{ isCategoryExpanded(cat.category_id) ? '-' : '+' }}
+                            </button>
+
+                            <!-- Nested child categories -->
+                            <ul id="desktop-category-{{ cat.category_id }}" class="hidden">
+                                <ng-container *ngFor="let child of cat.children">
+                                    <ng-template [ngTemplateOutlet]="recursiveList"
+                                        [ngTemplateOutletContext]="{ $implicit: child }"></ng-template>
+                                </ng-container>
+                            </ul>
+                        </li>
+                    </ng-template>
+                </div>
+
+            </div>
+            <div class="main_continer p-1">
+                <div class="container-fluid p-0">
+                    <div class="row Product_categroy p-2">
+                        <div class="col-md-4 " style="display: flex;justify-content: space-between;">
+                            <p class="text_hedding ms-1 m-auto" [routerLink]="['/medicines/all-medicines']">
+                                {{ categoryNameurl ? (categoryNameurl | capitalize) : 'All Medicines' }}
+                            </p>
+                            <button class="filter_button d-none" data-bs-toggle="offcanvas" href="#offcanvasExample"
+                                role="button" aria-controls="offcanvasExample">
+                                <span class="fw-bold">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none">
+                                        <g clip-path="url(#clip0_527_2285)">
+                                            <path d="M10 18H14V16H10V18ZM3 6V8H21V6H3ZM6 13H18V11H6V13Z" fill="black" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_527_2285">
+                                                <rect width="24" height="24" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                    Filter
+                                </span>
+                            </button>
+                        </div>
+                        <div class="col-md-8 main_tab_conteiner" *ngIf="currentUrl !== '/medicines'">
+                            <div class="row p-2 " style="overflow: hidden;">
+                                <div class="tab-bar">
+                                    <div class=" g-0" style="display: contents;">
+                                        <a [ngClass]="{ 'active': selectedFilter === 'All' }"
+                                            (click)="selectFilter('All')" class="ms-1">All</a>
+                                        <a [ngClass]="{ 'active': selectedFilter === 'Ayurveda' }"
+                                            (click)="selectFilter('Ayurveda')">Ayurveda</a>
+                                        <a [ngClass]="{ 'active': selectedFilter === 'General' }"
+                                            (click)="selectFilter('General')">General</a>
+                                        <a [ngClass]="{ 'active': selectedFilter === 'Allopath' }"
+                                            (click)="selectFilter('Allopath')">Allopath</a>
+                                        <a [ngClass]="{ 'active': selectedFilter === 'Homeopath' }"
+                                            (click)="selectFilter('Homeopath')">Homeopath</a>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid p-0 g-0">
+                        <div class="row">
+                            <!-----i have here Work Print the product data And data Limites------>
+                            <div *ngIf="productData.length == 0" class="row_class row-cols-1 row-cols-sm-2">
+                                <div class="col" *ngFor="let a of filteredData">
+                                    <div class="card shadow-sm" (click)="viewProduct(a.product_id ,a.name)">
+                                        <div class="p-2 d-flex">
+                                            <img src="{{a.images_hsh?.array?.[0]}}" alt=""
+                                                style="margin: 20px auto; width: 120px; height: 100px;">
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text" style="text-transform: capitalize;">{{a.otc_type}}</p>
+                                            <h3 class="mb-1">{{a.name | truncate:30 }} </h3>
+                                            <div class="review_card" style="width: max-content;">
+                                                <p> {{a?.rating?.average || "0.0"}}</p>
+                                                <star-rating [rating]="a?.rating?.average || 0.0" [step]="0.1"
+                                                    [showHalfStars]="true" [readOnly]="true">
+                                                </star-rating>
+
+                                            </div>
+                                            <p class="Product_company">by <span style="text-transform: capitalize;"><a
+                                                        href="{{a.manufacturer.url}}"
+                                                        style="text-decoration: none; font-size: 12px;">
+                                                        {{a.manufacturer.name |
+                                                        truncate:25}}</a></span></p>
+
+                                            <div class="button_section">
+                                                <p class="Ammount_section">
+                                                    <span class="me-1">{{a.price.final_price |
+                                                        currency:'INR':'symbol'}}</span>
+                                                    <span class="wrong_price">{{a.price.mrp |
+                                                        currency:'INR':'symbol'}}</span>
+                                                </p>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="productData" class="row_class row-cols-1 row-cols-sm-2  "
+                                [ngStyle]="{ 'height': productData.length > 5 ? '100vh' : 'auto' }">
+                                <div class="col" *ngFor="let a of productData">
+                                    <div class="card shadow-sm" (click)="viewProduct(a.product_id ,a.name)">
+                                        <div class="p-2 d-flex">
+                                            <img src="{{a.images_hsh?.array?.[0]}}" alt=""
+                                                style="margin: 20px auto; width: 120px; height: 100px;">
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text" style="text-transform: capitalize;">{{a.otc_type}}</p>
+                                            <h3 class="mb-1">{{a.name | truncate:30 }} </h3>
+
+                                            <div class="review_card" style="width: max-content;">
+                                                <p> {{a?.rating?.average || "0.0"}}</p>
+                                                <star-rating [rating]="a?.rating?.average || 0.0" [step]="0.1"
+                                                    [showHalfStars]="true" [readOnly]="true">
+                                                </star-rating>
+
+                                            </div>
+                                            <p class="Product_company">by <span style="text-transform: capitalize;"><a
+                                                        href="{{a.manufacturer.url}}"
+                                                        style="text-decoration: none; font-size: 12px;">
+                                                        {{a.manufacturer.name |
+                                                        truncate:25}}</a></span></p>
+
+                                            <div class="button_section">
+                                                <p class="Ammount_section">
+                                                    <span class="me-1"> {{a.price.final_price |
+                                                        currency:'INR':'symbol'}}</span>
+                                                    <span class="wrong_price">{{a.price.mrp |
+                                                        currency:'INR':'symbol'}}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="button_section_load">
+    <div class="row m-0">
+        <button (click)="viewMore()">
+            View More <span class="ms-3">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="Keyboard arrow down" clip-path="url(#clip0_72_201)">
+                        <path id="Vector"
+                            d="M7.41 8.59009L12 13.1701L16.59 8.59009L18 10.0001L12 16.0001L6 10.0001L7.41 8.59009Z"
+                            fill="white" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_72_201">
+                            <rect width="24" height="24" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+            </span>
+        </button>
+    </div>
+</div>
+
+
+
+<!--=================offCavas===============-->
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel"
+    style="width: -webkit-fill-available;">
+    <div class="offcanvas-header">
+        <h2 class="offcanvas-title fw-bold m-0" id="offcanvasExampleLabel">Nectar Medicine Filter</h2>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="aside  shadow-sm " style="width: 100% !important; max-width: 100% !important;">
+            <div class="hedding py-1">
+                <h3 class="filter_text">Filter by</h3>
+                <button (click)="fetchData()" class="Show_product" data-bs-dismiss="offcanvas" aria-label="Close">Apply
+                    Filter</button>
+            </div>
+
+            <div class="filter_catragory">
+                <ul>
+                    <ng-container *ngFor="let cat of categories">
+                        <li>
+                            <div>
+                                <input type="checkbox" id="mobile-cat-{{ cat.category_id }}"
+                                    (change)="selectCategory(cat.category_id, cat.name_en)" class="checkbox"
+                                    [checked]="selectedCategoryIds.includes(cat.category_id)">
+                                <label for="mobile-cat-{{ cat.category_id }}">{{ cat.name_en | truncate:25 }}</label>
+
+                                <!-- Toggle button: Display only if there are children categories -->
+                                <button *ngIf="cat.children && cat.children.length > 0"
+                                    (click)="toggleChildrenVisibility(cat.category_id, 'mobile')"
+                                    class="btn btn-toggle align-items-center rounded collapsed Toogle_button"
+                                    [attr.data-bs-toggle]="'collapse'"
+                                    [attr.data-bs-target]="'#mobile-collapse-' + cat.category_id" aria-expanded="false">
+
+                                    {{ isCategoryExpanded(cat.category_id) ? '-' : '+' }}
+                                </button>
+
+
+                                <!-- Child categories -->
+                                <div class="collapse" id="mobile-collapse-{{ cat.category_id }}">
+                                    <ul id="mobile-category-{{ cat.category_id }}"
+                                        class="hidden btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <ng-container *ngFor="let child of cat.children">
+                                            <ng-template [ngTemplateOutlet]="recursiveList"
+                                                [ngTemplateOutletContext]="{ $implicit: child }"></ng-template>
+                                        </ng-container>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ng-container>
+                </ul>
+
+                <!-- Recursive template for nested children -->
+                <ng-template #recursiveList let-cat>
+                    <li>
+                        <input type="checkbox" id="mobile-cat-{{ cat.category_id }}"
+                            (change)="selectCategory(cat.category_id, cat.name_en)" class="checkbox">
+                        <label for="mobile-cat-{{ cat.category_id }}">{{ cat.name_en | truncate:25 }}</label>
+
+                        <!-- Show toggle button only if there are further child categories -->
+                        <button *ngIf="cat.children && cat.children.length > 0"
+                            (click)="toggleChildrenVisibility(cat.category_id, 'mobile')"
+                            class="btn btn-toggle align-items-center rounded collapsed Toogle_button"
+                            aria-expanded="false">
+
+                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20" fill="none">
+                        <g clip-path="url(#clip0_516_1120)">
+                          <path
+                            d="M15.8333 10.8333H10.8333V15.8333H9.16663V10.8333H4.16663V9.16666H9.16663V4.16666H10.8333V9.16666H15.8333V10.8333Z"
+                            fill="black" />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_516_1120">
+                            <rect width="20" height="20" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg> -->
+                            {{ isCategoryExpanded(cat.category_id) ? '-' : '+' }}
+                        </button>
+
+                        <!-- Nested child categories -->
+                        <ul id="mobile-category-{{ cat.category_id }}" class="hidden">
+                            <ng-container *ngFor="let child of cat.children">
+                                <ng-template [ngTemplateOutlet]="recursiveList"
+                                    [ngTemplateOutletContext]="{ $implicit: child }"></ng-template>
+                            </ng-container>
+                        </ul>
+                    </li>
+                </ng-template>
+            </div>
+
+
+
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<!-- Other component content -->

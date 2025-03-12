@@ -1,0 +1,143 @@
+<div class="second-section" *ngIf="!otpSend" [style.margin-top]="bottomSheet ? '0 !important' : 'auto'"
+  [style.margin-bottom]="bottomSheet ? '0 !important' : 'auto'">
+  <form [formGroup]="consultForm" class="second-wrap">
+    <h2>BOOK YOUR CONSULTATION TODAY</h2>
+    <div class="field d-flex flex-column gap-2">
+      <!-- <label>City<span>*</span></label> -->
+      <input type="text" placeholder="Enter Your City*" formControlName="city" [value]="['India']" maxlength="50"
+        oninput="this.value = this.value.replace(/^ $/,'');" (keypress)="cValidator.alphabetOnly($event)" />
+      <div class="form-error" *ngIf="(control['city'].touched || submitted) && control['city'].errors?.['required']">
+        Please enter city.
+      </div>
+    </div>
+    <div class="field mt-3 d-flex flex-column gap-2">
+      <ng-select [items]="popular_sergury_Data" bindLabel="title" bindValue="_id" placeholder="Select Treatment*"
+        formControlName="treatmentType"></ng-select>
+
+      <div class="form-error"
+        *ngIf="(consultForm.get('treatmentType').touched || submitted) && consultForm.get('treatmentType').errors?.['required']">
+        Please select treatment.
+      </div>
+    </div>
+
+
+    <div class="field mt-3 d-flex flex-column gap-2">
+      <!-- <label>Name<span>*</span></label> -->
+      <input type="text" placeholder="Enter Your Name*" formControlName="name" maxlength="50"
+        oninput="this.value = this.value.replace(/^ $/,'');" (keypress)="cValidator.alphabetOnly($event)" />
+      <div class="form-error" *ngIf="(control['name'].touched || submitted) && control['name'].errors?.['required']">
+        Please enter name.
+      </div>
+    </div>
+    <div class="field mt-3 d-flex flex-column gap-2">
+      <!-- <label>Phone Number<span>*</span> </label> -->
+      <div class="d-flex w-100">
+        <select class="countryCode w-20" name="countryCode" id="countryCode" (change)="onCountryChange($event)"
+          style="border: none; border-radius: 5px 0 0 5px">
+          <option [value]="item?.phonecode" *ngFor="let item of countryCodes"
+            [selected]="item?.phonecode == selectedCountryCode">
+            {{ item?.flag }} +{{ item?.phonecode }}
+          </option>
+        </select>
+
+        <!-- <ng-select
+          [(ngModel)]="selectedCountryCode"
+          [ngModelOptions]="{ standalone: true }"
+          name="countryCode"
+          class="countryCode"
+        >
+          <ng-option
+            [value]="item?.phonecode"
+            *ngFor="let item of countryCodes"
+          >
+            {{ item?.flag }} +{{ item?.phonecode }}</ng-option
+          >
+        </ng-select> -->
+
+        <input type="text" placeholder="Enter Phone Number*" class="w-80" formControlName="phone" maxlength="15"
+          oninput="this.value = this.value.replace(/\D/g, '').replace(/^0/,'');"
+          style="border: none; border-radius: 0 5px 5px 0" />
+      </div>
+
+      <div *ngIf="consultForm.get('phone')?.errors">
+        <div class="form-error"
+          *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['required']">
+          Please enter phone number.
+        </div>
+        <div class="form-error" *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['minlength'] 
+            ">
+          Please enter valid phone number.
+        </div>
+      </div>
+    </div>
+    <!-- <div class="checkbox-div mt-3">
+      <input
+        class="custom-checkbox green background-white"
+        type="checkbox"
+        style="width: 24px; height: 24px"
+        (change)="deviceWidth > 767 ? openDialog(true) : setCheckboxValue()"
+        [checked]="this.consultForm.get('permission')?.value"
+      />
+
+      <span>
+        <small class="opacity-50 text-18">
+          By signing up, I agree to&nbsp;
+        </small>
+
+        <u class="text-18 font-600 cursor-pointer" (click)="openDialog(true)"
+          >terms & condition
+        </u>
+      </span>
+    </div> -->
+
+    <div class="enquire" [style.opacity]="
+        this.consultForm.valid && this.consultForm.value.permission
+          ? '1'
+          : '0.8'
+      ">
+      <button type="submit" (click)="enquire()">ENQUIRY NOW</button>
+    </div>
+  </form>
+</div>
+
+<div class="otp-section my-5" *ngIf="otpSend">
+  <div class="p-4">
+    <div class="text-24 font-600">Verify Mobile</div>
+  </div>
+  <div class="px-4">
+    <div class="text-18 my-3">We have sent you an OTP on</div>
+    <div class="d-flex align-items-center gap-4">
+      <div class="text-32 font-600">
+        +{{ this.selectedCountryCode }} {{ this.consultForm.value.phone }}
+      </div>
+      <span>
+        <img src="assets/images/svg/edit.svg" class="cursor-pointer" (click)="onEdit()"/>
+      </span>
+    </div>
+    <form [formGroup]="otpForm">
+      <div class="text-18 mt-4">OTP</div>
+      <input class="mt-3 w-100" type="text" placeholder="Please enter the 6 digit OTP here to verify" maxlength="6"
+        formControlName="otp" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" />
+      <div class="form-error" *ngIf="(control['otp'].touched || submitted) && control['otp'].errors?.['required']">
+        Otp is required
+      </div>
+      <div class="form-error" *ngIf="(control['otp'].touched || submitted) && control['otp'].errors?.['minlength'] && 
+      (!control['otp'].errors?.['required'])">
+        Otp Must be Valid.
+      </div>
+    </form>
+    <div class="my-3 text-18 opacity-50">Didn’t received OTP?</div>
+    <div class="d-flex justify-content-between">
+      <div class="text-18 font-600" *ngIf="resendOtpVlaue">
+        {{ resendTime }}
+      </div>
+      <div class="text-18 font-600 cursor-pointer" (click)="resendOTP()" *ngIf="!resendOtpVlaue">
+        Resend Otp
+      </div>
+    </div>
+
+    <div class="my-3 w-100">
+      <button class="w-100" (click)="submit()">Submit</button>
+    </div>
+  </div>
+</div>

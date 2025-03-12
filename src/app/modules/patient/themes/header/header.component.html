@@ -1,0 +1,452 @@
+<!-- header 1 before scrolled -->
+<section *ngIf="
+    mode != 'register' && doctorListHeader == false && deviceWidth > 767 && show 
+  " [class.back-orange]="headerColor == 'orange'" [class.back-grey]="headerColor == 'grey'">
+  <div class="desktop-header-container">
+    <div class="desktop-header-container__wrapper">
+      <div class="desktop-header-container__wrapper__first-section">
+        <div class="desktop-header-container__wrapper__first-section__icon" routerLink="/">
+          <svg-icon src="assets/images/svg/logo.svg" class="d-flex"></svg-icon>
+        </div>
+      </div>
+      <div class="desktop-header-container__wrapper__second-section">
+        <!-- <div class="desktop-header-container__wrapper__second-section">
+          <div class="desktop-header-container__wrapper__second-section__items" *ngIf="!doctorListMode">
+            <a class="header_menu" *ngFor="let item of firstSectionContent"
+               [routerLink]="item.url"
+               [ngClass]="{'active': item.isActive}"
+               (click)="redirection(item)">
+              {{ item?.name }}
+            </a>
+          </div>
+        </div> -->
+        <div class="desktop-header-container__wrapper__second-section">
+          <div class="desktop-header-container__wrapper__second-section__items" *ngIf="!doctorListMode">
+            <a class="header_menu" *ngFor="let item of firstSectionContent"
+               [routerLink]="item.url"
+               [ngClass]="{'active': item.isActive}"
+               (click)="redirection(item)">
+              {{ item?.name }}
+            </a>
+            <!-- Hardcoded Blog URL -->
+            <a class="header_menu" 
+               href="https://blog.nectarplus.health/" 
+               target="_blank" 
+               rel="noopener noreferrer">
+              Blogs/News
+            </a>
+          </div>
+        </div>
+        
+        
+
+        <div class="search-wrap" *ngIf="doctorListMode">
+          <nectar-wrap-search></nectar-wrap-search>
+        </div>
+        <div class="desktop-header-container__wrapper__second-section__items">
+          <div class="desktop-header-container__wrapper__second-section__items me-4">
+            <p class="maxSize" routerLink="auth/doctors/newRegister">
+              List your practice for free
+            </p>
+          </div>
+
+          <!-- security and help section -->
+          <!-- <div
+            class="desktop-header-container__wrapper__second-section__items me-4"
+          >
+            <p [matMenuTriggerFor]="security" class="maxSize">
+              Security & Help &nbsp;
+              <svg-icon
+                src="assets/images/homepage/dropdown.svg"
+                alt=""
+                [class.security]="headerColor == 'orange'"
+              ></svg-icon>
+            </p>
+            <mat-menu #security="matMenu" class="header-menus">
+              <div class="security-help">
+                <a mat-menu-item routerLink="privacy-policy">
+                  Privacy & Policy
+                </a>
+                <a mat-menu-item routerLink="terms-conditions">
+                  Terms & Conditions
+                </a>
+                <a mat-menu-item routerLink="contact-us"> Help </a>
+              </div>
+            </mat-menu>
+          </div> -->
+        </div>
+      </div>
+
+      <div class="desktop-header-container__wrapper__third-section">
+        <div class="desktop-header-container__wrapper__second-section__items">
+          <div>
+            <p class="login d-flex gap-3" [matMenuTriggerFor]="login" *ngIf="!isLoggedin">
+              Login/Signup
+              <svg-icon src="assets/images/svg/downarrow.svg" alt="" class="me-2"></svg-icon>
+            </p>
+          </div>
+
+
+          <div class="loggedInMenu" *ngIf="isDoctor && loggedin">
+            <div class="rounded-0 dropdown w-100">
+              <div class="dropdown">
+                <div class="day d-flex gap-3 align-items-center dropdownbtn w-100 cursor-pointer"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="profile-wrapper d-flex justify-content-center align-items-center">
+                    <img [src]="doctorDetail?.doctor?.profilePic" alt="" *ngIf="doctorDetail?.doctor?.profilePic" />
+                    <span class="text-18 font-600" *ngIf="!doctorDetail?.doctor?.profilePic">
+                      {{ doctorDetail?.fullName | nameInitial | async | uppercase }}
+                    </span>
+                  </div>
+                  <svg-icon src="assets/images/svg/downarrow.svg"></svg-icon>
+                </div>
+                <div class="dropdown-menu">
+                  <div class="d-flex gap-3 align-items-center border-bottom-style p-24 dropdown-item">
+                    <div class="profile-wrapper d-flex justify-content-center align-items-center">
+                      <img [src]="doctorDetail?.doctor?.profilePic" alt="" *ngIf="doctorDetail?.doctor?.profilePic" />
+                      <span class="text-18 font-600" *ngIf="!doctorDetail?.doctor?.profilePic">
+                        {{ doctorDetail?.fullName | nameInitial | async | uppercase }}
+                      </span>
+                    </div>
+                    <div class="d-flex flex-column gap-2 whitespace-nowrap">
+                      <span class="font-600 text-18">{{
+                        doctorDetail?.fullName | titlecase
+                        }}</span>
+                      <span class="text-18">{{ doctorDetail?.phone }}</span>
+                    </div>
+                  </div>
+                  <div class="w-100 border-bottom-style px-24 py-12 text-18 dropdown-item"
+                    routerLink="/doctor/change-password">
+                    <span>
+                      <svg style="enable-background:new 0 0 24 24; width:15px  " version="1.1" viewBox="0 0 24 24"
+                        xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g id="info"></g>
+                        <g id="icons">
+                          <path
+                            d="M22.2,14.4L21,13.7c-1.3-0.8-1.3-2.7,0-3.5l1.2-0.7c1-0.6,1.3-1.8,0.7-2.7l-1-1.7c-0.6-1-1.8-1.3-2.7-0.7   L18,5.1c-1.3,0.8-3-0.2-3-1.7V2c0-1.1-0.9-2-2-2h-2C9.9,0,9,0.9,9,2v1.3c0,1.5-1.7,2.5-3,1.7L4.8,4.4c-1-0.6-2.2-0.2-2.7,0.7   l-1,1.7C0.6,7.8,0.9,9,1.8,9.6L3,10.3C4.3,11,4.3,13,3,13.7l-1.2,0.7c-1,0.6-1.3,1.8-0.7,2.7l1,1.7c0.6,1,1.8,1.3,2.7,0.7L6,18.9   c1.3-0.8,3,0.2,3,1.7V22c0,1.1,0.9,2,2,2h2c1.1,0,2-0.9,2-2v-1.3c0-1.5,1.7-2.5,3-1.7l1.2,0.7c1,0.6,2.2,0.2,2.7-0.7l1-1.7   C23.4,16.2,23.1,15,22.2,14.4z M12,16c-2.2,0-4-1.8-4-4c0-2.2,1.8-4,4-4s4,1.8,4,4C16,14.2,14.2,16,12,16z"
+                            id="settings"></path>
+                        </g>
+                      </svg>
+                    </span>
+                    <span style="padding-left: 3px;">
+
+                      {{ "ACCOUNT_SETTINGS" | translate }}
+                    </span>
+                  </div>
+                  <div class="w-100 border-bottom-style px-24 py-12 text-18 dropdown-item"
+                    routerLink="/doctor/dashboard">
+
+                    <span>
+                      <svg width="17px" height="24px" viewBox="0 0 21 20" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <!-- Generator: Sketch 3.8.1 (29687) - http://www.bohemiancoding.com/sketch -->
+                        <title>gallery_grid_view [#1405]</title>
+                        <desc>Created with Sketch.</desc>
+                        <defs></defs>
+                        <g id="Page-1" stroke="none" stroke-width="1" fill="grey" fill-rule="evenodd">
+                          <g id="Dribbble-Light-Preview" transform="translate(-259.000000, -680.000000)" fill="#000000">
+                            <g id="icons" transform="translate(56.000000, 160.000000)">
+                              <path
+                                d="M209.3,538 L206.15,538 C205.5704,538 205.1,537.552 205.1,537 C205.1,536.448 205.5704,536 206.15,536 L209.3,536 C209.8796,536 210.35,536.448 210.35,537 C210.35,537.552 209.8796,538 209.3,538 L209.3,538 Z M210.35,534 L205.1,534 C203.93975,534 203,534.895 203,536 L203,538 C203,539.105 203.93975,540 205.1,540 L210.35,540 C211.51025,540 212.45,539.105 212.45,538 L212.45,536 C212.45,534.895 211.51025,534 210.35,534 L210.35,534 Z M220.85,524 L217.7,524 C217.1204,524 216.65,523.552 216.65,523 C216.65,522.448 217.1204,522 217.7,522 L220.85,522 C221.4296,522 221.9,522.448 221.9,523 C221.9,523.552 221.4296,524 220.85,524 L220.85,524 Z M221.9,520 L216.65,520 C215.48975,520 214.55,520.895 214.55,522 L214.55,524 C214.55,525.105 215.48975,526 216.65,526 L221.9,526 C223.06025,526 224,525.105 224,524 L224,522 C224,520.895 223.06025,520 221.9,520 L221.9,520 Z M221.9,537 C221.9,537.552 221.4296,538 220.85,538 L217.7,538 C217.1204,538 216.65,537.552 216.65,537 L216.65,531 C216.65,530.448 217.1204,530 217.7,530 L220.85,530 C221.4296,530 221.9,530.448 221.9,531 L221.9,537 Z M221.9,528 L216.65,528 C215.48975,528 214.55,528.895 214.55,530 L214.55,538 C214.55,539.105 215.48975,540 216.65,540 L221.9,540 C223.06025,540 224,539.105 224,538 L224,530 C224,528.895 223.06025,528 221.9,528 L221.9,528 Z M210.35,529 C210.35,529.552 209.8796,530 209.3,530 L206.15,530 C205.5704,530 205.1,529.552 205.1,529 L205.1,523 C205.1,522.448 205.5704,522 206.15,522 L209.3,522 C209.8796,522 210.35,522.448 210.35,523 L210.35,529 Z M210.35,520 L205.1,520 C203.93975,520 203,520.895 203,522 L203,530 C203,531.105 203.93975,532 205.1,532 L210.35,532 C211.51025,532 212.45,531.105 212.45,530 L212.45,522 C212.45,520.895 211.51025,520 210.35,520 L210.35,520 Z"
+                                id="gallery_grid_view-[#1405]"></path>
+                            </g>
+                          </g>
+                        </g>
+                      </svg>
+                    </span>
+                    <span style="padding-left: 3px;">
+
+                      Dashboard
+                    </span>
+                  </div>
+                  <div class="w-100 px-24 py-12 text-18 dropdown-item" (click)="onLogout()">
+
+                    <span>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="24">
+                        <path fill="none" d="M0 0h24v24H0z"></path>
+                        <path
+                          d="M5 22a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3h-2V4H6v16h12v-2h2v3a1 1 0 0 1-1 1H5zm13-6v-3h-7v-2h7V8l5 4-5 4z"
+                          fill="red"></path>
+                      </svg>
+
+                    </span>
+                    <span style="color: red; padding-left: 3px;">
+
+                      {{ "LOG_OUT" | translate }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="loggedInMenu" *ngIf="!isDoctor">
+            <div>
+              <p class="login rounded-circle d-flex gap-3" [matMenuTriggerFor]="loggedIn"
+                *ngIf="isLoggedin && !userData?.patient?.profilePic">
+                {{ userData?.fullName | nameInitial | async | uppercase }}
+              </p>
+              <div class="login rounded-circle p-0" [matMenuTriggerFor]="loggedIn"
+                *ngIf="isLoggedin && userData?.patient?.profilePic" style="height: 48px; width: 48px">
+                <img [src]="userData?.patient?.profilePic" alt="" *ngIf="userData?.patient?.profilePic" height="48"
+                  width="48" class="img-fit-contain rounded-circle" />
+              </div>
+              <mat-menu #loggedIn="matMenu" xPosition="before" class="logged-menus picon">
+                <div class="logged-items" mat-menu-item [disableRipple]="true">
+                  <div class="d-flex align-items-center gap-3 p-3">
+                    <div class="profile-icon border-grey" *ngIf="!userData?.patient?.profilePic"
+                      routerLink="/profile/personal-info">
+                      {{ userData?.fullName | nameInitial | async | uppercase }}
+                    </div>
+                    <img [src]="userData?.patient?.profilePic" routerLink="/profile/personal-info" alt="" height="52"
+                      width="52" class="rounded-circle img-fit-contain border-grey"
+                      *ngIf="userData?.patient?.profilePic" />
+                    <div class="d-flex flex-column gap-2">
+                      <div class="text-14 font-600" routerLink="/profile/personal-info">
+                        {{ (userData?.fullName | titlecase) || "" }}
+                      </div>
+                      <div class="text-14" routerLink="/profile/personal-info">
+                        +91{{ userData?.phone || 0 }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="border: 1px solid rgba(0, 0, 0, 0.3)"></div>
+                  <div class="p-3">
+                    <div class="d-flex gap-2 py-2" routerLink="/profile">
+                      <img src="assets/images/svg/appointments.svg" alt="" height="20" width="20" />
+                      <div class="text-14">My Appointments</div>
+                    </div>
+
+                    <div class="d-flex gap-2 py-2" routerLink="/profile/medical-reports">
+                      <img src="assets/images/svg/medical-report 1.svg" alt="" height="20" width="20" />
+                      <div class="text-14">My Medical Reports</div>
+                    </div>
+                    <div class="d-flex gap-2 py-2" routerLink="/profile/feedbacks">
+                      <img src="assets/images/svg/feedback 1.svg" alt="" height="20" width="20" />
+                      <div class="text-14">My Feedback</div>
+                    </div>
+                    <div class="d-flex gap-2 py-2" routerLink="/profile/personal-info">
+                      <img src="assets/images/svg/person.svg" alt="" height="20" width="20" />
+                      <div class="text-14">Personal Information</div>
+                    </div>
+                    <div class="d-flex gap-2 py-2" routerLink="/profile/settings">
+                      <img src="assets/images/svg/settings.svg" alt="" height="20" width="20" />
+                      <div class="text-14">Settings</div>
+                    </div>
+                    <div class="d-flex gap-2 py-2" (click)="logout()">
+                      <img src="assets/images/svg/Logout.svg" alt="" height="20" width="20" />
+                      <div class="text-14 text-red">Logout</div>
+                    </div>
+                  </div>
+                </div>
+              </mat-menu>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- header 2 -->
+
+<section *ngIf="
+    mode != 'register' &&
+    doctorListHeader == false &&
+    deviceWidth > 767 &&
+    !show
+  " class="afterScroll" [class.back-orange]="headerColor == 'orange'" [class.back-grey]="headerColor == 'grey'"
+  [style.display]="!show ? 'block' : 'none'">
+  <div class="desktop-header-container">
+    <div class="desktop-header-container__wrapper">
+      <div class="desktop-header-container__wrapper__first-section">
+        <div class="desktop-header-container__wrapper__first-section__icon" routerLink="/">
+          <svg-icon src="assets/images/svg/logo.svg" class="d-flex"></svg-icon>
+        </div>
+      </div>
+      <div style="width: 97%">
+        <nectar-global-search [type]="'scroll'"></nectar-global-search>
+      </div>
+      <div class="desktop-header-container__wrapper__third-section">
+        <div class="desktop-header-container__wrapper__second-section__items">
+          <div>
+            <p class="login d-flex gap-3" [matMenuTriggerFor]="login" *ngIf="!isLoggedin">
+              Login/Signup
+              <svg-icon src="assets/images/svg/downarrow.svg" alt="" class="me-2"></svg-icon>
+            </p>
+          </div>
+          <div class="loggedInMenu">
+            <div>
+              <p class="login rounded-circle d-flex gap-3" [matMenuTriggerFor]="loggedIn"
+                *ngIf="isLoggedin && !userData?.patient?.profilePic">
+                {{ userData?.fullName | nameInitial | async | uppercase }}
+              </p>
+              <div class="login rounded-circle p-0" [matMenuTriggerFor]="loggedIn"
+                *ngIf="isLoggedin && userData?.patient?.profilePic" style="height: 48px; width: 48px">
+                <img [src]="userData?.patient?.profilePic" alt="" *ngIf="userData?.patient?.profilePic" height="48"
+                  width="48" class="img-fit-contain rounded-circle" />
+              </div>
+              <mat-menu #loggedIn="matMenu" xPosition="before" class="logged-menus picon">
+                <div class="logged-items" mat-menu-item [disableRipple]="true">
+                  <div class="d-flex align-items-center gap-3 p-3">
+                    <div class="profile-icon border-grey" *ngIf="!userData?.patient?.profilePic"
+                      routerLink="/profile/personal-info">
+                      {{ userData?.fullName | nameInitial | async | uppercase }}
+                    </div>
+                    <img [src]="userData?.patient?.profilePic" routerLink="/profile/personal-info"
+                      [alt]="userData?.fullName" height="52" width="52"
+                      class="rounded-circle img-fit-contain border-grey" *ngIf="userData?.patient?.profilePic" />
+                    <div class="d-flex flex-column gap-2">
+                      <div class="text-14 font-600" routerLink="/profile/personal-info">
+                        {{ (userData?.fullName | titlecase) || "" }}
+                      </div>
+                      <div class="text-14" routerLink="/profile/personal-info">
+                        +91{{ userData?.phone || 0 }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="border: 1px solid rgba(0, 0, 0, 0.3)"></div>
+                  <div class="p-3">
+                    <div class="d-flex gap-2 py-2" routerLink="/profile">
+                      <img src="assets/images/svg/appointments.svg" alt="" height="20" width="20" />
+                      <div class="text-14">My Appointments</div>
+                    </div>
+
+                    <div class="d-flex gap-2 py-2" routerLink="/profile/medical-reports">
+                      <img src="assets/images/svg/medical-report 1.svg" alt="" height="20" width="20" />
+                      <div class="text-14">My Medical Reports</div>
+                    </div>
+                    <div class="d-flex gap-2 py-2" routerLink="/profile/feedbacks">
+                      <img src="assets/images/svg/feedback 1.svg" alt="" height="20" width="20" />
+                      <div class="text-14">My Feedback</div>
+                    </div>
+                    <div class="d-flex gap-2 py-2" routerLink="/profile/personal-info">
+                      <img src="assets/images/svg/person.svg" alt="" height="20" width="20" />
+                      <div class="text-14">Personal Information</div>
+                    </div>
+                    <div class="d-flex gap-2 py-2" routerLink="/profile/settings">
+                      <img src="assets/images/svg/settings.svg" alt="" height="20" width="20" />
+                      <div class="text-14">Settings</div>
+                    </div>
+                    <div class="d-flex gap-2 py-2" (click)="logout()">
+                      <img src="assets/images/svg/Logout.svg" alt="" height="20" width="20" />
+                      <div class="text-14 text-red">Logout</div>
+                    </div>
+                  </div>
+                </div>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- header for register screen -->
+
+<section *ngIf="mode == 'register' && deviceWidth > 767" class="registerHeader">
+  <div class="d-flex justify-content-between align-items-end wrapper">
+    <div routerLink="/" class="logo-register" style="vertical-align: bottom">
+      <svg-icon src="assets/images/svg/logo.svg" style="display: flex"></svg-icon>
+    </div>
+    <div class="d-flex justify-content-between box">
+      <div class="step d-flex align-items-end">
+        <div class="" *ngIf="steps.showstep">
+          Steps {{ steps.currentstep + "/" + steps.laststep }}
+        </div>
+      </div>
+      <div class="support cursor-pointer" (click)="openDialog()">
+        <img loading="lazy" src="assets/images/svg/support.svg" alt="img" />&nbsp;&nbsp;
+        <span>Support</span>
+      </div>
+    </div>
+    <div class="saveExit whitespace-nowrap" (click)="onSaveExit()">
+      Save & Exit
+    </div>
+  </div>
+</section>
+
+<!-- header for doctor list screen -->
+
+<section class="doctor-list-header" *ngIf="doctorListHeader && doctorListMode"
+  [ngClass]="{ afterScroll: doctorListHeader }">
+  <div class="d-flex gap-4">
+    <!-- <nectar-filters></nectar-filters> -->
+    <div class="search-wrap" *ngIf="deviceWidth > 1200">
+      <nectar-wrap-search></nectar-wrap-search>
+    </div>
+  </div>
+</section>
+
+<!-- common header for mobile devices -->
+
+<section *ngIf="deviceWidth < 767 && !removeHeader" class="hamber-sidenav">
+  <div class="d-flex justify-content-between align-items-center my-2 mobile-header">
+    <div class="d-flex gap-2 align-items-center">
+      <div class="hamber" (click)="openSidenav()" *ngIf="mode != 'register'">
+        <svg-icon src="assets/images/svg/hamber.svg" class="cursor-pointer"></svg-icon>
+      </div>
+    </div>
+    <svg-icon src="assets/images/svg/logo.svg" class="d-flex cursor-pointer" style="width: 155px" routerLink="/"
+      *ngIf="!mobileHeaderSearch"></svg-icon>
+    <div *ngIf="mobileHeaderSearch" class="w-75">
+      <div class="border-grey search" (click)="openBottomSheet()">
+        <img loading="lazy" src="assets/images/svg/search-icon-black.svg" alt="" />
+        <span class="opacity-70" style="font-weight: 400 !important; font-size: 14px">Search doctor, hospital,
+          clinic.</span>
+      </div>
+    </div>
+    <div *ngIf="mode !== 'register'">
+      <img src="assets/images/svg/FramePro.svg" height="36" width="36" alt="" *ngIf="!isLoggedin"
+        [matMenuTriggerFor]="login" class="cursor-pointer" />
+      <div class="login rounded-circle d-flex gap-3 cursor-pointer" *ngIf="isLoggedin && !userData?.patient?.profilePic"
+        (click)="openProfileSideNav()">
+        {{ userData?.fullName | nameInitial | async | uppercase }}
+      </div>
+      <img class="login rounded-circle cursor-pointer p-0" *ngIf="isLoggedin && userData?.patient?.profilePic"
+        [src]="userData?.patient?.profilePic" (click)="openProfileSideNav()" alt="" height="36" width="36" />
+    </div>
+    <div *ngIf="mode == 'register'" (click)="onSaveExit()" class="whitespace-nowrap">
+      Save & Exit
+    </div>
+  </div>
+</section>
+
+<!-- login and signUp card -->
+
+<mat-menu #login="matMenu" xPosition="before" class="header-menus">
+  <div class="login-items" mat-menu-item [disableRipple]="true">
+    <span class="name d-flex" routerLink="/auth/patient/login"><svg-icon src="assets/images/svg/patientlogin.svg" class="me-1" ></svg-icon>
+      Patients&nbsp;&nbsp;&nbsp;</span>
+    <!-- <span class="action" >
+      Log in&nbsp;&nbsp;&nbsp;&nbsp;
+    </span> 
+   <span class="action" routerLink="/auth/patient/register"> Sign up </span> -->
+  </div>
+  <div class="border-bottom-div"></div>
+  <div class="login-items" mat-menu-item [disableRipple]="true">
+    <span class="name d-felx" routerLink="/auth/doctors/newlogin"><svg-icon src="assets/images/svg/medical-assistancelogin.svg"
+        class="me-1" alt=""></svg-icon> Doctor&nbsp;&nbsp;&nbsp; </span>
+    <!-- <span class="action" >
+      Log in&nbsp;&nbsp;&nbsp;&nbsp;
+    </span>
+    <span class="action" routerLink="/auth/doctors/newRegister"> Sign up </span> -->
+  </div>
+  <div class="border-bottom-div"></div>
+  <div class="login-items" mat-menu-item [disableRipple]="true">
+    <span class="name d-flex" routerLink="/auth/hospitals/login"><svg-icon src="assets/images/svg/pharmacylogin.svg" class="me-1"></svg-icon> Hospital&nbsp;&nbsp;&nbsp; </span>
+    <!-- <span class="action w-30" >
+      Log in&nbsp;&nbsp;&nbsp;&nbsp;
+    </span>
+    <span class="action w-30" routerLink="/auth/hospitals/register">
+      Sign up
+    </span> -->
+  </div>
+</mat-menu>

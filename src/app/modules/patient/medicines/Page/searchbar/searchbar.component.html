@@ -1,0 +1,20 @@
+<div class=" search d-flex banner_main_box ">
+      <div class=" big-card search_container">
+            <div class="serch_section">
+                  <form class="d-flex align-items-center search-parent position-relative">
+                        <input type="search" placeholder="Search Your Medicine Name" #searchInput class="form-control"
+                              style="border: none;" (input)="onSearch($event)">
+                  </form>
+                  <div *ngIf="showSuggestions && suggestions.length > 0" class="suggestions">
+                        <ul>
+                              <li *ngFor="let suggestion of suggestions" class="m-0"
+                                    (click)="goToProduct(suggestion.product_id ,suggestion.name)">
+                                    <img [src]="suggestion.image" alt=""> {{ suggestion.name | truncate:50}} <span>
+                                    </span>
+                              </li>
+                        </ul>
+                  </div>
+            </div>
+
+      </div>
+</div>

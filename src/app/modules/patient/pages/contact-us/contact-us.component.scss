@@ -1,0 +1,125 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+@import "variable.scss";
+
+
+.main {
+  @include font-sans_pro-regular($size: $font_14);
+  background: $bright-gray;
+
+  @media screen and (max-width: 767px) {
+    background: $white;
+  }
+
+  .wrapper {
+    max-width: $content-max-width;
+
+    @media screen and (max-width: 767px) {
+      max-width: $content-sm-max-width;
+      padding: 80px 0;
+    }
+
+    margin: 0 auto;
+    padding: 40px 0;
+
+    h2 {
+      @include font-sans_pro-bold($size: 32px, $lineheight: 40px);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-bold($size: 24px);
+      }
+    }
+
+    .image-section {
+      max-width: 100%;
+    }
+
+    .content {
+      background: $white;
+      padding: $pad_24;
+      // max-height: 660px;
+      width: 30%;
+
+      @media screen and (min-width: 1400px) {
+        width: 486px;
+      }
+
+      @media screen and (max-width: 767px) {
+        width: 100%;
+        padding: 32px 0px;
+      }
+
+      .fields {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+
+        label {
+          @include font-sans_pro-regular($size: $font_14);
+
+          span {
+            color: $red;
+          }
+
+          @media screen and (max-width: 767px) {
+            @include font-sans_pro-regular($size: 16px);
+          }
+        }
+
+        input {
+          border: 1px solid $border-color;
+          padding: 12px 19px;
+          @include font-sans_pro-regular($size: $font_14);
+
+          ::placeholder {
+            opacity: 0.5;
+          }
+
+          @media screen and (max-width: 767px) {
+            @include font-sans_pro-regular($size: 16px);
+          }
+        }
+      }
+
+      .button {
+        button {
+          border: none;
+          min-height: 48px;
+          width: 100%;
+          background: $purple;
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+.gap-20 {
+  gap: 20%;
+}
+
+.image-section {
+  svg {
+    max-width: 100%;
+
+    @media screen and (max-width: 767px) {
+      max-height: 300px;
+    }
+
+    path {
+      fill: $bright-gray;
+    }
+  }
+}
+
+textarea {
+  resize: none;
+  border: 1px solid $border-color;
+  padding: 12px 19px;
+  max-height: 120px;
+}

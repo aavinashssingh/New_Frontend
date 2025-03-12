@@ -1,0 +1,228 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+@import "variable.scss";
+
+
+.cards {
+  background: $white;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  width: 290px;
+  height: 316px;
+  position: relative;
+  padding: 12px 24px;
+  margin-bottom: 1px;
+
+  @media screen and (max-width: 776px) {
+    width: 260px;
+    height: 230px;
+    padding: 14px;
+  }
+
+  &__image {
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
+
+    .profile-icon {
+      @include font-sans_pro-semibold(32px);
+      color: $purple;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+
+      @media screen and (max-width: 776px) {
+        @include font-sans_pro-semibold(24px);
+      }
+    }
+
+    .profile-icon,
+    img {
+      border: 1px solid $border-color;
+      background-color: $white;
+      height: 84px;
+      width: 88px;
+      border-radius: 50%;
+
+      @media screen and (max-width: 776px) {
+        width: 68px;
+        height: 64px;
+      }
+    }
+  }
+
+  &__details {
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
+
+    h2 {
+      margin-bottom: 0px;
+      @include font-sans_pro-semibold(14px);
+
+      @media screen and (max-width: 776px) {
+        @include font-sans_pro-semibold(16px);
+      }
+    }
+
+    h3 {
+      margin-bottom: 0px;
+      opacity: 0.8;
+      @include font-sans_pro-regular(14px);
+
+      @media screen and (max-width: 776px) {
+        @include font-sans_pro-regular(16px);
+      }
+    }
+
+    p {
+      margin-bottom: 0px;
+      @include font-sans_pro-semibold(14px);
+
+      @media screen and (max-width: 776px) {
+        opacity: 0.8;
+        @include font-sans_pro-semibold(16px);
+      }
+    }
+
+    .price-box {
+      color: $black;
+
+      @include font-sans_pro-semibold(14px);
+
+      @media screen and (max-width: 776px) {
+        @include font-sans_pro-semibold(16px);
+      }
+
+      .price {
+        color: $black;
+        opacity: 0.5;
+        @include font-sans_pro-regular(16px);
+        margin-right: 5px;
+
+        @media screen and (max-width: 776px) {
+          @include font-sans_pro-regular(16px);
+        }
+      }
+    }
+  }
+
+  &__button {
+    position: absolute;
+    bottom: 12px;
+    width: calc(100% - 48px);
+
+    button {
+      border: 1px solid $purple;
+      background: $purple;
+      border-radius: 8px;
+      height: 47px;
+      width: 100%;
+      color: $white;
+      @include font-sans_pro-semibold(14px);
+
+      @media screen and (max-width: 776px) {
+        @include font-sans_pro-semibold(16px);
+      }
+    }
+  }
+
+  &__top-doctors {
+    border: 1px solid rgba(69, 25, 124, 0.3);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    padding: 4px 8px;
+    gap: 5px;
+    align-items: center;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+
+    p {
+      color: $purple;
+      @include font-sans_pro-semibold(14px);
+      margin: 5px 0px 0 0;
+
+      @media screen and (max-width: 776px) {
+        @include font-sans_pro-semibold(16px);
+      }
+    }
+  }
+}
+
+.mobile-doc-card {
+  display: none;
+
+  @media screen and (max-width: 767px) {
+    display: block;
+  }
+
+  .profile-icon {
+    @include font-sans_pro-semibold(20px);
+    color: $purple;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+
+  .profile-icon,
+  img {
+    border: 1px solid $border-color;
+    background-color: $white;
+    border-radius: 50%;
+    width: 68px;
+    height: 64px;
+  }
+
+  h2 {
+    @include font-sans_pro-semibold(16px);
+    margin: 0;
+  }
+
+  h3 {
+    @include font-sans_pro-regular(16px);
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    @include font-sans_pro-semibold(16px);
+  }
+}
+
+.top-doctorss {
+  border: 1px solid rgba(69, 25, 124, 0.3);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  padding: 4px;
+  gap: 5px;
+  align-items: center;
+
+  img {
+    width: 20px;
+    height: 20px;
+    border: none !important;
+  }
+
+  p {
+    color: $purple;
+    @include font-sans_pro-semibold(16px);
+    margin: 5px 0px 0 0;
+  }
+}
+
+::ng-deep {
+  .mat-bottom-sheet-container {
+    padding: 0 !important;
+    border-radius: 20px 20px 0 0px !important;
+  }
+}

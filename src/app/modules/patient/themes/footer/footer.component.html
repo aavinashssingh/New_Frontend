@@ -1,0 +1,242 @@
+<section class="footer" *ngIf="mode != 'register' && !newLogin  && !newRegister">
+  <div class="footer__container">
+    <div class="footer__container__wrapper">
+      <div>
+        <img
+          src="assets/images/Nectar Footer Desktop Logo.png"
+          alt=""
+          class="nectar-logo"
+        />
+        <div class="mt-3">
+          <div class="text-14 font-600 text-white">Connect with us</div>
+          <div class="d-flex gap-2 align-items-center mt-2">
+            <a href="https://www.facebook.com/nectarplushealth" target="_blank">
+              <img loading="lazy" src="assets/images/homepage/fb.svg " alt="" />
+            </a>
+            <a href="https://twitter.com/nectarhealth_IN" target="_blank">
+              <img loading="lazy" src="assets/images/homepage/x.svg " alt="" />
+            </a>
+            <a
+              href="https://www.instagram.com/nectarplushealth/"
+              target="_blank"
+            >
+              <img
+                loading="lazy"
+                src="assets/images/homepage/insta.svg "
+                alt=""
+              />
+            </a>
+
+            <a href="https://www.youtube.com/@nectarplushealth" target="_blank">
+              <img loading="lazy" src="assets/images/homepage/YT.svg " alt="" />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/nectar-plus-health/about/"
+              target="_blank"
+            >
+              <img
+                loading="lazy"
+                src="assets/images/homepage/Linked.svg "
+                alt=""
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__container__wrapper__items">
+        <h2 class="heading">Nectar+</h2>
+        <p
+          class="sub-heading"
+          (click)="scrollOnTop()"
+          routerLink="hospital-list"
+        >
+          Find Doctors
+        </p>
+        <p
+          class="sub-heading"
+          (click)="scrollOnTop()"
+          routerLink="about-us/about"
+        >
+          About us
+        </p>
+        <p class="sub-heading">
+          <a href="https://blog.nectarplus.health/" target="_blank">Blog</a>
+        </p>
+        <p class="sub-heading" (click)="scrollOnTop()" routerLink="contact-us">
+          Contact us
+        </p>
+        <p class="sub-heading" (click)="scrollOnTop()" routerLink="surgeries">
+          Surgeries
+        </p>
+      </div>
+      <div class="footer__container__wrapper__items">
+        <h2 class="heading">For patients</h2>
+        <p
+          class="sub-heading"
+          (click)="scrollOnTop()"
+          routerLink="hospital-list"
+        >
+          Search for doctors
+        </p>
+        <p
+          class="sub-heading"
+          (click)="scrollOnTop()"
+          routerLink="hospital-list"
+        >
+          Search for clinics
+        </p>
+        <p
+          class="sub-heading"
+          (click)="scrollOnTop()"
+          routerLink="hospital-list"
+        >
+          Search for hospitals
+        </p>
+        <p class="sub-heading">
+          <a href="https://blog.nectarplus.health/">Read health articles</a>
+        </p>
+      </div>
+      <div class="footer__container__wrapper__items">
+        <h2 class="heading">For doctors</h2>
+
+        <a
+        style="font-size: small; color:#b3a1ca;"
+          class="sub-heading"
+          (click)="scrollOnTop()"
+          routerLink="auth/doctors/newlogin"
+        >
+          Nectar Profile
+        </a>
+        
+        <h2 class="heading" style="margin-top: 5px;">For clinics</h2>
+
+        <a 
+        style="font-size: small;color: #b3a1ca;"
+          class="sub-heading"
+          (click)="scrollOnTop()"
+          routerLink="auth/hospitals/login"
+        >
+          Nectar Profile
+        </a>
+      </div>
+      <div class="footer__container__wrapper__items">
+        <h2 class="heading">For Hospitals/Clinic</h2>
+
+        <a
+          class="sub-heading"
+          style="font-size: small;color: #b3a1ca;"
+          (click)="scrollOnTop()"
+          routerLink="auth/hospitals/login"
+        >
+          Nectar Profile
+        </a>
+      </div>
+      <div class="footer__container__wrapper__items">
+        <h2 class="heading">More</h2>
+
+        <!-- <p class="sub-heading" (click)="scrollOnTop()" routerLink="contact-us">
+          Help
+        </p> -->
+        <p
+        
+          class="sub-heading"
+          (click)="scrollOnTop()"
+          routerLink="privacy-policy"
+        >
+          Privacy Policy
+        </p>
+        <p
+          class="sub-heading"
+          (click)="scrollOnTop()"
+          routerLink="terms-conditions"
+        >
+          Terms and condition
+        </p>
+      </div>
+    </div>
+    <div class="mobile-footer">
+      <div class="text-18 font-400 text-white mb-5">
+        <span class="font-600">Nectar Plus health</span> upholds the highest
+        standards when approving the doctors. That means every doctor you see on
+        the platform is highly qualified to provide the quality care possible.
+      </div>
+      <div>
+        <div *ngFor="let item of listing" class="mt-3">
+          <mat-accordion>
+            <mat-expansion-panel
+              (opened)="item.panelOpenState = true"
+              (closed)="item.panelOpenState = false"
+              hideToggle="true"
+            >
+              <mat-expansion-panel-header>
+                <mat-panel-title class="text-20">
+                  {{ item?.title | titlecase }}
+                </mat-panel-title>
+                <mat-panel-description>
+                  <mat-icon *ngIf="!item.panelOpenState">add</mat-icon>
+                  <mat-icon *ngIf="item.panelOpenState">remove</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div *ngFor="let i of item?.data" class="my-2">
+                <div class="text-16 text-white" (click)="redirection(i)">
+                  {{ i?.name }}
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__container__logo">
+      <div class="d-flex flex-column align-items-center text-center">
+        <img
+          src="assets/images/Nectar Footer Desktop Logo.png"
+          alt=""
+          width="155"
+          height="27"
+          class="social-icons-mobile"
+        />
+
+        <p class="text-white footer-text mt-4">
+          Copyright &#64; {{ year }}, Nectar. All rights reserved
+        </p>
+        <div class="social-icons-mobile">
+          <div class="d-flex gap-2 align-items-center mt-2">
+            <a href="https://www.facebook.com/nectarplushealth" target="_blank">
+              <img loading="lazy" src="assets/images/homepage/fb.svg " alt="" />
+            </a>
+            <a href="https://twitter.com/nectarhealth_IN" target="_blank">
+              <img loading="lazy" src="assets/images/homepage/x.svg " alt="" />
+            </a>
+            <a
+              href="https://www.instagram.com/nectarplushealth/"
+              target="_blank"
+            >
+              <img
+                loading="lazy"
+                src="assets/images/homepage/insta.svg "
+                alt=""
+              />
+            </a>
+
+            <a href="https://www.youtube.com/@nectarplushealth" target="_blank">
+              <img loading="lazy" src="assets/images/homepage/YT.svg " alt="" />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/nectar-plus-health/about/"
+              target="_blank"
+            >
+              <img
+                loading="lazy"
+                src="assets/images/homepage/Linked.svg "
+                alt=""
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

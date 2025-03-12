@@ -1,0 +1,134 @@
+<div *ngIf="isLoading" class="loader-container">
+  <img src="assets/Nectar-Plus-Health-Icon.gif" alt="Loading..." class="loader-gif" />
+</div>
+
+<section class="list-section" nectarInfiniteScroll [class.blur-content]="isLoading"  >
+  <div class="heading">All appointments</div>
+  <div class="filters anime-section" *ngIf="scrollTop < 50">
+    <!-- <nectar-filters></nectar-filters> -->
+  </div>
+  <h1 class="popular">Popular Doctor/Hospital On Nectar</h1>
+  <!-- <div *ngIf="isLoading" class="text-32 font-600 text-center my-5">
+    Loading...
+  </div> -->
+
+  <ng-container *ngFor="
+  let item of hospitalList | paginate: {
+    itemsPerPage: payload.size,
+    currentPage: payload.page,
+    totalItems: totalCount
+  }
+">
+    <div class="hospital-section">
+      <div class="hospital-detail">
+        <!-- hospital details and rating  -->
+
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="first d-flex gap-3">
+            <div>
+              <div class="profile-icon cursor-pointer" (click)="viewHospital(item)" *ngIf="!item?.profilePic">
+                {{ item?.name | nameInitial | async | uppercase }}
+              </div>
+              <img (click)="viewHospital(item)" [src]="item?.profilePic" [alt]="item?.name"
+                class="cursor-pointer img-fit-contain profile-icon" *ngIf="item?.profilePic" />
+              <div class="mt-2 d-flex align-items-end gap-1" *ngIf="deviceWidth < 767">
+                <img src="assets/images/svg/stars.svg" alt="" height="20" width="20" />
+                <div class="font-600 text-green" style="font-size: 18px">
+                  {{ (item?.rating | number : "1.1-1") || "0.0"
+                  }}<span class="opacity-70 text-black">/5</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="text-24 font-600 cursor-pointer" (click)="viewHospital(item)">
+                {{ item?.name | titlecase }}
+              </div>
+              <div class="d-flex gap-3 my-2 sm-flex-col">
+                <div class="text-18 sm-text-16">
+                  {{ item?.hospitalType[0]?.name | titlecase }}
+                </div>
+                <div class="text-18 font-600 sm-text-16">
+                  <img src="assets/images/svg/location.svg" alt="" height="20" width="20" *ngIf="deviceWidth > 767" />{{
+                  item?.address?.locality || "" }},
+                  {{ item?.address?.city || "N/A" }}
+                </div>
+              </div>
+              <div class="rating">
+                <star-rating [rating]="item?.rating" [step]="0.1" [showHalfStars]="true"
+                  [readOnly]="true"></star-rating>
+                <span class="star">
+                  {{ (item?.rating | number : "1.1-1") || "0.0" }}
+                </span>
+                <span class="total"> &nbsp;/5 </span>
+                <span class="review" *ngIf="item?.reviews <= 1">({{ item?.reviews || 0 }} review)</span>
+                <span class="review" *ngIf="item?.reviews > 1">
+                  ({{ item?.reviews }} reviews)
+                </span>
+              </div>
+              <div class="d-flex gap-2 align-items-end" *ngIf="deviceWidth < 776">
+                <div class="d-flex align-items-center gap-1">
+                  <img src="assets/images/svg/beds.svg" alt="" height="20" width="20" />
+                  <div class="text-18 sm-text-16 font-600 mt-1 sm-font-400">
+                    {{ item?.totalBed?.toLocaleString() || 0 }} Beds
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-1">
+                  <img src="assets/images/svg/ambulance.svg" alt="" height="20" width="20" />
+                  <div class="text-18 sm-text-16 font-600 mt-1 sm-font-400">
+                    {{ item?.ambulance?.toLocaleString() || 0 }} ambulance
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="second d-flex flex-column align-items-end" *ngIf="deviceWidth > 776">
+            <div class="d-flex align-items-center gap-3">
+              <div class="text-18 font-600 mt-1">
+                {{ item?.totalBed?.toLocaleString() || 0 }} Beds
+              </div>
+              <img src="assets/images/svg/beds.svg" alt="" height="36" width="36" />
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <div class="text-18 font-600 mt-1">
+                {{ item?.ambulance?.toLocaleString() || 0 }} ambulance
+              </div>
+              <img src="assets/images/svg/ambulance.svg" alt="" height="36" width="36" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- doctor card section -->
+
+      <div class="card-wrapper" *ngIf="item?.docList?.length">
+        <div class="text-18 font-400 my-2" *ngIf="deviceWidth < 767">
+          {{ item?.docList?.length }} Doctors
+        </div>
+        <owl-carousel-o [options]="customOptions" #owlCar>
+          <ng-container *ngFor="let i of item?.docList; let j = index">
+            <ng-template class="slide" carouselSlide [width]="290">
+              <nectar-doc-card [data]="i" [establishmentId]="item._id"></nectar-doc-card>
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o>
+      </div>
+
+      <!-- calendar-view-section -->
+      <ng-container *ngIf="item?.topDoc?.length">
+        <div class="calendar-wrapper" *ngFor="let i of item?.topDoc">
+          <div class="calendar-section">
+            <nectar-calendar-view [data]="i"></nectar-calendar-view>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <div *ngIf="!isLoading && !hospitalList.length" class="text-32 font-600 text-center my-5">
+    No Doctors Found
+  </div>
+
+  <div class="pagination-section" *ngIf="hospitalList.length ">
+    <pagination-controls class="text-center" [previousLabel]="' '" [nextLabel]="' '" (pageChange)="changingPage($event)"
+      [maxSize]="deviceWidth < 767?5:7"></pagination-controls>
+  </div>
+</section>

@@ -1,0 +1,99 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.badge {
+  font-size: inherit;
+  // line-height: 2;
+  // padding: 4px 15px;
+  &.badge-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // background-color: rgba(70, 25, 124, 0.15);
+    // color: #45197c;
+  }
+  &.badge-success {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // background-color: rgba(0, 128, 128, 0.15);
+    // color: #008080;
+  }
+  &.badge-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // background-color: rgba(229, 34, 99, 0.15);
+    // color: #e52264;
+  }
+}
+
+section {
+  .header {
+    background: $purple;
+    color: $white;
+    padding: 0 16px;
+    height: 55px;
+
+    p {
+      @include font-sans_pro-semibold(18px);
+      margin: 0;
+    }
+  }
+
+  .doctor-detail {
+    padding: 16px;
+    border-bottom: 1px solid $border-color;
+
+    .profile-pic {
+      width: 57px;
+      height: 57px;
+      border: 1px solid $border-color;
+      border-radius: 50%;
+
+      img {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .hospital-wrapper {
+    padding: 16px;
+
+    .hospital {
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      background: $white;
+      padding: 14px 16px;
+      margin-top: 16px;
+
+      .select {
+        width: 79px;
+
+        button {
+          border: 1px solid $purple;
+          padding: 6px 18px;
+          color: $white;
+          background: $purple;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}
+
+svg {
+  path {
+    // fill: $white !important;
+  }
+}

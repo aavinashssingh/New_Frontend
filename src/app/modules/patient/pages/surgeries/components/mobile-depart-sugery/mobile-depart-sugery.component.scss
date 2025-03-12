@@ -1,0 +1,19 @@
+@import "src/styles/scss/variable.scss";
+
+section {
+  min-height: 60vh !important;
+}
+
+.surgery-section {
+  .box {
+    width: 85px;
+    img {
+      border-radius: 500px;
+      border: 1px solid $border-color;
+      background: $white;
+      width: 52px;
+      height: 52px;
+      padding: 8px;
+    }
+  }
+}

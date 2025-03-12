@@ -1,0 +1,164 @@
+<div class="input-text" [style.border-radius]="type == 'scroll' ? '30px' : '30px'" (keyup.enter)="getSearchData()">
+  <div class="input-text__container d-flex align-items-center box1"
+    [style.border-radius]="type == 'scroll' ? ' 30px 0 0 30px' : '2px'">
+    <img src="assets/images/svg/search-icon-black.svg" alt="" class="icon" height="18" width="18" />
+    <input class="input-box" type="text" placeholder="Search by specialty, doctor, clinic, hospital, treatment"
+      #symptoms [matAutocomplete]="auto" [matAutocompleteDisabled]="deviceWidth < 767"
+      #autocomplete="matAutocompleteTrigger" (input)="getSuggestionList($event)" (click)="openBottomSheet('symptomps')"
+      (focus)="focusinmethod()" (focusout)="focusoutmethod()" />
+    <img src="assets/images/svg/cross.svg" alt="" class="me-3" *ngIf="symptoms.value"
+      (click)="closeSuggestion('symptomps')" />
+    <mat-autocomplete #auto="matAutocomplete" class="my-4">
+      <mat-option [value]="item?.name" *ngFor="let item of specialityOptions">
+        <div *ngIf="item?.name" class="d-flex gap-2 justify-content-between align-items-center mx-3"
+          (click)="focusOnLocation()">
+          <div class="text-16">
+            <img src="assets/images/svg/Search-drop.svg" alt="" height="24" width="24" />
+            &nbsp;
+            {{ item?.name }}
+          </div>
+          <div class="opacity-80 text-12">Speciality</div>
+        </div>
+      </mat-option>
+      <mat-option [value]="item?.name" *ngFor="let item of servicesOptions">
+        <div *ngIf="item?.name" class="d-flex gap-2 justify-content-between align-items-center mx-3"
+          (click)="focusOnLocation()">
+          <div class="text-16">
+            <img src="assets/images/svg/Search-drop.svg" alt="" height="24" width="24" />&nbsp;
+            {{ item?.name }}
+          </div>
+          <div class="opacity-80 text-12">Service</div>
+        </div>
+      </mat-option>
+      <mat-optgroup class="text-12 font-600" [label]="'Doctors'" *ngIf="doctorsOptions.length">
+        <mat-option *ngFor="let item of doctorsOptions" [value]="item" (click)="getSuggestion(item, 'doctor')">
+          <div class="d-flex align-items-center gap-3">
+            <img [src]="item?.profilePic" alt="" height="24" width="24" *ngIf="item?.profilePic" class="profile-icon" />
+            <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+              {{ item?.name | nameInitial | async | uppercase }}
+            </div>
+            <div class="text-16">
+              <div>{{ item?.name }}</div>
+              <div class="opacity-80 text-12 opacity-80">
+                {{(item?.specialization?.[0] | titlecase) || ''}}
+              </div>
+            </div>
+          </div>
+        </mat-option>
+      </mat-optgroup>
+      <mat-optgroup class="text-12 font-600" [label]="'Clinic'" *ngIf="clinicOptions.length">
+        <mat-option *ngFor="let item of clinicOptions" [value]="item" (click)="getSuggestion(item, 'hospital')">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+              <img [src]="item?.profilePic" alt="" height="24" width="24" *ngIf="item?.profilePic"
+                class="profile-icon" />
+              <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+                {{ item?.name | nameInitial | async | uppercase }}
+              </div>
+              <div class="text-16">
+                <div>{{ item?.name }}</div>
+                <div class="opacity-80 text-12">
+                  {{ (item?.address?.locality || "N/A" | titlecase) || "" }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-option>
+      </mat-optgroup>
+      <mat-optgroup class="text-12 font-600" [label]="'Hospitals'" *ngIf="hospitalsOptions.length">
+        <mat-option *ngFor="let item of hospitalsOptions" [value]="item" (click)="getSuggestion(item, 'hospital')">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+              <img [src]="item?.profilePic" alt="" height="24" width="24" *ngIf="item?.profilePic"
+                class="profile-icon" />
+              <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+                {{ item?.name | nameInitial | async | uppercase }}
+              </div>
+              <div class="text-16">
+                <div>{{ item?.name }}</div>
+                <div class="opacity-80 text-12">
+                  {{ (item?.address?.locality || "N/A" | titlecase) || "" }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-option>
+      </mat-optgroup>
+      <mat-option *ngIf="symptoms.value.length > 3" [value]="symptoms.value">
+        <div class="d-flex align-items-center gap-3 mx-2" (click)="focusOnLocation()">
+          <img src="assets/images/svg/Search-drop.svg" alt="" height="24" width="24" />
+          <div class="text-16 font-400">
+            <div>Doctor Name {{ symptoms.value }}</div>
+          </div>
+        </div>
+      </mat-option>
+      <mat-option *ngIf="symptoms.value.length > 3" [value]="symptoms.value">
+        <div class="d-flex align-items-center gap-3 mx-2" (click)="focusOnLocation()">
+          <img src="assets/images/svg/Search-drop.svg" alt="" height="24" width="24" />
+          <div class="text-16 font-400">
+            <div>Hospital Name {{ symptoms.value }}</div>
+          </div>
+        </div>
+      </mat-option>
+      <mat-option *ngIf="symptoms.value.length > 3" [value]="symptoms.value">
+        <div class="d-flex align-items-center gap-3 mx-2" (click)="focusOnLocation()">
+          <img src="assets/images/svg/Search-drop.svg" alt="" height="24" width="24" />
+          <div class="text-16 font-400">
+            <div>Clinic Name {{ symptoms.value }}</div>
+          </div>
+        </div>
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+
+  <span *ngIf="deviceWidth > 767">|</span>
+  <div class="input-text__container d-flex align-items-center">
+    <img loading="lazy" src="assets/images/svg/location.svg" alt="" class="icon" />
+    <input 
+    class="input-box" 
+    type="text" 
+    placeholder="Search Cities, States, or Pin code"
+    #autocomplete="matAutocompleteTrigger" 
+    [matAutocomplete]="landmark1" 
+    [matAutocompleteDisabled]="deviceWidth < 767"
+    (keyup)="onCitySearch($event)"
+    (blur)="validateCity($event)"
+    #location
+  />
+  
+  <mat-autocomplete #landmark1="matAutocomplete" class="my-4">
+    <mat-option 
+      *ngFor="let city of filteredCities" 
+      [value]="city.name" 
+      (onSelectionChange)="onCitySelect($event)">
+      <div class="d-flex align-items-center gap-3 mx-2">
+        <img loading="lazy" src="assets/images/svg/location.svg" alt="" height="18" width="18" />
+        <div>
+          <div class="text-16 font-400">{{ city.name }}</div>
+        </div>
+      </div>
+    </mat-option>
+  </mat-autocomplete>
+  
+    <mat-autocomplete #landmark2="matAutocomplete" class="my-4">
+      <mat-option *ngFor="let state of filteredStates" [value]="state" (click)="setSelectedState(state)">
+        <div class="d-flex align-items-center gap-3 mx-2">
+          <img loading="lazy" src="assets/images/svg/location.svg" alt="" height="18" width="18" />
+          <div>
+            <div class="text-16 font-400">{{ state }}</div>
+          </div>
+        </div>
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+
+  <button (click)="getSearchData()" class="button_search" [class.border-right]="type == 'scroll'" style="border-radius: 0px 30px 30px 0px;">
+    <img loading="lazy" src="assets/images/search-icon-white.svg" alt="" />
+    Find the Doctor
+  </button>
+</div>
+<!-- book Appointments footer -->
+<div class="footer" [ngClass]="bottomReached ? 'white-footer' : 'purple-footer'" *ngIf="scrollTop > 70"
+  (click)="scrollToTop()">
+  <p>Find the Doctor</p>
+</div>

@@ -1,0 +1,138 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.footer {
+  background: $purple;
+  padding: 80px 0px 30px 0;
+
+  @media screen and (max-width: 776px) {
+    padding: 50px 0;
+  }
+
+  &__container {
+    max-width: $content-max-width;
+    margin: auto;
+
+    @media screen and (max-width: 776px) {
+      max-width: $content-sm-max-width;
+    }
+
+    &__wrapper {
+      display: flex;
+      // justify-content: space-between;
+      justify-content: center;
+      gap: 50px;
+      flex-wrap: wrap;
+
+      @media screen and (max-width: 776px) {
+        text-align: center;
+        display: none;
+      }
+
+      &__items {
+        p {
+          color: $white;
+          @include font-sans_pro-regular($size: 14px);
+          opacity: 0.7;
+        }
+
+        h2 {
+          color: $white;
+          @include font-sans_pro-bold($size: 14px);
+        }
+      }
+    }
+
+    &__logo {
+      display: flex;
+      justify-content: center;
+      padding: 30px 0px;
+    }
+  }
+}
+
+.mobile-footer,
+.social-icons-mobile {
+  display: none;
+
+  @media screen and (max-width: 767px) {
+    display: block;
+  }
+}
+
+.sub-heading {
+  cursor: pointer;
+}
+
+.heading {
+  cursor: default;
+}
+
+.footer-text {
+  @include font-sans_pro-regular($size: 14px);
+}
+
+.text-20 {
+  white-space: nowrap;
+  @include font-sans_pro-regular($size: 20px);
+}
+
+.text-16 {
+  @include font-sans_pro-regular($size: 16px);
+}
+
+:host::ng-deep {
+  .mat-expansion-panel-header-description {
+    justify-content: end !important;
+    color: $white;
+  }
+
+  .mat-expansion-panel,
+  .mat-expansion-panel-header {
+    background-color: $purple;
+    padding: 0 !important;
+  }
+
+  .mat-expansion-panel-header-title {
+    color: $white;
+  }
+
+  .mat-expansion-panel-header .mat-expanded {
+    background-color: none;
+  }
+
+  .mat-expansion-panel:not(.mat-expanded):not([aria-disabled="true"]) .mat-expansion-panel-header:hover {
+    background: $purple;
+  }
+
+  .mat-accordion .mat-expansion-panel {
+    border-radius: 0 !important;
+  }
+
+  .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+    box-shadow: none !important;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0 !important;
+  }
+}
+
+.nectar-logo {
+  @media screen and (max-width: 1400px) {
+    width: 180px;
+  }
+}
+
+a {
+  color: $white;
+  text-decoration: none;
+}

@@ -1,0 +1,162 @@
+<section class="appointment-booking">
+  <div class="appointment-booking__wrapper">
+    <div class="appointment-booking__wrapper__name">
+      <div>
+        <img [src]="doctorDetail?.doctorPic" alt="" class="cursor-pointer" (click)="viewDoctor()" />
+      </div>
+      <div>
+        <h2 class="cursor-pointer" (click)="viewDoctor()">
+          {{ doctorDetail?.fullname || "N/A" }}
+        </h2>
+        <p>
+          {{ (doctorDetail?.specialization | formatarray : "name") || "N/A" }}
+        </p>
+        <p>{{ doctorDetail?.address || "N/A" }}</p>
+      </div>
+    </div>
+    <div class="line-sec">
+      <hr class="light-line" />
+    </div>
+    <div class="appointment-booking__wrapper__name hospital mt-2" *ngIf="this.appoitmentType==1">
+      <div>
+        <img class="cursor-pointer" [src]="details?.hospital?.profilePic" alt="image" (click)="viewHospital()" />
+      </div>
+      <div>
+        <h2 (click)="viewHospital()" class="cursor-pointer">
+          {{ details?.name }}
+        </h2>
+
+        <p>
+          {{ details?.address?.locality }} , {{ details?.address?.city }}&nbsp;
+          {{ details?.address?.pincode }}
+        </p>
+        <h4 class="cursor-pointer" (click)="openGoogleMaps(details)
+    ">
+          Get Direction
+        </h4>
+      </div>
+    </div>
+    <div class="appointment-booking__wrapper__timings">
+      <div class="appointment-booking__wrapper__timings__details">
+        <div class="date">
+          <img loading="lazy" src="assets/images/svg/calendar.svg" alt="" />
+          <span>On</span>
+          <p>{{ timing?.date }}</p>
+        </div>
+        <div class="time">
+          <img loading="lazy" src="assets/images/svg/Access time.svg" alt="" />
+          <span>At</span>
+          <p>{{ timing?.time?.time }}</p>
+        </div>
+      </div>
+    </div>
+    <hr class="light-line" />
+    <div class="appointment-booking__wrapper__patient-details">
+      <div class="appointment-booking__wrapper__patient-details__selection">
+        <div class="box box1" (click)="getAppoinmentType('1')" *ngIf="doctorDetail?.consultationFees!=-1">
+          <input type="radio" id="in-clinic" name="appointment-type" value="1" [checked]="appoitmentType == '1'" />
+          <label for="in-clinic" class="cursor-pointer">In-Clinic Appoinment Fees: &#8377;{{doctorDetail?.consultationFees ||
+            "0"}}</label>
+        </div>
+        <div class="box" (click)="getAppoinmentType('2')" *ngIf="doctorDetail?.videoConsultationFees!=-1">
+          <input type="radio" id="video" name="appointment-type" value="2" [checked]="appoitmentType == '2'" />
+          <label for="video" class="cursor-pointer">Video Consultation Appoinment Fees: &#8377;{{
+            doctorDetail?.videoConsultationFees || "0" }}</label>
+        </div>
+      </div>
+      <h3>Patient Details</h3>
+      <p>This in-clinic appointment is for:</p>
+      <div class="appointment-booking__wrapper__patient-details__selection">
+        <!-- <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group"
+            [(ngModel)]="type"
+          >
+            <mat-radio-button
+              class="example-radio-button"
+              *ngFor="let item of userType"
+              [value]="item"
+            >
+              {{ item?.name }}
+            </mat-radio-button>
+          </mat-radio-group> -->
+        <div class=" box1 customBox" (click)="getType('self')">
+          <input type="radio" style="margin-top: 13px; margin-bottom: 13px;" id="self" name="appointment-booking" value="self" [checked]="type == 'self'" />
+          <label style="margin-top: 13px;" *ngIf="patientDetail?.fullName" for="self" class="cursor-pointer">{{
+            patientDetail?.fullName || "N/A" | titlecase
+            }}</label>
+          <input  [(ngModel)]="customName" [disabled]="patientProfielName!='' && patientProfielName!=null " (ngModelChange)="onNameChange($event)"  *ngIf="!patientDetail?.fullName" type="text" style="width: 100%; height: 100%; border: none; outline: none;" placeholder="Please enter your name here." />
+        </div>
+        <div class="box" (click)="getType('other')">
+          <input type="radio" id="other" name="appointment-booking" value="other" [checked]="type == 'other'" />
+          <label for="other" class="cursor-pointer">Someone else</label>
+        </div>
+      </div>
+      <div class="appointment-booking__wrapper__patient-details__data">
+        <form [formGroup]="bookingForm">
+          <p *ngIf="type != 'other'">This in-clinic appointment is for:</p>
+          <h2>Please Provide your following information :</h2>
+          <div class="name" *ngIf="type == 'self'">
+            <label> Full Name<span>*</span></label>
+            <input type="text" placeholder="Full Name" formControlName="name" />
+          </div>
+          <div class="name" *ngIf="type == 'other'">
+            <label> Patient's Full Name<span>*</span></label>
+            <input type="text" placeholder="Enter Patient's Full Name" formControlName="patientName" maxlength="30" />
+            <div class="form-error"
+              *ngIf="(control['patientName'].touched || submitted) && control['patientName'].errors?.['required']">
+              Please enter patient's name.
+            </div>
+          </div>
+          <div class="mobile">
+            <label>Mobile Number<span>*</span></label>
+            <input type="text" placeholder="Mobile Number" [value]="'+91 ' + patientDetail?.phone" disabled />
+          </div>
+          <div class="mobile" *ngIf="type == 'other'" style="position: relative">
+            <label>Patient's Mobile<span>*</span></label>
+
+            <input type="text" placeholder="Enter Patient's Mobile" maxlength="10" formControlName="phone"
+              oninput="this.value = this.value.replace(/\D/g, '').replace(/^0/,'');" style="padding-left: 49px" />
+            <span class="countryCode">+91 </span>
+            <div *ngIf="bookingForm.get('phone')?.errors">
+              <div class="form-error"
+                *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['required']">
+                Please enter patient's phone number.
+              </div>
+
+              <div class="form-error" *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['minlength'] 
+                && (!control['phone'].errors?.['required']) && (!control['phone'].errors?.['pattern'])">
+                Please enter valid phone number.
+              </div>
+            </div>
+          </div>
+          <div class="email">
+            <label>Email ID</label>
+            <input type="text" maxlength="256" placeholder="Enter Your Email ID(Optional)" formControlName="email" />
+            <div *ngIf="bookingForm.get('email')?.errors">
+              <!-- <span
+                  class="text-danger"
+                  *ngIf="f['email']?.errors?.['required'] && (f['email'].touched || submitted) "
+                  >Please enter email address
+                </span> -->
+              <span class="text-danger"
+                *ngIf="(control['email']?.errors?.['email'] || control['email']?.errors?.['pattern']) && (control['email'].touched || submitted) ">Please
+                enter a valid email address
+              </span>
+            </div>
+          </div>
+          <div class="submit">
+            <button (click)="confirmBooking()">Confirm Booking</button>
+          </div>
+          <div class="details">
+            <p>1. Updates will be sent to +91{{ patientDetail?.phone }}</p>
+            <p>
+              By booking this appointment, you agree to Nectar Terms and
+              Conditions.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

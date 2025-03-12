@@ -1,0 +1,47 @@
+<div class="main">
+  <div class="wrapper d-flex gap-3">
+    <div class="side-nav">
+      <div class="items">
+        <div
+          class="item"
+          routerLink="/profile"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          My Appointment
+        </div>
+        <div
+          class="item mt-2"
+          routerLink="/profile/medical-reports"
+          routerLinkActive="active"
+        >
+          My Medical Reports
+        </div>
+        <div
+          class="item mt-2"
+          routerLink="/profile/feedbacks"
+          routerLinkActive="active"
+        >
+          My Feedback
+        </div>
+        <div
+          class="item mt-2"
+          routerLink="/profile/personal-info"
+          routerLinkActive="active"
+        >
+          Personal Information
+        </div>
+        <div
+          class="item mt-2"
+          routerLink="/profile/settings"
+          routerLinkActive="active"
+        >
+          Settings
+        </div>
+      </div>
+    </div>
+    <div class="sections">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

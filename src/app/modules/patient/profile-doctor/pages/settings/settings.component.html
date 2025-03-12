@@ -1,0 +1,26 @@
+<section class="d-flex gap-3 w-100 h-100">
+  <div class="side-nav">
+    <div>
+      <h2 class="p-4">Settings</h2>
+    </div>
+    <div class="p-4">
+      <div class="items">
+        <div class="item active">Delete My Account</div>
+
+        <div class="item mt-2 text-red" (click)="logout()">Logout</div>
+      </div>
+    </div>
+  </div>
+  <div class="delete-account">
+    <div>
+      <h2 class="p-4">Delete My Account</h2>
+    </div>
+    <div class="text text-wrap p-4">
+      As a Nectar user, you can request the permanent deletion of your personal
+      information. By confirming below, you acknowledge and agree that your
+      account and its data will be deleted. If you decide to open a new account
+      with Nectar, you will be unable to access your historical data.
+    </div>
+    <button class="mx-4" (click)="deleteAccountPopup()">Confirm</button>
+  </div>
+</section>

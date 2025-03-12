@@ -1,0 +1,221 @@
+<div class="main">
+  <div class="wrapper">
+    <div class="heading d-flex justify-content-between align-items-center">
+      <h2>My Appointment</h2>
+      <div class="cursor-pointer" [style.opacity]="totalCount ? '1' : '0.5'">
+        <svg-icon
+          src="assets/images/svg/filter.svg"
+          [mat-menu-trigger-for]="appointmentfilter"
+          *ngIf="totalCount"
+        ></svg-icon>
+        <svg-icon
+          *ngIf="!totalCount"
+          src="assets/images/svg/filter.svg"
+        ></svg-icon>
+      </div>
+    </div>
+
+    <ng-container *ngIf="totalCount">
+      <div
+        class="content"
+        *ngFor="
+          let item of yearWiseData
+            | paginate
+              : {
+                  itemsPerPage: payload.size,
+                  currentPage: payload.page,
+                  totalItems: totalCount
+                }
+        "
+      >
+        <p *ngIf="item?._id !== 0" id="content">{{ item?._id }}</p>
+        <p *ngIf="item?._id == 0">Upcoming</p>
+        <div class="tab" *ngFor="let i of item?.data">
+          <div
+            class="box d-flex flex-wrap gap-2 justify-content-between align-items-center"
+          >
+            <div class="first-section d-flex gap-2">
+              <div class="date">
+                <div class="num">{{ i?.date | date : "dd" }}</div>
+                <div>{{ i?.date | date : "MMM" }}</div>
+              </div>
+              <div class="details">
+                <div class="name">{{ i?.fullName | titlecase }}</div>
+                <div class="time">
+                  {{ i?.date | date : "EEEE, hh:mm a" }}
+                </div>
+                <div class="time" *ngIf="i?.status == 0">
+                  {{ i?.establishmentName || "N/A" }}
+                </div>
+                <div
+                  *ngIf="i?.status == -1"
+                  class="completed cancelled mt-1 text-center"
+                >
+                  Cancelled
+                </div>
+                <div *ngIf="i?.status == 1" class="completed mt-2 text-center">
+                  Completed
+                </div>
+              </div>
+            </div>
+            <div class="second-section d-flex gap-3">
+              <button *ngIf="i?.status == -1" (click)="bookAgain(i)">
+                Book again
+              </button>
+              <button
+                *ngIf="i?.status == 1 && i?.feedBackGiven == false"
+                (click)="shareFeedback(i)"
+              >
+                Give your Feedback
+              </button>
+              <button
+                *ngIf="i?.status == 1 && i?.feedBackGiven == true"
+                routerLink="/profile/feedbacks"
+              >
+                View your Feedback
+              </button>
+              <button (click)="viewDetails(i)">View Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div
+      class="pagination-section"
+      *ngIf="totalCount && totalCount > payload.size"
+    >
+      <pagination-controls
+        class="text-center"
+        [previousLabel]="' '"
+        [nextLabel]="' '"
+        (pageChange)="changingPage($event)"
+        [maxSize]="deviceWidth > 576 ? 7 : 3"
+      ></pagination-controls>
+    </div>
+
+    <div
+      style="min-height: calc(100vh - 355px)"
+      class="d-flex justify-content-center align-items-center text-32 font-600"
+      *ngIf="!totalCount"
+    >
+      No Appointments Found.
+    </div>
+  </div>
+</div>
+
+<mat-menu #appointmentfilter class="appointment-filter">
+  <div
+    class="d-flex justify-content-between align-items-center w-100 px-24 py-2 text-14 border-bottom-style"
+  >
+    <span class="opacity-50 cursor-pointer" (click)="onResetForm()">{{
+      "CLEAR_FILTER" | translate
+    }}</span>
+    <button class="save-button" (click)="onFiltering()">
+      {{ "SAVE" | translate }}
+    </button>
+  </div>
+  <form [formGroup]="filterForm" class="">
+    <mat-accordion>
+      <mat-expansion-panel (click)="$event.stopPropagation()">
+        <mat-expansion-panel-header class="border-bottom-style">
+          <mat-panel-title>
+            <div class="d-flex align-items-center gap-3">
+              <svg-icon src="assets/images/svg/status-filter.svg"></svg-icon>
+              <span class="text-14 font-400">
+                {{ "FILTER_BY_STATUS" | translate }}</span
+              >
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="d-flex flex-column gap-2">
+          <div class="d-flex gap-3 align-items-center">
+            <input
+              class=""
+              style="width: 24px; height: 24px"
+              type="radio"
+              [value]="0"
+              formControlName="status"
+            />
+            <span class="text-14">{{ "UPCOMING" | translate }}</span>
+          </div>
+          <div class="d-flex gap-3 align-items-center">
+            <input
+              class=""
+              style="width: 24px; height: 24px"
+              type="radio"
+              [value]="1"
+              formControlName="status"
+            />
+            <span class="text-14">{{ "COMPLETED" | translate }}</span>
+          </div>
+          <div class="checkbox-item d-flex gap-3 align-items-center">
+            <input
+              class=""
+              style="width: 24px; height: 24px"
+              type="radio"
+              [value]="-1"
+              formControlName="status"
+            />
+            <span class="text-14">{{ "CANCELLED" | translate }}</span>
+          </div>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel (click)="$event.stopPropagation()" *ngIf="upcoming">
+        <mat-expansion-panel-header class="border-bottom-style">
+          <mat-panel-title>
+            <div class="d-flex align-items-center gap-3">
+              <svg-icon src="assets/images/svg/calendar-filter.svg"></svg-icon>
+              <span class="text-18 font-400">
+                {{ "FILTER_BY_DATE" | translate }}</span
+              >
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="d-flex gap-2 w-100">
+          <div class="d-flex flex-column gap-2 w-50">
+            <label class="text-14">{{ "FROM" | translate }}</label>
+            <div class="matdate-input d-flex">
+              <input
+                matInput
+                class="w-90"
+                type="text"
+                [matDatepicker]="pickerfrom"
+                placeholder="DD/MM/YYYY"
+                formControlName="from"
+                [max]="filterForm.get('to').value"
+              />
+
+              <mat-datepicker-toggle
+                class="toggle"
+                matIconSuffix
+                [for]="pickerfrom"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #pickerfrom></mat-datepicker>
+            </div>
+          </div>
+          <div class="d-flex flex-column gap-2 w-50">
+            <label class="text-14">{{ "TO" | translate }}</label>
+            <div class="matdate-input d-flex">
+              <input
+                matInput
+                class="w-90"
+                type="text"
+                [matDatepicker]="pickerto"
+                placeholder="DD/MM/YYYY"
+                formControlName="to"
+                [min]="filterForm.get('from').value"
+              />
+
+              <mat-datepicker-toggle
+                class="toggle"
+                matIconSuffix
+                [for]="pickerto"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #pickerto></mat-datepicker>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </form>
+</mat-menu>

@@ -1,0 +1,634 @@
+<div class="search-wrap">
+  <div></div>
+  <div class="input-text">
+    <div
+      class="input-text__container d-flex align-items-center"
+      style="width: 55%"
+    >
+      <img
+        loading="lazy"
+        src="assets/images/svg/search-icon-black.svg"
+        alt=""
+        class="icon"
+      />
+      <input
+        class="input-box"
+        type="text"
+        placeholder="Search Doctor,clinics,hospitals,etc."
+        #symptoms
+        (keydown)="search($event)"
+        [matAutocomplete]="auto"
+        (input)="getSuggestionList($event)"
+      />
+      <img
+        src="assets/images/svg/cross.svg"
+        alt=""
+        class="me-3"
+        *ngIf="symptoms.value"
+        (click)="closeSuggestion('symptomps')"
+      />
+      <mat-autocomplete #auto="matAutocomplete" class="my-4">
+        <mat-option
+          [value]="item?.name"
+          *ngFor="let item of specialityOptions"
+          (click)="search({ code: 'Enter' }); focusOnLocation()"
+        >
+          <div
+            *ngIf="item?.name"
+            class="d-flex gap-2 justify-content-between align-items-center mx-3"
+          >
+            <div class="text-16">
+              <img
+                src="assets/images/svg/Search-drop.svg"
+                alt=""
+                height="24"
+                width="24"
+              />
+              &nbsp;
+              {{ item?.name }}
+            </div>
+            <div class="opacity-80 text-12">Speciality</div>
+          </div>
+        </mat-option>
+        <mat-option
+          [value]="item?.name"
+          *ngFor="let item of servicesOptions"
+          (click)="search({ code: 'Enter' }); focusOnLocation()"
+        >
+          <div
+            *ngIf="item?.name"
+            class="d-flex gap-2 justify-content-between align-items-center mx-3"
+          >
+            <div class="text-16">
+              <img
+                src="assets/images/svg/Search-drop.svg"
+                alt=""
+                height="24"
+                width="24"
+              />&nbsp;
+              {{ item?.name }}
+            </div>
+            <div class="opacity-80 text-12">Service</div>
+          </div>
+        </mat-option>
+        <mat-optgroup
+          class="text-12 font-600"
+          [label]="'Doctors'"
+          *ngIf="doctorsOptions.length"
+        >
+          <mat-option
+            *ngFor="let item of doctorsOptions"
+            [value]="item?.name"
+            (click)="getSuggestion(item, 'doctor')"
+          >
+            <div class="d-flex align-items-center gap-3">
+              <img
+                [src]="item?.profilePic"
+                alt=""
+                height="24"
+                width="24"
+                *ngIf="item?.profilePic"
+                class="profile-icon"
+              />
+              <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+                {{ item?.name | nameInitial | async | uppercase }}
+              </div>
+              <div class="text-16">
+                <div>{{ item?.name }}</div>
+                <div class="opacity-80 text-12 opacity-80">
+                  {{(item?.specialization?.[0] | titlecase) || ''}}
+                </div>
+              </div>
+            </div>
+          </mat-option>
+        </mat-optgroup>
+        <mat-optgroup
+          class="text-12 font-600"
+          [label]="'Clinic'"
+          *ngIf="clinicOptions.length"
+        >
+          <mat-option
+            *ngFor="let item of clinicOptions"
+            [value]="item?.name"
+            (click)="getSuggestion(item, 'hospital')"
+          >
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-3">
+                <img
+                  [src]="item?.profilePic"
+                  alt=""
+                  height="24"
+                  width="24"
+                  *ngIf="item?.profilePic"
+                  class="profile-icon"
+                />
+                <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+                  {{ item?.name | nameInitial | async | uppercase }}
+                </div>
+                <div class="text-16">
+                  <div>{{ item?.name }}</div>
+                  <div class="opacity-80 text-12">
+                    {{ (item?.address?.locality || "N/A" | titlecase) || "" }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-option>
+        </mat-optgroup>
+        <mat-optgroup
+          class="text-12 font-600"
+          [label]="'Hospitals'"
+          *ngIf="hospitalsOptions.length"
+        >
+          <mat-option
+            *ngFor="let item of hospitalsOptions"
+            [value]="item?.name"
+            (click)="getSuggestion(item, 'hospital')"
+          >
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-3">
+                <img
+                  [src]="item?.profilePic"
+                  alt=""
+                  height="24"
+                  width="24"
+                  *ngIf="item?.profilePic"
+                  class="profile-icon"
+                />
+                <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+                  {{ item?.name | nameInitial | async | uppercase }}
+                </div>
+                <div class="text-16">
+                  <div>{{ item?.name }}</div>
+                  <div class="opacity-80 text-12">
+                    {{ (item?.address?.locality || "N/A" | titlecase) || "" }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-option>
+        </mat-optgroup>
+        <mat-option
+          *ngIf="symptoms.value.length > 3"
+          [value]="symptoms.value"
+          (click)="search({ code: 'Enter' }); focusOnLocation()"
+        >
+          <div class="d-flex align-items-center gap-3 mx-2">
+            <img
+              src="assets/images/svg/Search-drop.svg"
+              alt=""
+              height="24"
+              width="24"
+            />
+            <div class="text-16 font-400">
+              <div>Doctor Name {{ symptoms.value }}</div>
+            </div>
+          </div>
+        </mat-option>
+        <mat-option
+          *ngIf="symptoms.value.length > 3"
+          [value]="symptoms.value"
+          (click)="search({ code: 'Enter' }); focusOnLocation()"
+        >
+          <div class="d-flex align-items-center gap-3 mx-2">
+            <img
+              src="assets/images/svg/Search-drop.svg"
+              alt=""
+              height="24"
+              width="24"
+            />
+            <div class="text-16 font-400">
+              <div>Hospital Name {{ symptoms.value }}</div>
+            </div>
+          </div>
+        </mat-option>
+        <mat-option
+          *ngIf="symptoms.value.length > 3"
+          [value]="symptoms.value"
+          (click)="search({ code: 'Enter' }); focusOnLocation()"
+        >
+          <div class="d-flex align-items-center gap-3 mx-2">
+            <img
+              src="assets/images/svg/Search-drop.svg"
+              alt=""
+              height="24"
+              width="24"
+            />
+            <div class="text-16 font-400">
+              <div>Clinic Name {{ symptoms.value }}</div>
+            </div>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+    <span>|</span>
+    <div class="input-text__container d-flex align-items-center">
+      <img
+        loading="lazy"
+        src="assets/images/svg/location.svg"
+        alt=""
+        class="icon"
+      />
+      <input
+        class="input-box"
+        type="text"
+        placeholder="Search City, Pincode"
+        #location
+        (keydown)="search($event)"
+        [matAutocomplete]="landmark"
+        (input)="onSearch($event)"
+      />
+      <img
+        src="assets/images/svg/cross.svg"
+        alt=""
+        class="me-3"
+        *ngIf="location.value"
+        (click)="closeSuggestion('location')"
+      />
+      <mat-autocomplete #landmark="matAutocomplete" class="my-4">
+        <mat-option style="background: #eee" [value]="currentCity">
+          <div
+            class="d-flex align-items-center gap-3 mx-2"
+            (click)="getCurrentCity()"
+          >
+            <img
+              src="assets/images/My location.svg"
+              alt=""
+              height="24"
+              width="24"
+            />
+            <div class="text-16 font-600 text-purple">Use current location</div>
+          </div>
+        </mat-option>
+        <!-- <mat-option [value]="currentCity" *ngIf="currentCity">
+          <div class="d-flex align-items-center gap-3">
+            <img
+              src="assets/images/svg/Location on.svg"
+              alt=""
+              height="24"
+              width="24"
+            />
+            <div class="text-18 font-600 text-purple">
+              Search in entire {{ currentCity | titlecase }}
+            </div>
+          </div>
+        </mat-option> -->
+        <mat-option
+          *ngFor="let place of placePredictions"
+          [value]="place.description"
+          (click)="getPlace(place)"
+        >
+          <div class="d-flex align-items-center gap-3 mx-2">
+            <img
+              src="assets/images/svg/location.svg"
+              alt=""
+              height="20"
+              width="20"
+            />
+            <div>
+              <div class="text-16 font-400">
+                {{ place.description }}
+              </div>
+            </div>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+  </div>
+</div>
+
+<div
+  class="d-flex align-items-center justify-content-between p-3 mobile-header"
+  *ngIf="deviceWidth < 767"
+>
+  <div class="d-flex gap-3 align-items-center">
+    <img
+      src="assets/images/svg/back.svg"
+      alt=""
+      height="24"
+      width="24"
+      (click)="locations.back()"
+      class="cursor-pointer"
+    />
+    <div *ngIf="scrollTop > 100" class="d-flex gap-2">
+      <div class="pro">
+        <div
+          class="profile-icons d-flex align-items-center justify-content-center"
+          *ngIf="!hospitalDetail?.profilePic"
+        >
+          {{ hospitalDetail?.name | nameInitial | async | uppercase }}
+        </div>
+        <img
+          [src]="hospitalDetail?.profilePic"
+          alt=""
+          *ngIf="hospitalDetail?.profilePic"
+        />
+      </div>
+      <div>
+        <div class="text-16 font-600">
+          {{ formatName(hospitalDetail?.name, 20) }}
+        </div>
+        <div class="text-16 font-400 opacity-70">
+          {{ formatName(hospitalDetail?.hospitalType, 20) | titlecase }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="share-doctor d-flex gap-3 align-items-center">
+    <img
+      src="assets/images/svg/search-icon-black.svg"
+      alt=""
+      height="24"
+      width="24"
+      class="cursor-pointer"
+      (click)="openBottomSheet()"
+    />
+    <img
+      (click)="openShareDialog()"
+      src="assets/images/svg/share.svg"
+      alt=""
+      height="24"
+      width="24"
+    />
+  </div>
+</div>
+
+<div class="main">
+  <div class="breadcrumb mt-4">
+    <a routerLink="/">Home</a>&nbsp;&nbsp; >&nbsp;&nbsp;
+    <a
+      routerLink="/{{
+        commonService.replaceSpaceWithHyphen(hospitalDetail?.address?.city)
+      }}/doctors"
+      (click)="eventService.broadcastEvent('clear-speciality', true)"
+      *ngIf="hospitalDetail?.address?.city"
+      >{{ hospitalDetail?.address?.city | titlecase }}</a
+    >
+    &nbsp;&nbsp;>&nbsp;&nbsp;
+    <a
+      routerLink="/{{
+        commonService.replaceSpaceWithHyphen(hospitalDetail?.address?.city)
+      }}/doctors"
+      (click)="eventService.broadcastEvent('clear-speciality', true)"
+      *ngIf="hospitalDetail?.address?.city"
+      >{{ hospitalDetail?.hospitalType | titlecase }}</a
+    >
+    &nbsp;&nbsp;>&nbsp;&nbsp;
+    <span>{{ hospitalDetail?.name }}</span>
+  </div>
+  <div class="wrapper">
+    <div class="first-section">
+      <div class="image">
+        <div
+          class="profile-icons d-flex align-items-center justify-content-center"
+          *ngIf="!hospitalDetail?.profilePic"
+        >
+          {{ hospitalDetail?.name | nameInitial | async | uppercase }}
+        </div>
+        <img
+          [src]="hospitalDetail?.profilePic"
+          [alt]="hospitalDetail?.name"
+          *ngIf="hospitalDetail?.profilePic"
+        />
+        <div class="d-flex rating-box" *ngIf="deviceWidth < 767">
+          <svg-icon src="assets/images/svg/stars.svg"></svg-icon>&nbsp;
+          <span class="text-16 font-600">{{
+            (hospitalDetail?.rating | number : "1.1-1") || 0
+          }}</span>
+          <span class="text-16 font-400 text-black">/5</span>
+        </div>
+      </div>
+      <div class="content">
+        <h1 class="hospital-name m-0">
+          {{ hospitalDetail?.name | titlecase }}&nbsp;
+          <span
+            class="cursor-pointer"
+            (click)="openLoginDialog()"
+            *ngIf="hospitalDetail?.claimedProfile"
+            >(<small>Claim Profile</small>)</span
+          >
+        </h1>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="hospital-type">{{
+            hospitalDetail?.hospitalType | titlecase
+          }}</span>
+          <span class="beds d-flex gap-2" *ngIf="deviceWidth > 576"
+            >{{ hospitalDetail?.bedCount?.toLocaleString() || 0 }} Beds
+            <img loading="lazy" src="assets/images/svg/beds.svg" alt="" />
+          </span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="rating" *ngIf="deviceWidth > 767">
+            <star-rating
+              [rating]="hospitalDetail?.rating || 0"
+              [step]="0.1"
+              [showHalfStars]="true"
+              [readOnly]="true"
+            ></star-rating>
+            <span class="star">
+              {{ (hospitalDetail?.rating | number : "1.1-1") || 0 }}</span
+            >
+            <span class="total">&nbsp;/5 </span>
+            <span class="review" *ngIf="hospitalDetail?.reviews <= 1"
+              >({{ hospitalDetail?.reviews || "0" }} review)</span
+            >
+            <span class="review" *ngIf="hospitalDetail?.reviews > 1"
+              >({{ hospitalDetail?.reviews || 0 }} reviews)</span
+            >
+          </div>
+          <span class="beds d-flex gap-2" *ngIf="deviceWidth > 576"
+            >{{ hospitalDetail?.ambulanceCount?.toLocaleString() || 0 }}
+            ambulance
+            <img loading="lazy" src="assets/images/svg/ambulance.svg" alt="" />
+          </span>
+        </div>
+        <div
+          class="address"
+          *ngIf="
+            hospitalDetail?.address?.locality && hospitalDetail?.address?.city
+          "
+        >
+          {{ hospitalDetail?.address?.locality }},
+          {{ hospitalDetail?.address?.city }}
+        </div>
+        <div
+          class="address"
+          *ngIf="
+            hospitalDetail?.address?.locality && !hospitalDetail?.address?.city
+          "
+        >
+          {{ hospitalDetail?.address?.locality }}
+        </div>
+        <div
+          class="address"
+          *ngIf="
+            !hospitalDetail?.address?.locality && hospitalDetail?.address?.city
+          "
+        >
+          {{ hospitalDetail?.address?.city }}
+        </div>
+        <div
+          class="direction cursor-pointer"
+          *ngIf="deviceWidth > 767"
+          (click)="
+            gService.redirectToGoogleMaps(
+              hospitalDetail?.location?.coordinates?.[1] || 28.6448,
+              hospitalDetail?.location?.coordinates?.[0] || 77.216721
+            )
+          "
+        >
+          Get Direction
+        </div>
+
+        <div
+          class="d-flex gap-3 mt-2 whitespace-nowrap"
+          *ngIf="deviceWidth < 576"
+        >
+          <span class="beds d-flex gap-2"
+            ><img loading="lazy" src="assets/images/svg/beds.svg" alt="" />
+            {{ hospitalDetail?.bedCount?.toLocaleString() || 0 }} Beds
+          </span>
+          <span class="beds d-flex gap-2">
+            <img loading="lazy" src="assets/images/svg/ambulance.svg" alt="" />
+            {{ hospitalDetail?.ambulanceCount?.toLocaleString() || 0 }}
+            ambulance
+          </span>
+        </div>
+        <div class="d-flex gap-2 justify-content-end" *ngIf="deviceWidth > 767">
+          <a
+            [href]="item?.url"
+            target="_blank"
+            *ngFor="let item of hospitalDetail?.social"
+          >
+            <img
+              loading="lazy"
+              [src]="item?.socialmedias?.logo"
+              alt=""
+              height="24"
+              width="24"
+          /></a>
+        </div>
+      </div>
+    </div>
+    <div class="second-section">
+      <ul>
+        <li
+          *ngFor="let item of tabContent; let i = index"
+          [ngClass]="{ active: selected == i }"
+          (click)="selected = i"
+        >
+          <!-- <svg-icon [src]="item.img"></svg-icon> -->
+          <span>
+            {{ item.name
+            }}<span class="count" *ngIf="item?.count"
+              >&nbsp;({{ item.count }})</span
+            >
+          </span>
+        </li>
+      </ul>
+      <div class="about" *ngIf="selected == 0 && this.hospitalId">
+        <!-- about section -->
+        <nectar-doctor-about-section
+          [id]="hospitalId"
+        ></nectar-doctor-about-section>
+        <!-- services section -->
+        <nectar-services-section
+          [tab]="0"
+          [id]="hospitalId"
+          [type]="'hospital'"
+          [city]="hospitalDetail?.address?.city"  
+        ></nectar-services-section>
+
+        <!-- procedure section -->
+        <!-- <nectar-procedure-section
+          [tab]="0"
+          [id]="hospitalId"
+          [name]="hospitalDetail?.name"
+          [address]="hospitalDetail?.address"
+          (valueChange)="tabChange(2)"
+        ></nectar-procedure-section> -->
+
+        <!-- speciality section -->
+
+        <nectar-speciality-section
+          [tab]="0"
+          [id]="hospitalId"
+          [name]="hospitalDetail?.name"
+          [address]="hospitalDetail?.address"
+          (valueChange)="tabChange(3)"
+        ></nectar-speciality-section>
+
+        <!-- faq section -->
+        <nectar-faq-section
+          [tab]="0"
+          [id]="hospitalId"
+          [type]="'hospital'"
+        ></nectar-faq-section>
+
+        <!-- video section -->
+        <nectar-videos-section
+          [tab]="0"
+          [id]="hospitalId"
+          [type]="'hospital'"
+        ></nectar-videos-section>
+
+        <!-- review section -->
+        <nectar-review-section
+          [tab]="0"
+          [type]="'hospital'"
+          [id]="hospitalId"
+          [name]="hospitalDetail?.name"
+          (valueChange)="tabChange(6)"
+        ></nectar-review-section>
+      </div>
+      <div class="procedures" *ngIf="selected == 2">
+        <nectar-procedure-section
+          [id]="hospitalId"
+          [name]="hospitalDetail?.name"
+          [address]="hospitalDetail?.address"
+        ></nectar-procedure-section>
+      </div>
+      <div *ngIf="selected == 3">
+        <nectar-services-section
+          [tab]="1"
+          [id]="hospitalId"
+          [type]="'hospital'"
+        ></nectar-services-section>
+      </div>
+      <div class="doctors" *ngIf="selected == 1">
+        <nectar-speciality-section
+          [id]="hospitalId"
+          [name]="hospitalDetail?.name"
+          [address]="hospitalDetail?.address"
+        ></nectar-speciality-section>
+      </div>
+      <div class="faq-tab" *ngIf="selected == 4">
+        <nectar-faq-section
+          [id]="hospitalId"
+          [type]="'hospital'"
+        ></nectar-faq-section>
+      </div>
+      <div class="video-tab" *ngIf="selected == 5">
+        <nectar-videos-section
+          [id]="hospitalId"
+          [type]="'hospital'"
+        ></nectar-videos-section>
+      </div>
+      <div class="review-tab" *ngIf="selected == 6">
+        <nectar-review-section
+          [tab]="1"
+          [type]="'hospital'"
+          [id]="hospitalId"
+          [name]="hospitalDetail?.name"
+        ></nectar-review-section>
+      </div>
+    </div>
+  </div>
+</div>
+<nectar-seo-content
+  *ngIf="hospitalDetail?.specialization"
+  [allowDescription]="false"
+  [data]="hospitalDetail?.specialization"
+  [city]="hospitalDetail?.address?.city"
+  [search]="hospitalDetail?.specialization | formatarray : 'name'"
+></nectar-seo-content>

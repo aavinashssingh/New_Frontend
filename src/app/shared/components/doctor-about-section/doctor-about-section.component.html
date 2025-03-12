@@ -1,0 +1,85 @@
+<div class="main border-bottom-style">
+  <div class="wrapper">
+    <h2>About {{ data?.name }}</h2>
+
+    <p class="d-flex">
+      {{ data?.about | slice: 0:(isExpanded ? undefined : 120) }}
+      <span *ngIf="data?.about?.length > 120">
+        ...
+        <p color="primary" (click)="toggleReadMore()">
+          {{ isExpanded ? 'Read Less' : 'Read More' }}
+        </p>
+      </span>
+    </p>
+
+  
+    <div class="sections d-flex gap-3">
+      <!-- <div class="map-image">
+        <nectar-google-maps
+          class="map d-flex"
+          [lat]="data?.location?.coordinates[1]"
+          [lng]="data?.location?.coordinates[0]"
+        ></nectar-google-maps>
+      </div> -->
+      <div class="address">
+        <div class="heading d-flex gap-2">
+          <img loading="lazy" src="assets/images/svg/location.svg" alt="" />
+          <span>Address</span>
+        </div>
+        <p>
+          {{ data?.address | titlecase }}
+        </p>
+
+        <div
+          class="direction cursor-pointer"
+          (click)="
+            gService.redirectToGoogleMaps(
+              data?.location?.coordinates?.[1] ,
+              data?.location?.coordinates?.[0] 
+            )
+          "
+        >
+          Get Direction
+        </div>
+      </div>
+
+      <div class="time-image">
+        <div class="time-section">
+          <div class="head d-flex gap-1">
+            <img
+              loading="lazy"
+              src="assets/images/svg/Access time.svg"
+              alt=""
+            />
+            <span>Time</span>
+          </div>
+          <div class="slots" *ngFor="let i of data?.establishmentTiming">
+            <div
+              *ngIf="i?.day && (i?.morning || i?.afternoon || i?.evening)"
+              class="head"
+            >
+              {{ i?.day | titlecase }}
+            </div>
+            <div class="times" *ngIf="i?.morning">{{ i?.morning }}</div>
+            <div class="times" *ngIf="i?.afternoon">{{ i?.afternoon }}</div>
+            <div class="times" *ngIf="i?.evening">{{ i?.evening }}</div>
+          </div>
+        </div>
+
+        <div class="image-section mt-4 d-flex flex-wrap gap-3">
+          <div *ngFor="let i of data?.images; let j = index">
+            <img
+              *ngIf="j < 4"
+              [src]="i?.url"
+              class="cursor-pointer"
+              alt="hospital-image"
+              height="64"
+              width="64"
+              (click)="viewImage(i?.url)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

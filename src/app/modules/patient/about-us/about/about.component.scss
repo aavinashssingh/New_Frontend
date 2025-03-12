@@ -1,0 +1,94 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+.first-section {
+  max-width: $content-max-width;
+  margin: auto;
+  margin-bottom: 70px;
+  margin-top: 30px;
+
+  @media screen and (max-width: 767px) {
+    max-width: $content-sm-max-width;
+  }
+
+  h2 {
+    @include font-sans_pro-regular($size: 24px);
+
+    @media screen and (max-width: 767px) {
+      @include font-sans_pro-regular($size: 20px);
+    }
+  }
+
+  p {
+    word-break: break-word;
+    @include font-sans_pro-regular($size: 14px);
+
+    @media screen and (max-width: 767px) {
+      @include font-sans_pro-regular($size: 16px);
+    }
+  }
+}
+
+.second-section {
+  background-color: $purple;
+  color: $white;
+
+  //   padding: auto;
+  .wrapper {
+    max-width: $content-max-width;
+    margin: auto;
+    padding: 70px 0;
+
+    h2 {
+      margin: 0;
+      @include font-sans_pro-semibold($size: 24px);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-semibold($size: 20px);
+      }
+    }
+
+    p {
+      word-break: break-word;
+      @include font-sans_pro-regular($size: 14px);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-regular($size: 16px);
+      }
+    }
+
+    .box {
+      text-align: center;
+      margin-top: 50px;
+
+      img {
+        height: 100px;
+        width: 100px;
+      }
+
+      h2 {
+        margin-top: 16px;
+        @include font-sans_pro-regular($size: 24px);
+        font-weight: 700 !important;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular($size: 20px);
+        }
+      }
+
+      p {
+        word-break: break-word;
+        @include font-sans_pro-regular($size: 14px);
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular($size: 16px);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+<div class="main" [class.error]="this.data.slice(-4) == '.pdf'">
+  <div class="text-end">
+    <img
+      class="cursor-pointer"
+      src="assets/images/svg/corss_black.svg"
+      alt=""
+      (click)="onNoClick()"
+    />
+  </div>
+  <div class="image p-3" *ngIf="this.data.slice(-4) != '.pdf'">
+    <img loading="lazy" src="{{ data }}" alt="" />
+  </div>
+  <div class="image h-100 w-100 p-3" *ngIf="this.data.slice(-4) == '.pdf'">
+    <iframe [src]="data | sanitize | async" alt="" title="document"></iframe>
+  </div>
+</div>

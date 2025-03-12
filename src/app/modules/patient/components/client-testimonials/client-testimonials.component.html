@@ -1,0 +1,86 @@
+<ng-container>
+  <section class="multi-slide">
+    <h2>Real Patient Stories</h2>
+    <div class="multi-slide__wrapper d-none d-lg-block d-md-none">
+      <swiper-container class="swiper-container" [attr.slides-per-view]="swiperConfig.slidesPerView"
+        [attr.space-between]="swiperConfig.spaceBetween" [attr.navigation]="swiperConfig.navigation" [attr.loop]="true"
+        [attr.speed]="swiperConfig.speed" style="padding-left: 40px;padding-right: 40px;">
+
+        <swiper-slide class="multi-slide__slide" *ngFor="let slide of apiData; index as i">
+          <div class="multi-slide__content content-center-mobile" style="margin: 5px;">
+            <div class="cards-section">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="wrap d-flex gap-3">
+                  <div>
+                    <img loading="lazy" [src]="slide?.patientImage" alt="" class="image" />
+                  </div>
+                  <div class="details d-flex flex-column">
+                    <h4>{{ (slide?.patientName | titlecase) || "N/A" }}</h4>
+                    <p>{{ slide?.address || "N/A" }}</p>
+                  </div>
+                </div>
+
+                <div class="badge-data">
+                  <img loading="lazy" src="assets/images/homepage/Check circle.svg" alt="" />
+                  <p>Verified User</p>
+                </div>
+                <div class="mobile-badge-data">
+                  <img src="assets/images/homepage/Verified user3.svg" alt="" />
+                </div>
+              </div>
+              <div class="text">
+                <p>
+                  {{ slide?.feedback || "N/A" }}
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper-container>
+    </div>
+    <!--------mobile crsole-->
+    <div class="mobile_carsole">
+      <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button *ngFor="let slide of apiData; let i = index" type="button"
+            [attr.data-bs-target]="'#carouselExampleCaptions'" [attr.data-bs-slide-to]="i" [class.active]="i === 0"
+            [attr.aria-label]="'Slide ' + (i + 1)">
+          </button>
+        </div>
+
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let slide of apiData; let i = index" [class.active]="i === 0">
+            <div class="multi-slide__content content-center-mobile" style="margin: 5px;">
+              <div class="cards-section mobile_card">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="wrap d-flex gap-3">
+                    <div class="card-body">
+                      <div>
+                        <img loading="lazy" [src]="slide?.patientImage" alt="" class="image" />
+                      </div>
+                      <div class="details d-flex flex-column">
+                        <h4>{{ (slide?.patientName | titlecase) || "N/A" }}</h4>
+                        <p>{{ slide?.address || "N/A" }}</p>
+                      </div>
+                    </div>
+                    <div class="badge-data">
+                      <img loading="lazy" src="assets/images/homepage/Check circle.svg" alt="" />
+                      <p>Verified User</p>
+                    </div>
+                    <div class="mobile-badge-data">
+                      <img src="assets/images/homepage/Verified user3.svg" alt="" />
+                    </div>
+                  </div>
+                  <div class="text">
+                    <p>{{ slide?.feedback || "N/A" }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container>

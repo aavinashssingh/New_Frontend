@@ -1,0 +1,147 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+@import "variable.scss";
+
+
+.search-doctors {
+  max-width: $content-max-width;
+  margin: 0 auto;
+
+  // padding-top: 35px;
+  @media screen and (max-width: 767px) {
+    max-width: $content-sm-max-width;
+    padding-top: 75px;
+  }
+
+  @include mq-breakpoint-xl() {
+    // padding: 0 30px;
+  }
+
+  //   padding: 50px 0 40px;
+  &__wrapper {
+    &__heading {
+      display: flex;
+      gap: 10px;
+      height: 100px;
+      align-items: center;
+
+      @media screen and (max-width: 767px) {
+        height: max-content;
+      }
+
+      h2 {
+        @include font-sans_pro-regular(48px);
+        margin: 0;
+        line-height: 70px;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-semibold(24px);
+        }
+      }
+
+      .animation-text {
+        position: relative;
+
+        width: 35vw;
+        overflow-y: hidden;
+        height: 120px;
+
+        // width: calc(100% - 370px);
+        p {
+          @include font-sans_pro-semibold(48px);
+          margin: 0;
+          line-height: 70px;
+          width: initial;
+          position: absolute;
+          top: 25px;
+          left: 0;
+          display: inline-block;
+        }
+      }
+    }
+
+    &__sub-heading {
+      margin-top: 10px;
+
+      @media screen and (max-width: 767px) {
+        margin-top: 0px;
+      }
+
+      h3 {
+        @include font-sans_pro-regular(28px);
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular(18px);
+          opacity: 0.8;
+        }
+      }
+    }
+
+    &__find-doctor {
+      margin-top: 40px;
+
+      //   margin-bottom: 50px;
+      @media screen and (max-width: 767px) {
+        margin-top: 0px;
+      }
+    }
+  }
+}
+
+.plusIcon {
+  font-weight: 700;
+  font-size: 72px;
+  color: $purple;
+  position: relative;
+  top: -25px !important;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.anime-section {
+  @media screen and (min-width: 767px) {
+    animation-name: slideDown;
+    -webkit-animation-name: slideDown;
+
+    animation-duration: 0.2s;
+    -webkit-animation-duration: 0.2s;
+
+    animation-timing-function: ease;
+    -webkit-animation-timing-function: ease;
+
+    visibility: visible !important;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  50% {
+    transform: translateY(-50%);
+  }
+
+  65% {
+    transform: translateY(-35%);
+  }
+
+  80% {
+    transform: translateY(-20%);
+  }
+
+  95% {
+    transform: translateY(-5%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}

@@ -1,0 +1,34 @@
+<Section>
+  <div class="d-flex gap-4 links">
+    <div
+      routerLinkActive="active"
+      class="item"
+      routerLink="about"
+      (click)="activeTab = 'about'"
+    >
+      About Nectar
+    </div>
+    <div
+      routerLinkActive="active"
+      class="item"
+      routerLink="values"
+      (click)="activeTab = 'value'"
+    >
+      Value
+    </div>
+    <div
+      routerLinkActive="active"
+      class="item"
+      routerLink="leadership"
+      (click)="activeTab = 'leadership'"
+    >
+      Leadership
+    </div>
+  </div>
+</Section>
+
+<router-outlet> </router-outlet>
+<nectar-client-testimonials
+  *ngIf="activeTab != 'leadership'"
+></nectar-client-testimonials>
+<nectar-faq></nectar-faq>

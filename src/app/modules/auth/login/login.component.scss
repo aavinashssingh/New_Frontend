@@ -1,0 +1,94 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.sub-head {
+  @media screen and (max-width: 576px) {
+    justify-content: center !important;
+  }
+}
+
+.login-wrapper {
+  padding: 2rem;
+
+  @media screen and (max-width: 576px) {
+    padding: 2rem 10px;
+  }
+
+  label {
+    display: block;
+    @include font-sans_pro-regular($size: 14px);
+    margin-bottom: 16px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid $border-color;
+    padding: 9px 20px;
+    outline: none;
+    @include font-sans_pro-regular($size: 14px);
+
+    &.extra-pad {
+      // padding: 9px 20px 9px 48px !important;
+    }
+  }
+
+  .countryCode {
+    @include font-sans_pro-regular($size: 14px);
+    left: 20px;
+    top: 25.9px;
+  }
+
+  .checkbox-div {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  button {
+    cursor: pointer;
+    background: $purple;
+    border: none;
+    color: $white;
+    width: 100%;
+    padding: 12px 0;
+    @include font-sans_pro-semibold($size: 14px);
+  }
+
+  p {
+    color: #00000050;
+    @include font-sans_pro-regular($size: 14px);
+
+    span {
+      color: $red;
+    }
+  }
+}
+
+::ng-deep {
+  .mat-mdc-checkbox-checked .mat-mdc-primary .mat-mdc-checkbox-background {
+    background-color: $black !important;
+  }
+}
+
+.auth-nav-tab {
+  font-size: 14px;
+  padding: 15px 25px;
+
+  &.active {
+    border-bottom: 4px solid $blue-violet;
+  }
+}
+
+.border-grey {
+  border: 1px solid $border-color;
+  padding: 9px 20px;
+}

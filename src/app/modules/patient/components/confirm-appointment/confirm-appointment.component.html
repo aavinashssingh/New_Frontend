@@ -1,0 +1,108 @@
+<section class="confirm-booking">
+  <div class="confirm-booking__wrapper">
+    <div class="confirm-booking__wrapper__name">
+      <div>
+        <img
+          [src]="doctorDetail?.doctorPic"
+          alt=""
+          class="cursor-pointer"
+          (click)="viewDoctor()"
+        />
+      </div>
+      <div>
+        <h2 class="cursor-pointer" (click)="viewDoctor()">
+          {{ doctorDetail?.fullname || "N/A" }}
+        </h2>
+        <p>
+          {{ (doctorDetail?.specialization | formatarray : "name") || "N/A" }}
+        </p>
+      </div>
+    </div>
+    <div class="line-sec">
+      <hr class="light-line" />
+    </div>
+    <div class="confirm-booking__wrapper__name hospital">
+      <div>
+        <img
+          [src]="details?.establishment?.pic"
+          alt=""
+          class="cursor-pointer"
+          (click)="viewHospital()"
+        />
+      </div>
+      <div>
+        <h2 (click)="viewHospital()" class="cursor-pointer">
+          {{ details?.establishment?.name }}
+        </h2>
+
+        <p>
+          {{ details?.establishment?.address?.locality }} ,
+          {{ details?.establishment?.address?.city }}&nbsp;
+          {{ details?.establishment?.address?.pincode }}
+        </p>
+        <h4
+          class="cursor-pointer"
+          (click)="openGoogleMaps(details.establishment)
+      "
+        >
+          Get Direction
+        </h4>
+      </div>
+    </div>
+    <hr class="light-line" />
+
+    <div class="main-data">
+      <div class="confirm">
+        <img loading="lazy" src="assets/images/svg/Check.svg" alt="" />
+        <h4>Appointment Confirmed</h4>
+      </div>
+      <div class="data">
+        <h5>Your appointment ID - {{ details?.appointmentId }}</h5>
+        <h5>We have sent you sms to confirmation</h5>
+      </div>
+      <div class="box">
+        <p>Requested Appointment Time</p>
+        <h2>{{ details?.date | date : "hh:mm a, dd MMM, yyyy" }}</h2>
+        <p class="text-break">{{ doctorDetail?.fullname || "N/A" }}</p>
+        <p class="text-break">Booked For {{ details?.fullName }}</p>
+      </div>
+      <div class="box">
+        <div class="details">
+          <h3>Patient Name</h3>
+          <h5 class="text-break">{{ details?.fullName }}</h5>
+        </div>
+        <div class="details">
+          <h3>Mobile Number</h3>
+          <h5>+91{{ details?.phone }}</h5>
+        </div>
+        <div class="button customboxflex" >
+          <button (click)="cancelBooking()" style="color: red;
+          background: #ff00001a;
+          border: 1px solid red;">
+            <img
+              loading="lazy"
+              src="assets/images/svg/corss_black.svg"
+              alt=""
+            />
+            Cancel Appointment
+          </button>
+          <button (click)="redschduleAppoinment()" style="color: #45197c;
+          background-color: #45197c1c;
+          border: 1px solid #45197c;">
+            <img loading="lazy" src="assets/images/Schedule.svg" alt="" />
+            Reschedule Appointment
+          </button>
+        </div>
+      </div>
+      <div class="button">
+        <button routerLink="/profile">
+          <img loading="lazy" src="assets/images/svg/back.svg" alt="" />
+          Back to Profile
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>qp('track', 'GenerateLead');</script>

@@ -1,0 +1,42 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+section {
+  max-width: $content-max-width;
+
+  @media screen and (max-width: 767px) {
+    max-width: $content-sm-max-width;
+    margin-top: 80px;
+  }
+
+  .item {
+    cursor: pointer;
+    @include font-sans_pro-semibold($size: 14px);
+    opacity: 0.5;
+    padding-bottom: 5px;
+
+    @media screen and (max-width: 767px) {
+      @include font-sans_pro-semibold($size: 16px);
+    }
+  }
+}
+
+.active {
+  opacity: 1 !important;
+  border-bottom: 3px solid $black;
+}
+
+.links {
+  justify-content: end;
+
+  @media screen and (max-width: 767px) {
+    justify-content: center;
+    max-width: $content-sm-max-width;
+    margin: 0 auto;
+  }
+}

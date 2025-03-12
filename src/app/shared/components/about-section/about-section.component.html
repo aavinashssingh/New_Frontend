@@ -1,0 +1,483 @@
+<div class="about-section">
+  <div class="about-section__wrapper">
+    <div class="text-16 font-600 hospital-list">Hospital List</div>
+    <div class="about-section__wrapper__cards" *ngFor="let item of aboutData?.establishmentmaster; let j = index">
+      <div class="about-section__wrapper__cards__details" *ngIf="deviceWidth > 767 && item.isDeleted==false">
+        <div>
+          <div class="address"
+            *ngIf="item?.consultationFees!=-1 && item?.consultationFees!=0 && item?.consultationFees!=null && item?.consultationFees!=undefined">
+            <div class="heading">
+              <img loading="lazy" src="assets/images/svg/location.svg" alt="" />
+              <h2>Address</h2>
+            </div>
+            <p *ngIf="
+                item?.address?.landmark &&
+                item?.address?.locality &&
+                item?.address?.city
+              ">
+              {{ item?.address?.landmark }}
+              {{ item?.address?.locality | titlecase }},
+              {{ item?.address?.city | titlecase }}
+              {{ item?.address?.pincode }}
+            </p>
+            <p *ngIf="
+                !item?.address?.landmark &&
+                !item?.address?.locality &&
+                item?.address?.city
+              ">
+              {{ item?.address?.city | titlecase }}
+              {{ item?.address?.pincode }}
+            </p>
+            <p *ngIf="
+                !item?.address?.landmark &&
+                !item?.address?.locality &&
+                !item?.address?.city
+              ">
+
+            </p>
+          </div>
+          <div
+            *ngIf="item?.consultationFees!=-1 && item?.consultationFees!=0 &&item?.consultationFees!=null && item?.consultationFees!=undefined"
+            class="get-direction cursor-pointer" (click)="openGoogleMaps(item)">
+            Get Direction
+            <img loading="lazy" src="assets/images/svg/location_arrow.svg" alt="" />
+          </div>
+          <div class="name">
+            <h2 (click)="viewHospital(item)" class="cursor-pointer">
+              {{ item?.name }}
+            </h2>
+          </div>
+          <div class="rating">
+            <span class="type"> {{ item?.hospitalType[j] || "" }} </span>&nbsp;&nbsp;&nbsp;
+            <br *ngIf="deviceWidth < 576" />
+            <star-rating [rating]="item?.rating" [step]="0.1" [showHalfStars]="true" [readOnly]="true"></star-rating>
+            <span class="star">
+              {{ (item?.rating | number : "1.1") || "0.0" }}
+            </span>
+            <span class="total"> /5 </span>
+            <span class="review" *ngIf="item?.totalreviews <= 1">({{ item?.totalreviews || 0 }} review)</span>
+            <span class="review" *ngIf="item?.totalreviews > 1">({{ item?.totalreviews || 0 }} reviews)</span>
+          </div>
+          <div class="images-price">
+            <div class="images d-flex flex-wrap gap-3">
+              <ng-container *ngFor="let i of item?.images; let j = index">
+                <img *ngIf="j < 3" class="cursor-pointer" [src]="i?.url" alt="hospital-images" height="64" width="64"
+                  (click)="viewImage(i?.url)" />
+              </ng-container>
+            </div>
+            <div class="price-box">
+
+              <div class="in-clinic d-flex flex-column">
+                <span
+                  *ngIf="item?.consultationFees !== null && item?.consultationFees !== undefined && item?.consultationFees !== -1"
+                  class="font-600 text-16 d-flex p-2">
+                  <img src="assets/images/inclinickblue.png" alt="consultation" class="me-1">
+                  ₹{{ item?.consultationFees }}
+                </span>
+                <p
+                  *ngIf="item?.consultationFees !== null && item?.consultationFees !== undefined && item?.consultationFees !== -1">
+                </p>
+
+              </div>
+
+              <!-- Video Consultation Fees -->
+              <div class="video d-flex flex-column">
+                <span
+                  *ngIf="item?.videoConsultationFees !== null && item?.videoConsultationFees !== undefined && item?.videoConsultationFees !== -1"
+                  class="font-600 text-16 d-flex p-2">
+                  <img src="assets/images/videogrey.png" alt="video consultation" class="me-1 ">
+                  ₹{{ item?.videoConsultationFees }}
+                </span>
+                <p
+                  *ngIf="item?.videoConsultationFees !== null && item?.videoConsultationFees !== undefined && item?.videoConsultationFees !== -1">
+                </p>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="d-flex flex-column justify-content-between">
+          <div class="timings">
+            <div class="heading">
+              <img loading="lazy" src="assets/images/svg/Access time.svg" alt="" />
+              Time
+            </div>
+            <div class="slots" *ngFor="let i of item?.establishmenttiming">
+              <h4 *ngIf="i?.day && (i?.morning || i?.afternoon || i?.evening)">
+                {{ i?.day | titlecase }}
+              </h4>
+              <div class="times" *ngIf="i?.morning">{{ i?.morning }}</div>
+              <div class="times" *ngIf="i?.afternoon">{{ i?.afternoon }}</div>
+              <div class="times" *ngIf="i?.evening">{{ i?.evening }}</div>
+            </div>
+          </div>
+          <div class="button" [style.opacity]="
+              item?.isActive && aboutData?.claimProfile ? '1' : '0.5'
+            ">
+            <button (click)="
+                item?.isActive && aboutData?.claimProfile
+                  ? bookAppoint(item)
+                  : ''
+              " [ngClass]="aboutData?.consultationFees != -1 ? '' : 'newclass'">
+              Book Appoinment
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- mobile responsive design -->
+
+      <div class="py-2 mt-2 mobile-view">
+        <div class="mobile-detail-parent">
+          <div class="d-flex gap-2">
+            <div class="hospital-profile-pic" *ngIf="aboutData?.consultationType !='video'">
+              <img loading="lazy" [src]="item?.profilePic" alt="" *ngIf="item?.profilePic" />
+              <div *ngIf="!item?.profilePic"
+                class="d-flex justify-content-center align-items-center text-18 font-600 h-100 border-grey rounded-circle"
+                style="width: 60px">
+                {{ item?.name | nameInitial | async | uppercase }}
+              </div>
+            </div>
+            <div class="hospital-profile-pic" *ngIf="aboutData?.consultationType =='video'">
+              <img loading="lazy" [src]="aboutData?.profilePic" alt="" />
+            </div>
+            <div>
+              <p class="m-0 text-16 font-600 cursor-pointer" (click)="viewHospital(item)">
+                {{ item?.name }}
+              </p>
+              <div class="text-16 font-400">
+                {{ item?.hospitalType[j] || "" }}
+              </div>
+              <div class="text-16 font-600">
+                {{ item?.address?.locality | titlecase }}
+                {{item?.address?.locality ? ',' :''}}
+                {{ item?.address?.city | titlecase }}
+                {{ item?.address?.pincode }}
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between mt-2">
+            <div>
+              <div class="d-flex align-items-center">
+                <star-rating [rating]="item?.rating" [step]="0.1" [showHalfStars]="true"
+                  [readOnly]="true"></star-rating>
+                <span class="font-600 text-16 text-green">
+                  {{ (item?.rating | number : "1.1") || "0.0" }}
+                </span>
+                <span class="font-600 text-16 opacity-70"> /5 </span>
+              </div>
+              <div class="font-600 text-16 opacity-70">
+                ({{ item?.totalreviews || 0 }} reviews)
+              </div>
+            </div>
+
+
+
+            <span
+              *ngIf="item?.consultationFees !== null && item?.consultationFees !== undefined && item?.consultationFees !== -1"
+              class="font-600 text-16 d-flex p-2">
+              <img src="assets/images/inclinickblue.png" alt="consultation" class="me-1">
+              ₹{{ item?.consultationFees }} <br>
+
+            </span>
+
+            <!-- Video Consultation Fees -->
+            <span
+              *ngIf="item?.videoConsultationFees !== null && item?.videoConsultationFees !== undefined && item?.videoConsultationFees !== -1"
+              class="font-600 text-16 d-flex p-2">
+              <img src="assets/images/videogrey.png" alt="video consultation" class="me-1 ">
+              ₹{{ item?.videoConsultationFees }} <br>
+
+            </span>
+
+          </div>
+        </div>
+
+        <!-- timing section -->
+
+        <div class="mt-3 py-2">
+          <div class="text-16 font-600 d-flex align-items-center gap-1">
+            <img src="assets/images/svg/Access time.svg" alt="" height="20" width="20" />
+            Time
+          </div>
+          <div class="d-flex flex-wrap gap-2 justify-content-between">
+            <div class="" *ngFor="let i of item?.establishmenttiming">
+              <h4 *ngIf="i?.day && (i?.morning || i?.afternoon || i?.evening)" class="text-16 font-600 m-0 p-0">
+                {{ i?.day | titlecase }}
+              </h4>
+              <div class="text-16 font-400 whitespace-nowrap" *ngIf="i?.morning">
+                {{ i?.morning }}
+              </div>
+              <div class="text-16 font-400 whitespace-nowrap" *ngIf="i?.afternoon">
+                {{ i?.afternoon }}
+              </div>
+              <div class="text-16 font-400 whitespace-nowrap" *ngIf="i?.evening">
+                {{ i?.evening }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3 py-2" *ngIf="item?.images.length">
+          <div class="text-16 font-600">
+            <img loading="lazy" src="assets/images/svg/gallery.svg" alt="" />
+            Hospital Photo
+          </div>
+          <div class="d-flex gap-3 mt-2">
+            <ng-container *ngFor="let i of item?.images; let j = index">
+              <div *ngIf="j < 4" class="border-grey border-radius-5">
+                <img class="cursor-pointer" [src]="i?.url" alt="hospital-images" height="50" width="50"
+                  (click)="viewImage(i?.url)" style="border-radius: 5px" />
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="mt-3 py-2 d-flex gap-4 justify-content-between">
+          <button class="mobile-book-appointment" [style.opacity]="
+              item?.isActive && aboutData?.claimProfile ? '1' : '0.5'
+            " (click)="
+              item?.isActive && aboutData?.claimProfile
+                ? openBottomSheet(item)
+                : ''
+            " [ngClass]="aboutData?.consultationFees != -1 ? '' : 'newclass'">
+            Book Appointment
+          </button>
+          <button class="mobile-get-direction" (click)="openGoogleMaps(item)"
+            *ngIf="!(aboutData?.consultationType === 'video') || aboutData?.videoConsultationFees === null">
+            Get Direction
+            <svg-icon src="assets/images/svg/location_arrow.svg"></svg-icon>
+          </button>
+        </div>
+      </div>
+      <!------ONLY VIDEO CONSLTAION HOSPITAL------>
+
+      <!------ONLY VIDEO CONSLTAION HOSPITAL------>
+
+
+    </div>
+    <div class="about-section__wrapper__doctor">
+      <h2>About {{ aboutData?.fullName }}</h2>
+
+      <p>
+        {{ aboutData?.about | slice: 0:(isExpanded ? undefined : 200) }}
+        <span *ngIf="aboutData?.about?.length > 200">
+          ..
+          <button class="primary" color="primary" (click)="toggleReadMore()">
+            {{ isExpanded ? 'Read Less' : 'Read More' }}
+          </button>
+        </span>
+      </p>
+      <div class="about-section__wrapper__doctor__details" *ngIf="deviceWidth > 767">
+        <div class="grid-item">
+          <h2>
+            <img loading="lazy" src="assets/images/doctor-details/star.svg" alt="" class="image_wrapper" />
+            Specialisations
+          </h2>
+          <div class="list">
+            <div>
+
+            </div>
+            <p *ngFor="let i of aboutData?.specialization">
+              <!-- <a style="cursor: pointer;" (click)="navigateToSearch(i.slug)">{{i.name}}</a> -->
+              <a
+              style="cursor: pointer;"
+                [routerLink]="['/', cityName, i.slug]"
+                class="specialization-link"
+              >
+                {{ i.name }}
+              </a>
+
+            </p>
+          </div>
+        </div>
+        <div class="grid-item">
+          <h2>
+            <img loading="lazy" src="assets/images/doctor-details/medal.svg" alt="" class="image_wrapper" />
+            Awards and Recognitions
+          </h2>
+          <div class="list">
+            <p *ngFor="let i of aboutData?.award">{{ i?.name }}</p>
+          </div>
+        </div>
+        <div class="grid-item">
+          <h2>
+            <img loading="lazy" src="assets/images/doctor-details/college-graduation.svg" alt=""
+              class="image_wrapper" />
+            Education
+          </h2>
+          <div class="list">
+            <p *ngFor="let i of aboutData?.education">
+              <span>{{ i?.degree }}</span>
+              <span *ngIf="i?.college">- {{ i?.college }}</span>
+              <span *ngIf="i?.year">- {{ i?.year }}</span>
+            </p>
+          </div>
+        </div>
+        <div class="grid-item">
+          <h2>
+            <img loading="lazy" src="assets/images/doctor-details/premium.svg" alt="" class="image_wrapper" />
+            Membership
+          </h2>
+          <div class="list">
+            <p *ngFor="let i of aboutData?.membership">
+              {{ i?.name }}
+            </p>
+          </div>
+        </div>
+        <div class="grid-item">
+          <h2>
+            <img loading="lazy" src="assets/images/doctor-details/form.svg" alt="" class="image_wrapper" />
+            Registrations
+          </h2>
+          <div class="list">
+            <p *ngFor="let i of aboutData?.medicalRegistration">
+              {{ i?.registrationNumber }} {{ i?.council || "N/A" }},
+              {{ i?.year }}
+            </p>
+          </div>
+        </div>
+        <div class="grid-item" *ngIf="deviceWidth > 776"></div>
+      </div>
+      <div *ngIf="deviceWidth < 767">
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item" *ngIf="aboutData?.specialization?.length">
+            <h2 class="accordion-header m-0" id="headingService m-0">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseOneService" aria-expanded="false" aria-controls="collapseOneService">
+                <img src="assets/images/doctor-details/purple-service.svg" alt="" />&nbsp; Services
+              </button>
+            </h2>
+            <div id="collapseOneService" class="accordion-collapse collapse" aria-labelledby="headingService"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="list">
+                  <!-- <p *ngFor="let i of aboutData?.service" class="text-16 font-400 d-flex gap-2">
+                    <img loading="lazy" src="assets/images/serviceCheck.svg" alt="" />
+                    {{ i?.name || "N/A" }}
+                  </p> -->
+
+                  <a style="text-decoration: none; cursor: pointer;color: #3f4246;margin-bottom: 5px;" *ngFor="let i of aboutData?.service" class="service_link text-16 font-400 d-flex gap-2"
+                  [routerLink]="['/', formatName(city), formatName(i.name)]" 
+                  [routerLinkActive]="'active'">
+                  <img loading="lazy" src="assets/images/serviceCheck.svg" alt="" />
+                  {{ i?.name || "N/A" }}
+                </a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item" *ngIf="aboutData?.specialization?.length">
+            <h2 class="accordion-header m-0" id="headingOne m-0">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                <img src="assets/images/svg/Specialty-Icon.svg" alt="" />&nbsp; Specialisations
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="list">
+                  <!-- <p *ngFor="let i of aboutData?.specialization" class="text-16 font-400 d-flex gap-2">
+                    <img loading="lazy" src="assets/images/serviceCheck.svg" alt="" />
+                    {{ i?.name || "N/A" }}
+                  </p> -->
+                  <div *ngFor="let i of aboutData?.specialization" class="text-16 font-400 d-flex gap-2">
+                        <span style="margin-top: 2px;">
+                          <a style="text-decoration: none; color: #3f4246;"
+                          [routerLink]="['/', cityName, i.slug]"
+                          class="specialization-link"
+                        >
+                        <img loading="lazy" src="assets/images/serviceCheck.svg" alt="" />
+                        {{ i?.name || "N/A" }}
+                        </a>
+                        </span>
+                  </div>
+                 
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item" *ngIf="aboutData?.education?.length">
+            <h2 class="accordion-header m-0" id="headingThree">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <img src="assets/images/doctor-details/purple-education.svg" alt="" />&nbsp; Education
+              </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="list">
+                  <p *ngFor="let i of aboutData?.education" class="text-16 font-400 d-flex gap-2">
+                    <span class="purple-dot"></span> {{ i?.degree }} -
+                    {{ i?.college }} - {{ i?.year }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item" *ngIf="aboutData?.medicalRegistration?.length">
+            <h2 class="accordion-header m-0" id="headingFive">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                <img src="assets/images/doctor-details/purpl-spec.svg" alt="" />&nbsp; Registrations
+              </button>
+            </h2>
+            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="list">
+                  <p *ngFor="let i of aboutData?.medicalRegistration" class="text-16 font-400 d-flex gap-2">
+                    <span class="purple-dot"></span>{{ i?.registrationNumber }}
+                    {{ i?.council || "N/A" }}, {{ i?.year }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item" *ngIf="aboutData?.award?.length">
+            <h2 class="accordion-header m-0" id="headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <img src="assets/images/doctor-details/purple-award.svg" alt="" />&nbsp; Awards and Recognitions
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="list">
+                  <p *ngFor="let i of aboutData?.award" class="text-16 font-400 d-flex gap-2">
+                    <span class="purple-dot"></span> {{ i?.name }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item" *ngIf="aboutData?.membership?.length">
+            <h2 class="accordion-header m-0" id="headingFour">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                <img src="assets/images/doctor-details/purple-member.svg" alt="" />&nbsp; Membership
+              </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="list">
+                  <p *ngFor="let i of aboutData?.membership" class="text-16 font-400 d-flex gap-2">
+                    <span class="purple-dot"></span> {{ i?.name }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

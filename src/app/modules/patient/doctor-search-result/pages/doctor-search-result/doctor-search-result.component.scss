@@ -1,0 +1,225 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+@import "src/styles/components/_components.ngx-pagination.scss";
+
+.heading {
+  @media screen and (max-width: 767px) {
+    display: none !important;
+  }
+}
+
+.filter {
+  @media screen and (max-width: 767px) {
+    position: sticky;
+    background: $white;
+    z-index: 99;
+    top: 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+.doctor-search-result {
+  // margin-top: 140px;
+  min-height: calc(100vh - 180px);
+  border-top: 1px solid #00000040;
+
+  &__container {
+    max-width: $content-max-width;
+    margin: 0 auto;
+
+    // padding: 0 30px;
+    @media screen and (max-width: 767px) {
+      max-width: 95%;
+      margin-top: 70px;
+    }
+
+    h2 {
+      margin: 0;
+      padding-top: 18px;
+      padding-bottom: 5px;
+      width: max-content;
+      border-bottom: 2px solid $black;
+      @include font-sans_pro-regular($size: 14px);
+      color: $black;
+
+      @media screen and (max-width: 767px) {
+        display: none;
+        @include font-sans_pro-regular($size: 16px);
+      }
+    }
+
+    &__cards {
+      max-width: 1155px;
+
+      ul {
+        list-style: none;
+        padding-left: 0;
+
+        li {
+
+          // border-bottom: 1px solid $border-color;
+          // &:first-child {
+          //   border-bottom: 0;
+          // }
+          &:last-child {
+            border-bottom: 1px solid $border-color;
+          }
+
+          border-top: 1px solid $border-color;
+          border-right: 1px solid $border-color;
+          border-left: 1px solid $border-color;
+
+          @media screen and (max-width: 767px) {
+            border: none;
+            border-bottom: 1px solid $border-color;
+            border-top: 1px solid $border-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+.pagination-section {
+  margin: 40px 0px;
+}
+
+:host::ng-deep {
+  .ngx-pagination {
+    @include ngx-pagination($purple, $purple);
+  }
+}
+
+.no-data {
+  .first-section {
+    border: 1px solid $border-color;
+    padding: 32px;
+    margin-bottom: 20px;
+
+    h2 {
+      @include font-sans_pro-bold($size: 32px, $lineheight: 30px);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-semibold($size: 24px);
+      }
+    }
+
+    p {
+      @include font-sans_pro-regular($size: 24px, $lineheight: 30px);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-regular($size: 18px);
+      }
+    }
+  }
+
+  .second-section {
+    margin-bottom: 20px;
+    // margin-top: 20px;
+    border: 1px solid $border-color;
+    padding: 32px;
+
+    span {
+      color: $purple;
+      @include font-sans_pro-regular($size: 14px);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-regular($size: 16px);
+      }
+    }
+
+    .box {
+      margin: 24px 0;
+      padding: 12px 20px;
+      border: 1px solid $border-color;
+      border-radius: 25px;
+
+      p {
+        text-decoration: underline;
+        @include font-sans_pro-regular($size: 14px);
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular($size: 16px);
+        }
+      }
+    }
+  }
+}
+
+.anime-section {
+  @media screen and (min-width: 767px) {
+    animation-name: slideDown;
+    -webkit-animation-name: slideDown;
+
+    animation-duration: 0.2s;
+    -webkit-animation-duration: 0.2s;
+
+    animation-timing-function: ease;
+    -webkit-animation-timing-function: ease;
+
+    visibility: visible !important;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  50% {
+    transform: translateY(-50%);
+  }
+
+  65% {
+    transform: translateY(-35%);
+  }
+
+  80% {
+    transform: translateY(-20%);
+  }
+
+  95% {
+    transform: translateY(-5%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+/* Loader container - Fully centered */
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; /* Full width */
+  height: 100vh; /* Full height */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+  z-index: 1000;
+}
+
+/* Loader Image */
+.loader-gif {
+  width: 80px; /* Adjust size for responsiveness */
+  max-width: 15vw; /* Scales with screen size */
+  height: auto;
+}
+
+/* Blurred content when loading */
+.blur-content {
+  filter: blur(5px);
+  pointer-events: none; /* Prevent clicks */
+  user-select: none; /* Prevent text selection */
+}

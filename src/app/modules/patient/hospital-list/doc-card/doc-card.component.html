@@ -1,0 +1,84 @@
+<div class="cards">
+  <div class="cards__image">
+    <div
+      class="profile-icon"
+      (click)="viewDoctor()"
+      *ngIf="!data?.doctorProfilePic"
+    >
+      {{ data?.doctorName | nameInitial | async | uppercase }}
+    </div>
+    <img
+      [src]="data?.doctorProfilePic"
+      (click)="viewDoctor()"
+      *ngIf="data?.doctorProfilePic"
+      [alt]="data?.doctorName"
+    />
+  </div>
+  <div class="cards__details">
+    <h2 class="cursor-pointer" (click)="viewDoctor()">
+      {{ data?.doctorName || "N/A" }}
+    </h2>
+    <h3>
+      {{ formatName(data?.specialization | formatarray : "name") || "N/A" }}
+    </h3>
+    <p>{{ data?.experience || 0 }} year Experience</p>
+    <div class="d-flex align-items-center gap-2 justify-content-between">
+      <div class="cards__top-doctors">
+        <img loading="lazy" src="assets/images/homepage/thumbs-up.svg" alt="" />
+        <p>{{ (data?.doctorRecommended | number : ".0-1") || 0 }}%</p>
+      </div>
+      <div class="price-box d-flex flex-column">
+        <div>&#8377;{{ data?.consultationFees || 0 }}</div>
+        <span class="price">Consultation Fees </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- UI for mobile -->
+
+  <div class="mobile-doc-card">
+    <div class="d-flex gap-2">
+      <div>
+        <img
+          [src]="data?.doctorProfilePic"
+          (click)="viewDoctor()"
+          *ngIf="data?.doctorProfilePic"
+          alt=""
+        />
+        <div
+          class="profile-icon"
+          (click)="viewDoctor()"
+          *ngIf="!data?.doctorProfilePic"
+        >
+          {{ data?.doctorName | nameInitial | async | uppercase }}
+        </div>
+      </div>
+      <div>
+        <h2 class="cursor-pointer" (click)="viewDoctor()">
+          {{ formatName(data?.doctorName, 16) || "N/A" }}
+        </h2>
+        <h3>
+          {{
+            formatName(data?.specialization | formatarray : "name", 18) || "N/A"
+          }}
+        </h3>
+        <p>{{ data?.experience || 0 }} years Experience</p>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center gap-2 justify-content-between mt-3">
+      <div class="top-doctorss">
+        <img loading="lazy" src="assets/images/homepage/thumbs-up.svg" alt="" />
+        <p>{{ (data?.doctorRecommended | number : ".0-1") || 0 }}%</p>
+      </div>
+      <div class="text-16 font-400 d-flex flex-column">
+        <div>&#8377;{{ data?.consultationFees || 0 }}</div>
+        <span class="text-16 font-400 opacity-50">Consultation Fees </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards__button" [style.opacity]="!data?.isActive ? '0.5' : '1'">
+    <button class="" (click)="bookAppointment()">Book Appointment</button>
+  </div>
+</div>

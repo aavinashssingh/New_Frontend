@@ -1,0 +1,260 @@
+<div class="input-text">
+  <div class="input-text__container d-flex align-items-center box1">
+    <img
+      loading="lazy"
+      src="assets/images/svg/search-icon-black.svg"
+      alt=""
+      class="icon"
+    />
+    <input
+      class="input-box"
+      type="text"
+      placeholder="Search Doctor,clinics,hospitals,etc."
+      #symptoms
+      (keydown)="search($event)"
+      [matAutocomplete]="auto"
+      (input)="getSuggestionList($event)"
+    />
+    <img
+      src="assets/images/svg/cross.svg"
+      alt=""
+      class="me-3"
+      *ngIf="symptoms.value"
+      (click)="closeSuggestion('symptomps')"
+    />
+    <mat-autocomplete #auto="matAutocomplete" class="my-4">
+      <mat-option
+        [value]="item?.name"
+        *ngFor="let item of specialityOptions"
+        class="px-3"
+        (click)="search({ code: 'Enter' }); focusOnLocation()"
+      >
+        <div
+          *ngIf="item?.name"
+          class="d-flex gap-2 justify-content-between align-items-center"
+        >
+          <div class="text-16">
+            <img
+              src="assets/images/svg/Search-drop.svg"
+              alt=""
+              height="24"
+              width="24"
+            />
+            &nbsp;
+            {{ item?.name }}
+          </div>
+          <div class="opacity-80 text-12">Speciality</div>
+        </div>
+      </mat-option>
+      <mat-option
+        [value]="item?.name"
+        *ngFor="let item of servicesOptions"
+        class="px-3"
+        (click)="search({ code: 'Enter' }); focusOnLocation()"
+      >
+        <div
+          *ngIf="item?.name"
+          class="d-flex gap-2 justify-content-between align-items-center"
+        >
+          <div class="text-16">
+            <img
+              src="assets/images/svg/Search-drop.svg"
+              alt=""
+              height="24"
+              width="24"
+            />&nbsp;
+            {{ item?.name }}
+          </div>
+          <div class="opacity-80 text-12">Service</div>
+        </div>
+      </mat-option>
+      <mat-optgroup
+        class="text-12 font-600"
+        [label]="'Doctors'"
+        *ngIf="doctorsOptions.length"
+      >
+        <mat-option
+          *ngFor="let item of doctorsOptions"
+          [value]="item"
+          (click)="getSuggestion(item, 'doctor')"
+        >
+          <div class="d-flex align-items-center gap-3">
+            <img
+              [src]="item?.profilePic"
+              alt=""
+              height="24"
+              width="24"
+              *ngIf="item?.profilePic"
+              class="profile-icon"
+            />
+            <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+              {{ item?.name | nameInitial | async | uppercase }}
+            </div>
+            <div class="text-16">
+              <div>{{ item?.name }}</div>
+              <div class="opacity-80 text-12 opacity-80">
+                {{(item?.specialization?.[0] | titlecase) || ''}}
+              </div>
+            </div>
+          </div>
+        </mat-option>
+      </mat-optgroup>
+      <mat-optgroup
+        class="text-12 font-600"
+        [label]="'Clinic'"
+        *ngIf="clinicOptions.length"
+      >
+        <mat-option
+          *ngFor="let item of clinicOptions"
+          [value]="item"
+          (click)="getSuggestion(item, 'hospital')"
+        >
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+              <img
+                [src]="item?.profilePic"
+                alt=""
+                height="24"
+                width="24"
+                *ngIf="item?.profilePic"
+                class="profile-icon"
+              />
+              <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+                {{ item?.name | nameInitial | async | uppercase }}
+              </div>
+              <div class="text-16">
+                <div>{{ item?.name }}</div>
+                <div class="opacity-80 text-12">
+                  {{ (item?.address?.locality || "N/A" | titlecase) || "" }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-option>
+      </mat-optgroup>
+      <mat-optgroup
+        class="text-12 font-600"
+        [label]="'Hospitals'"
+        *ngIf="hospitalsOptions.length"
+      >
+        <mat-option
+          *ngFor="let item of hospitalsOptions"
+          [value]="item"
+          (click)="getSuggestion(item, 'hospital')"
+        >
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+              <img
+                [src]="item?.profilePic"
+                alt=""
+                height="24"
+                width="24"
+                *ngIf="item?.profilePic"
+                class="profile-icon"
+              />
+              <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+                {{ item?.name | nameInitial | async | uppercase }}
+              </div>
+              <div class="text-16">
+                <div>{{ item?.name }}</div>
+                <div class="opacity-80 text-12">
+                  {{ (item?.address?.locality || "N/A" | titlecase) || "" }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-option>
+      </mat-optgroup>
+      <mat-option
+        *ngIf="symptoms.value.length > 3"
+        [value]="symptoms.value"
+        (click)="search({ code: 'Enter' }); focusOnLocation()"
+      >
+        <div class="d-flex align-items-center gap-3 mx-2">
+          <img
+            src="assets/images/svg/Search-drop.svg"
+            alt=""
+            height="24"
+            width="24"
+          />
+          <div class="text-16 font-400">
+            <div>Doctor Name {{ symptoms.value }}</div>
+          </div>
+        </div>
+      </mat-option>
+      <mat-option
+        *ngIf="symptoms.value.length > 3"
+        [value]="symptoms.value"
+        (click)="search({ code: 'Enter' }); focusOnLocation()"
+      >
+        <div class="d-flex align-items-center gap-3 mx-2">
+          <img
+            src="assets/images/svg/Search-drop.svg"
+            alt=""
+            height="24"
+            width="24"
+          />
+          <div class="text-16 font-400">
+            <div>Hospital Name {{ symptoms.value }}</div>
+          </div>
+        </div>
+      </mat-option>
+      <mat-option
+        *ngIf="symptoms.value.length > 3"
+        [value]="symptoms.value"
+        (click)="search({ code: 'Enter' }); focusOnLocation()"
+      >
+        <div class="d-flex align-items-center gap-3 mx-2">
+          <img
+            src="assets/images/svg/Search-drop.svg"
+            alt=""
+            height="24"
+            width="24"
+          />
+          <div class="text-16 font-400">
+            <div>Clinic Name {{ symptoms.value }}</div>
+          </div>
+        </div>
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+  <div class="input-text__container d-flex align-items-center">
+    <img
+      loading="lazy"
+      src="assets/images/svg/location.svg"
+      alt=""
+      class="icon"
+    />
+    <input
+      class="input-box"
+      type="text"
+      placeholder="Search City, Pincode"
+      #location
+      (keydown)="search($event)"
+      [matAutocomplete]="landmark"
+      (input)="onCitySearch($event)"
+      (blur)="validateCity($event)"    />
+    <img
+      src="assets/images/svg/cross.svg"
+      alt=""
+      class="me-3"
+      *ngIf="location.value"
+      (click)="closeSuggestion('location')"
+    />
+    <mat-autocomplete #landmark="matAutocomplete" class="my-4">
+    
+
+      <mat-option *ngFor="let city of filteredCities" [value]="city.name" (onSelectionChange)="onCitySelect($event)">
+        <div class="d-flex align-items-center gap-3 mx-2">
+          <img loading="lazy" src="assets/images/svg/location.svg" alt="" height="18" width="18" />
+          <div>
+            <div class="text-16 font-400">{{ city.name }}</div>
+          </div>
+        </div>
+      </mat-option>
+
+
+      
+    </mat-autocomplete>
+  </div>
+</div>

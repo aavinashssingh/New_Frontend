@@ -1,0 +1,45 @@
+
+
+
+.big-card{
+ padding:30px 100px;
+}
+@media (max-width: 576px) {
+
+
+
+    .big-card {
+        padding: 10px 5px;
+        margin-top: 30px;
+    }
+
+   
+}
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 768px) {
+    .big-card {
+        padding: 10px 5px !important;
+        margin-top: 30px;
+    }
+    .serchbar{
+        padding: 0px !important;
+    }
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (max-width: 992px) {
+
+
+    .big-card {
+        padding: 10px 5px;
+    }
+}
+@media (max-width: 1292px) {
+
+
+    .big-card {
+        padding: 30px 35px;
+    }
+}

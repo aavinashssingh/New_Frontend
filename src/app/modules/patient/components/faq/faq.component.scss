@@ -1,0 +1,153 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.faq {
+  background-color: $bright-gray;
+
+  &__wrapper {
+    max-width: $content-max-width;
+    margin: 0 auto;
+    padding: 40px 0px;
+
+    @media screen and (max-width: 767px) {
+      max-width: $content-sm-max-width;
+    }
+
+    h2 {
+      text-align: center;
+      @include font-sans_pro-regular($size: 28px);
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      text-align: center;
+      @include font-sans_pro-semibold($size: 28px);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-semibold($size: 24px);
+      }
+    }
+
+    &__content {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+
+      @media screen and (max-width: 767px) {
+        grid-template-columns: 1fr;
+      }
+
+      &__image-section {
+        display: flex;
+        justify-content: center;
+
+        img {
+          max-height: 633px;
+
+          @media screen and (max-width: 1200px) {
+            width: 50%;
+          }
+        }
+      }
+
+      &__questions {
+        overflow: auto;
+        max-height: 600px;
+        padding-right: 10px;
+        padding-bottom: 20px;
+
+        mat-accordion {
+          ::ng-deep {
+            mat-expansion-panel {
+              padding: 4px 0px;
+              margin-top: 20px;
+              box-shadow: none;
+              border: none;
+              border-radius: 5px !important;
+              background: $bright-gray;
+
+              &.mat-expanded {
+                border-radius: 5px 5px 0px 0px !important;
+              }
+
+              &:first-child {
+                // margin-top: 0px !important;
+              }
+
+              mat-panel-title {
+                color: $white;
+                @include font-sans_pro-semibold($size: 14px);
+              }
+
+              .mat-expansion-indicator {
+                &::after {
+                  color: $white;
+                  margin-bottom: 7px;
+                }
+              }
+
+              mat-expansion-panel-header {
+                min-height: 48px;
+                height: max-content;
+                background: $purple;
+                padding: 10px 15px;
+
+                .mat-content {
+                  display: block;
+                }
+
+                &:hover {
+                  background: $purple !important;
+                }
+              }
+
+              .mat-expansion-panel-body {
+                padding: 10px;
+                background: $white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+:host::ng-deep.mat-expansion-indicator::after {
+  border-style: none !important;
+  border-width: 6px !important;
+  display: inline-block !important;
+  padding: 0px !important;
+  transform: rotate(0deg) !important;
+  vertical-align: middle;
+  border-top: 6px solid $white !important;
+  border-left: 6px solid transparent !important;
+  border-right: 6px solid transparent !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: $white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $purple;
+  border-radius: 20px;
+}
+button{
+  border: none !important;
+  background: none !important;
+  color: blue !important;
+}

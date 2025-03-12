@@ -1,0 +1,17 @@
+<section class="auth-landing" [class.doctor-background-image]="userType == 2" [class.hospital-background-image]="userType == 3">
+  <div class="auth-landing__wrapper">
+    <!-- <h1 *ngIf="!verifyNumber">Welcome To Nectar</h1> -->
+    <div class="auth-landing__wrapper__container">
+      <div class="auth-landing__wrapper__container__image-section">
+        <img src="assets/images/auth/auth-logo.svg" alt="patient-image" *ngIf="userType == 1" class="patient-logo" />
+        <img src="assets/images/auth/Doctor.png" alt="doctor-image" class="w-100 mobile-logo-image" *ngIf="userType == 2" />
+        <img src="assets/images/auth/Hospital.png" alt="hospital-image" class="w-100 mobile-logo-image" *ngIf="userType == 3" />
+      </div>
+      <div class="auth-landing__wrapper__container__tab-section" style="background-color: #def6f6 !important">
+        <div class="auth-landing__wrapper__container__tab-section__details" style="background-color: #def6f6 !important">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

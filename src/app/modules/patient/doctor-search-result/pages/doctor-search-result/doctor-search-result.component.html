@@ -1,0 +1,97 @@
+<div *ngIf="isLoading" class="loader-container">
+  <img src="assets/Nectar-Plus-Health-Icon.gif" alt="Loading..." class="loader-gif" />
+</div>
+
+<section class="doctor-search-result" [class.blur-content]="isLoading">
+  <div class="doctor-search-result__container">
+    <h2>All Appointments</h2>
+    <div class="mt-3 mb-3 breadcrumb">
+      <a routerLink="/">Home</a>&nbsp;&nbsp; >&nbsp;&nbsp;
+    
+      <a *ngIf="payload.city"
+        routerLink="/{{ commonService.replaceSpaceWithHyphen(payload.city) }}/doctors"
+        (click)="removeLocality()">
+        {{ payload.city | titlecase }}
+      </a> 
+      
+      <span *ngIf="payload.search">&nbsp;&nbsp; >&nbsp;&nbsp;</span>
+      <a *ngIf="payload.search"
+        routerLink="/{{ commonService.replaceSpaceWithHyphen(payload.city) }}/{{ commonService.replaceSpaceWithHyphen(payload.search) }}">
+        {{ payload.search | titlecase }}
+      </a>
+    
+      <span *ngIf="payload.locality">&nbsp;&nbsp; >&nbsp;&nbsp;</span>
+      <a *ngIf="payload.locality"
+        routerLink="/{{ commonService.replaceSpaceWithHyphen(payload.city) }}/doctors/{{ commonService.replaceSpaceWithHyphen(payload.search) }}/{{ commonService.replaceSpaceWithHyphen(payload.locality) }}">
+        {{ payload.locality | titlecase }}
+      </a>
+    </div>
+    
+    <div
+      class="doctor-search-result__container__filters filter anime-section"
+      *ngIf="scrollTop < 50"
+    >
+      <!-- <nectar-filters></nectar-filters> -->
+    </div>
+    <div class="heading d-flex" *ngIf="totalItems">
+      <h1 *ngIf="!city">{{ totalItems }} doctors available</h1>
+
+      <h1 *ngIf="city">
+        {{ totalItems }} doctors available in {{ payload.locality ? payload.locality : city | titlecase }}
+      </h1>
+    </div>
+
+
+    
+    <div
+      class="doctor-search-result__container__cards"
+      *ngIf="totalItems"
+      nectarInfiniteScroll
+    >
+      <ul>
+        <li
+          *ngFor="
+            let item of deviceWidth > 767
+              ? (content
+                | paginate
+                  : {
+                      itemsPerPage: payload.size,
+                      currentPage: payload.page,
+                      totalItems: totalItems
+                    })
+              : content
+          "
+        >
+          <nectar-calendar-view [data]="item"></nectar-calendar-view>
+        </li>
+      </ul>
+    </div>
+    <div class="pagination-section" *ngIf="totalItems && deviceWidth > 767">
+      <pagination-controls
+        class="text-center"
+        [previousLabel]="' '"
+        [nextLabel]="' '"
+        (pageChange)="changingPage($event)"
+      ></pagination-controls>
+    </div>
+    <div class="no-data" *ngIf="!totalItems && apiHit">
+      <div class="first-section">
+        <h2>We couldn't find any doctors for you</h2>
+        <p *ngIf="city">
+          Your search for {{ symptomps }} in {{ city }} didn't match anything.
+        </p>
+        <p *ngIf="!city">
+          Your search for {{ symptomps }} didn't match anything.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<nectar-seo-content
+  *ngIf="seoData"
+  [allowDescription]="true"
+  [data]="seoData"
+  [city]="payload?.city"
+  [search]="payload.search"
+></nectar-seo-content>

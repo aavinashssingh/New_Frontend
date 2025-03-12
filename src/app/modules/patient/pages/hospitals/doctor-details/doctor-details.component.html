@@ -1,0 +1,682 @@
+<div class="search-wrap">
+  <div class="input-text">
+    <div class="input-text__container d-flex align-items-center" style="width: 55%">
+      <img src="assets/images/svg/search-icon-black.svg" alt="" class="icon" height="18" width="18" />
+      <input class="input-box" type="text" placeholder="Search Doctor,clinics,hospitals,etc." #symptoms
+        (keydown)="search($event)" [matAutocomplete]="auto" (input)="getSuggestionList($event)" />
+      <img src="assets/images/svg/cross.svg" alt="" class="me-3" *ngIf="symptoms.value"
+        (click)="closeSuggestion('symptomps')" />
+      <mat-autocomplete #auto="matAutocomplete" class="my-4">
+        <mat-option [value]="item?.name" *ngFor="let item of specialityOptions"
+          (click)="search({ code: 'Enter' }); focusOnLocation()">
+          <div *ngIf="item?.name" class="d-flex gap-2 justify-content-between align-items-center mx-3">
+            <div class="text-16">
+              <img src="assets/images/svg/Search-drop.svg" alt="" height="24" width="24" />
+              &nbsp;
+              {{ item?.name }}
+            </div>
+            <div class="opacity-80 text-12">Speciality</div>
+          </div>
+        </mat-option>
+        <mat-option [value]="item?.name" *ngFor="let item of servicesOptions"
+          (click)="search({ code: 'Enter' }); focusOnLocation()">
+          <div *ngIf="item?.name" class="d-flex gap-2 justify-content-between align-items-center mx-3">
+            <div class="text-16">
+              <img src="assets/images/svg/Search-drop.svg" alt="" height="24" width="24" />&nbsp;
+              {{ item?.name }}
+            </div>
+            <div class="opacity-80 text-12">Service</div>
+          </div>
+        </mat-option>
+        <mat-optgroup class="text-12 font-600" [label]="'Doctors'" *ngIf="doctorsOptions.length">
+          <mat-option *ngFor="let item of doctorsOptions" [value]="item?.name" (click)="getSuggestion(item, 'doctor')">
+            <div class="d-flex align-items-center gap-3">
+              <img [src]="item?.profilePic" alt="" height="24" width="24" *ngIf="item?.profilePic"
+                class="profile-icon" />
+              <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+                {{ item?.name | nameInitial | async | uppercase }}
+              </div>
+              <div class="text-16">
+                <div>{{ item?.name }}</div>
+                <div class="opacity-80 text-12 opacity-80">
+                  {{(item?.specialization?.[0] | titlecase) || ''}}
+                </div>
+              </div>
+            </div>
+          </mat-option>
+        </mat-optgroup>
+        <mat-optgroup class="text-12 font-600" [label]="'Clinic'" *ngIf="clinicOptions.length">
+          <mat-option *ngFor="let item of clinicOptions" [value]="item?.name" (click)="getSuggestion(item, 'hospital')">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-3">
+                <img [src]="item?.profilePic" alt="" height="24" width="24" *ngIf="item?.profilePic"
+                  class="profile-icon" />
+                <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+                  {{ item?.name | nameInitial | async | uppercase }}
+                </div>
+                <div class="text-16">
+                  <div>{{ item?.name }}</div>
+                  <div class="opacity-80 text-12">
+                    {{ (item?.address?.locality || "" | titlecase) || "" }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-option>
+        </mat-optgroup>
+        <mat-optgroup class="text-12 font-600" [label]="'Hospitals'" *ngIf="hospitalsOptions.length">
+          <mat-option *ngFor="let item of hospitalsOptions" [value]="item?.name"
+            (click)="getSuggestion(item, 'hospital')">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-3">
+                <img [src]="item?.profilePic" alt="" height="24" width="24" *ngIf="item?.profilePic"
+                  class="profile-icon" />
+                <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+                  {{ item?.name | nameInitial | async | uppercase }}
+                </div>
+                <div class="text-16">
+                  <div>{{ item?.name }}</div>
+                  <div class="opacity-80 text-12">
+                    {{ (item?.address?.locality || "" | titlecase) || "" }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-option>
+        </mat-optgroup>
+        <mat-option *ngIf="symptoms.value.length > 3" [value]="symptoms.value"
+          (click)="search({ code: 'Enter' }); focusOnLocation()">
+          <div class="d-flex align-items-center gap-3 mx-2">
+            <img src="assets/images/svg/Search-drop.svg" alt="" height="24" width="24" />
+            <div class="text-16 font-400">
+              <div>Doctor Name {{ symptoms.value }}</div>
+            </div>
+          </div>
+        </mat-option>
+        <mat-option *ngIf="symptoms.value.length > 3" [value]="symptoms.value"
+          (click)="search({ code: 'Enter' }); focusOnLocation()">
+          <div class="d-flex align-items-center gap-3 mx-2">
+            <img src="assets/images/svg/Search-drop.svg" alt="" height="24" width="24" />
+            <div class="text-16 font-400">
+              <div>Hospital Name {{ symptoms.value }}</div>
+            </div>
+          </div>
+        </mat-option>
+        <mat-option *ngIf="symptoms.value.length > 3" [value]="symptoms.value"
+          (click)="search({ code: 'Enter' }); focusOnLocation()">
+          <div class="d-flex align-items-center gap-3 mx-2">
+            <img src="assets/images/svg/Search-drop.svg" alt="" height="24" width="24" />
+            <div class="text-16 font-400">
+              <div>Clinic Name {{ symptoms.value }}</div>
+            </div>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+    <span>|</span>
+    <div class="input-text__container d-flex align-items-center">
+      <img loading="lazy" src="assets/images/svg/location.svg" alt="" class="icon" />
+      <input class="input-box" type="text" placeholder="Search City, Pincode" #location  (input)="onCitySearch($event)"
+      (blur)="validateCity($event)" 
+        [matAutocomplete]="landmark" (input)="onSearch($event)" />
+      <img src="assets/images/svg/cross.svg" alt="" class="me-3" *ngIf="location.value"
+        (click)="closeSuggestion('location')" />
+      <mat-autocomplete #landmark="matAutocomplete" class="my-4">
+
+        <mat-option *ngFor="let city of filteredCities" [value]="city.name" (onSelectionChange)="onCitySelect($event)">
+          <div class="d-flex align-items-center gap-3 mx-2">
+            <img loading="lazy" src="assets/images/svg/location.svg" alt="" height="18" width="18" />
+            <div>
+              <div class="text-16 font-400">{{ city.name }}</div>
+            </div>
+          </div>
+        </mat-option>
+        <!-- <mat-option style="background: #eee" [value]="currentCity">
+          <div
+            class="d-flex align-items-center gap-3 mx-2"
+            (click)="getCurrentCity()"
+          >
+            <img
+              src="assets/images/My location.svg"
+              alt=""
+              height="24"
+              width="24"
+            />
+            <div class="text-16 font-600 text-purple">Use current location</div>
+          </div>
+        </mat-option> -->
+        <!-- <mat-option [value]="currentCity" *ngIf="currentCity">
+          <div class="d-flex align-items-center gap-3">
+            <img
+              src="assets/images/svg/Location on.svg"
+              alt=""
+              height="24"
+              width="24"
+            />
+            <div class="text-18 font-600 text-purple">
+              Search in entire {{ currentCity | titlecase }}
+            </div>
+          </div>
+        </mat-option> -->
+        <!-- <mat-option
+          *ngFor="let place of placePredictions"
+          [value]="place.description"
+          (click)="getPlace(place)"
+        >
+          <div class="d-flex align-items-center gap-3 mx-2">
+            <img
+              src="assets/images/svg/location.svg"
+              alt=""
+              height="20"
+              width="20"
+            />
+            <div>
+              <div class="text-16 font-400">
+                {{ place.description }}
+              </div>
+            </div>
+          </div>
+        </mat-option> -->
+      </mat-autocomplete>
+    </div>
+  </div>
+ 
+</div>
+<div class="d-flex align-items-center justify-content-between p-3 mobile-header"
+  *ngIf="deviceWidth < 767 && scrollTop > 100">
+  <div class="d-flex gap-3 align-items-center">
+    <img src="assets/images/svg/back.svg" alt="" height="24" width="24" (click)="locations.back()"
+      class="cursor-pointer" />
+    <div *ngIf="scrollTop > 100" class="d-flex gap-2">
+      <div class="pro">
+        <div class="profile-icons d-flex align-items-center justify-content-center" *ngIf="!doctorDetail?.profilePic">
+          {{ doctorDetail?.fullName | nameInitial | async | uppercase }}
+        </div>
+        <img [src]="doctorDetail?.profilePic" alt="" *ngIf="doctorDetail?.profilePic" />
+      </div>
+      <div>
+        <div class="text-16 font-600">
+          {{ formatName(doctorDetail?.fullName, 15) }}
+          <img loading="lazy" src="assets/images/svg/Verified.svg" alt="" />
+        </div>
+        <div class="text-16 font-400 opacity-70">
+          {{
+          formatName(
+          doctorDetail?.specialization | formatarray : "name",
+          25
+          ) || "N/A"
+          }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="share-doctor d-flex gap-3 align-items-center">
+    <img src="assets/images/svg/search-icon-black.svg" alt="" height="24" width="24" class="cursor-pointer"
+      (click)="openBottomSheet1()" />
+    <!-- <img (click)="openShareDialog()" src="assets/images/svg/share.svg" alt="" height="24" width="24" /> -->
+  </div>
+</div>
+
+<!--  shown by default (hidden when scrolled more than 100px) -->
+<div class="d-flex align-items-center justify-content-between p-3 mobile-header"
+     *ngIf="deviceWidth < 767 && !isScrolled">
+  <div class="d-flex gap-3 align-items-center">
+    <div class="d-flex gap-2">
+      <button class="bras_button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
+              aria-controls="offcanvasWithBothOptions">
+        <svg-icon src="assets/images/svg/hamber.svg" class="cursor-pointer"></svg-icon>
+      </button>
+      <svg-icon src="assets/images/svg/logo.svg" routerLink="/" class="d-flex cursor-pointer"
+      style="width: 155px"></svg-icon>    </div>
+  </div>
+  <div class="share-doctor d-flex gap-3 align-items-center">
+    <img src="assets/images/svg/search-icon-black.svg" alt="" height="24" width="24" class="cursor-pointer"
+         (click)="openBottomSheet1()" />
+  </div>
+</div>
+
+
+
+
+<section class="doctor-details">
+  <div class="doctor-details__wrapper">
+    <!-- <div class="breadcrumb-container">
+      <div class="breadcrumb">
+        <a routerLink="/">Home</a>&nbsp;&nbsp; > &nbsp;&nbsp;
+        <a (click)="breadcrumbRedirection('city')">{{ selectedHospital?.address?.city }}</a>
+        &nbsp;&nbsp; > &nbsp;&nbsp;
+        <a (click)="breadcrumbRedirection('city')">{{ doctorDetail?.specialization[0]?.name }}</a>
+        &nbsp;&nbsp; > &nbsp;&nbsp;
+        <a *ngIf="selectedHospital?.address?.locality && selectedHospital?.address?.locality !== ''"
+          (click)="breadcrumbRedirection('locality')">
+          {{ selectedHospital?.address?.locality }}
+        </a>
+        <span *ngIf="selectedHospital?.address?.locality && selectedHospital?.address?.locality !== ''">
+          &nbsp;&nbsp; > &nbsp;&nbsp;
+        </span>
+        <span>{{ doctorDetail?.fullName }}</span>
+      </div>
+    </div> -->
+
+<div class="breadcrumb-container">
+    <div class="breadcrumb">
+      <a routerLink="/">Home</a>&nbsp;&nbsp; > &nbsp;&nbsp;
+      
+      <a [routerLink]="['/', commonService.replaceSpaceWithHyphen(selectedHospital?.address?.city),'doctors']" 
+         *ngIf="selectedHospital?.address?.city">
+        {{ selectedHospital?.address?.city }}
+      </a>&nbsp;&nbsp; > &nbsp;&nbsp;
+      
+      <a [routerLink]="['/', commonService.replaceSpaceWithHyphen(selectedHospital?.address?.city), 
+                         commonService.replaceSpaceWithHyphen(doctorDetail?.specialization[0]?.name)]" 
+         *ngIf="doctorDetail?.specialization?.length">
+        {{ doctorDetail?.specialization[0]?.name }}
+      </a>&nbsp;&nbsp; > &nbsp;&nbsp;
+      
+      <a *ngIf="selectedHospital?.address?.locality && selectedHospital?.address?.locality !== ''"
+         [routerLink]="['/', commonService.replaceSpaceWithHyphen(selectedHospital?.address?.city),
+                         commonService.replaceSpaceWithHyphen(doctorDetail?.specialization[0]?.name), 
+                         commonService.replaceSpaceWithHyphen(selectedHospital?.address?.locality)]">
+        {{ selectedHospital?.address?.locality | titlecase }}
+      </a>
+      
+      <span *ngIf="selectedHospital?.address?.locality && selectedHospital?.address?.locality !== ''">
+        &nbsp;&nbsp; > &nbsp;&nbsp;
+      </span>
+      
+      <span>{{ doctorDetail?.fullName }}</span>
+    </div>
+  </div>
+    
+
+
+    <div class="doctor-details__wrapper__grid">
+      <div class="doctor-details__wrapper__grid__details">
+        <div class="doctor-details__wrapper__grid__details__grid">
+          <div class="doctor-details__wrapper__grid__details__grid__image-section">
+            <img [src]="doctorDetail?.profilePic" [alt]="doctorDetail?.fullName" />
+          </div>
+          <div class="doctor-details__wrapper__grid__details__grid__doctor-section">
+            <div class="name">
+              <h1 class="h2">
+                {{ doctorDetail?.fullName || "N/A" }}
+                <span (click)="openLoginDialog()" class="cursor-pointer" *ngIf="!doctorDetail?.claimProfile">
+                  (Claim Profile)
+                </span>
+
+                <img src="assets/images/svg/verified_tick.svg" alt="img"
+                  *ngIf="deviceWidth > 767 && doctorDetail?.claimProfile" />
+                <img src="assets/images/svg/Verified.svg" alt="img"
+                  *ngIf="deviceWidth < 767 && doctorDetail?.claimProfile" />
+              </h1>
+            </div>
+            <div>
+              <p class="specialization">
+                {{
+                (doctorDetail?.education | formatarray : "degree") || "N/A"
+                }}
+              </p>
+              <p class="specialization">
+                {{
+                (doctorDetail?.specialization | formatarray : "name") || "N/A"
+                }}
+              </p>
+              <h3 class="exp">
+                {{ doctorDetail?.experience || "0" }} Years Experience Overall
+              </h3>
+            </div>
+            <div class="rating flex-wrap">
+              <div class="recomm d-flex align-items-center" *ngIf="deviceWidth < 767">
+                <img src="assets/images/homepage/thumbs-up.svg" alt="" height="20" width="20" class="m-0" />
+                {{ (doctorDetail?.recommended | number : ".0-2") || "0" }}%
+                &nbsp;&nbsp;
+              </div>
+              <star-rating [rating]="doctorDetail?.rating || 0" [step]="0.1" [showHalfStars]="true" [readOnly]="true"
+                *ngIf="deviceWidth > 767"></star-rating>
+              <img src="assets/images/svg/stars.svg" alt="" width="20" height="20" *ngIf="deviceWidth < 767"
+                class="m-0" />&nbsp;&nbsp;
+              <span class="star">
+                {{ (doctorDetail?.rating | number : "1.1-1") || "0.0" }}
+              </span>
+              <span class="total">&nbsp;/5 </span>
+              <span class="review" *ngIf="doctorDetail?.totalReview <= 1">({{ doctorDetail?.totalReview || "0" }}
+                review)</span>
+              <span class="review" *ngIf="doctorDetail?.totalReview > 1">({{ doctorDetail?.totalReview || "0" }}
+                reviews)</span>
+            </div>
+            <div class="doctor-details-price" *ngIf="deviceWidth > 767">
+              <div class="score">
+                <img loading="lazy" src="assets/images/homepage/thumbs-up.svg" alt="" />
+                <p>
+                  {{ (doctorDetail?.recommended | number : ".0-2") || "0" }}%
+                </p>
+              </div>
+              <div class="price-box">
+                <span style="display: flex;
+                align-items: center;
+                justify-content: center;"
+                  *ngIf="doctorDetail?.consultationFees!=-1 && doctorDetail?.consultationFees!=0 && doctorDetail?.consultationFees!=null && doctorDetail?.consultationFees!=undefined">
+                  <span class="badge badge-primary">
+                    <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M6.2 13C6.36569 13 6.5 12.8657 6.5 12.7V8.8C6.5 8.63431 6.63431 8.5 6.8 8.5H9.2C9.36569 8.5 9.5 8.63431 9.5 8.8V12.7C9.5 12.8657 9.63431 13 9.8 13H12.95C13.1157 13 13.25 12.8657 13.25 12.7V7.3C13.25 7.13431 13.3843 7 13.55 7H14.7182C14.9932 7 15.1233 6.66094 14.9189 6.47701L8.20069 0.430621C8.0866 0.327939 7.9134 0.327938 7.79931 0.43062L1.0811 6.47701C0.876734 6.66094 1.00684 7 1.28179 7H2.45C2.61569 7 2.75 7.13431 2.75 7.3V12.7C2.75 12.8657 2.88431 13 3.05 13H6.2Z"
+                        fill="#45197C" />
+                    </svg>
+                  </span>
+                  &#8377;{{ doctorDetail?.consultationFees || "0" }}
+                  <span class="price" style="padding-left: 5px;">
+
+
+
+
+               </span>
+                </span>
+                <span style="display: flex;
+                align-items: center;
+                justify-content: start;"
+                  *ngIf="doctorDetail?.videoConsultationFees!=-1 && doctorDetail?.videoConsultationFees!=0 && doctorDetail?.videoConsultationFees!=null && doctorDetail?.videoConsultationFees!=undefined">
+                  <span class="badge badge-success">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink">
+                      <rect width="18" height="18" fill="url(#pattern0_491_3389)" />
+                      <defs>
+                        <pattern id="pattern0_491_3389" patternContentUnits="objectBoundingBox" width="1" height="1">
+                          <use xlink:href="#image0_491_3389" transform="scale(0.00195312)" />
+                        </pattern>
+                        <image id="image0_491_3389" width="512" height="512"
+                          xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAMAAADDpiTIAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAqxQTFRFAAAAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICA7pdMugAAAOR0Uk5TAAIjTW6LprrL293NwLKTd1tVVqe7zNjPv6+UdlgzCBdTkMfz//vVo2cqATeF0umdUQspgN73swUGyeZ+DXn4nyYM7PyhJOH6kRAxyOpi+cEuYV71B6LXJRTtQiffXyvl/nE27i1152YWTOAVtiwyhtEvf2CwQ3pKyuQ+XK0efYji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" />
+                      </defs>
+                    </svg>
+                  </span>
+                  &#8377;{{ doctorDetail?.videoConsultationFees || "0" }}
+                  <span class="price" style="padding-left: 5px;">
+
+
+
+                     </span>
+                </span>
+
+
+
+
+
+              </div>
+            </div>
+            <div class="share-doctor" *ngIf="deviceWidth > 767">
+              <button (click)="openShareDialog()">
+                <img loading="lazy" src="assets/images/svg/share.svg" alt="" />
+                Share
+              </button>
+            </div>
+
+            <div class="social-links" *ngIf="deviceWidth > 767">
+              <a [href]="item?.url" target="_blank" *ngFor="let item of doctorDetail?.social">
+                <img [src]="item?.socialmedias?.logo" alt="" height="24" width="24" /></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- card section in mobile responsive -->
+
+
+
+        <div class="w-100 d-flex justify-content-center">
+          <div class="mobile-card" *ngIf="deviceWidth < 767">
+            <div class="hedder_lable">
+              <!-- In-Clinic Section -->
+              <div
+                *ngIf="selectedHospital?.consultationFees > 0 && (!selectedHospital?.videoConsultationFees || selectedHospital?.videoConsultationFees <= 0)"
+                class="card-header d-flex align-items-center gap-2 single">
+                <img src="assets/images/pharmacy 1@2x.png" alt="" height="24" width="24" />
+                In-clinic
+              </div>
+
+              <!-- Video Section -->
+              <div
+                *ngIf="selectedHospital?.videoConsultationFees > 0 && (!selectedHospital?.consultationFees || selectedHospital?.consultationFees <= 0)"
+                class="card-header2 d-flex align-items-center gap-2 single">
+                <img src="assets/images/video.png" alt="" height="24" width="24" />
+                Video
+              </div>
+
+              <!-- Dual Section -->
+              <div *ngIf="selectedHospital?.consultationFees > 0 && selectedHospital?.videoConsultationFees > 0"
+                class="dual">
+                <div class="card-header d-flex align-items-center gap-2">
+                  <img src="assets/images/pharmacy 1@2x.png" alt="" height="24" width="24" />
+                  In-clinic
+                </div>
+                <div class="card-header2 d-flex align-items-center gap-2 ">
+                  <img src="assets/images/video.png" alt="" height="24" width="24" />
+                  Video
+                </div>
+              </div>
+            </div>
+
+
+            <div class="hospital-data">
+              <div class="d-flex gap-2 justify-content-between" style="height: 20px">
+                <p>{{ formatName(selectedHospital?.name, 22) }}</p>
+                <!-- <p *ngIf="selectedHospital?.consultationFees == -1 || selectedHospital?.consultationFees != -1  ">{{selectedHospital?.address?.locality}}{{selectedHospital?.address?.city}}</p> -->
+                <div class="d-flex align-items-center gap-1" *ngIf="this.doctorDetail?.establishmentmaster.length > 1">
+                  <div class="text-16 font-400 text-purple text-nowrap" (click)="openBottomSheet('Hospital')">
+                    Change Clinic
+                  </div>
+                  <img src="assets/images/svg/downarrow.svg" alt="" height="16" width="16" style="margin-top: 5px"
+                    (click)="openBottomSheet('Hospital')" />
+                </div>
+              </div>
+              <!-- 
+
+              
+                
+              -->
+              <div class="mt-2 d-flex align-items-center gap-2">
+                <!-- Address -->
+                <span class="text-16">
+                  {{ selectedHospital?.address?.locality }}, {{ selectedHospital?.address?.city }}
+                </span>
+                <!-- All Fees -->
+
+              </div>
+
+            </div>
+            <div class="hospital_status_feesbar d-flex">
+              <div class="hospital_status_feesbar d-flex">
+                <!-- Consultation Fees -->
+                <span
+                  *ngIf="selectedHospital?.consultationFees !== null && selectedHospital?.consultationFees !== undefined && selectedHospital?.consultationFees !== -1"
+                  class="font-600 text-16 d-flex p-2">
+                  <img src="assets/images/inclinickblue.png" alt="consultation" class="me-1">
+                  ₹{{ selectedHospital?.consultationFees }} 
+                </span>
+
+                <!-- Video Consultation Fees -->
+                <span
+                  *ngIf="selectedHospital?.videoConsultationFees !== null && selectedHospital?.videoConsultationFees !== undefined && selectedHospital?.videoConsultationFees !== -1"
+                  class="font-600 text-16 d-flex p-2">
+                  <img src="assets/images/videogrey.png" alt="video consultation" class="me-1 ">
+                  ₹{{ selectedHospital?.videoConsultationFees }} 
+                </span>
+              </div>
+
+            </div>
+            <div class="appoint mt-3">
+              <div class="box-wrapper">
+                <div class="box" [class.opacity-70]="!item?.count" *ngFor="let item of dateRange; let i = index"
+                  (click)="
+                    item?.count
+                      ? openBottomSheet(
+                          'apoointment',
+                          selectedHospital,
+                          item?.date
+                        )
+                      : ''
+                  ">
+                  <p class="text-16" *ngIf="i > 1">
+                    {{ item?.date | date : "EEE, MMM d" }}
+                  </p>
+                  <p class="text-16" *ngIf="i == 0">Today</p>
+                  <p class="text-16" *ngIf="i == 1">Tomorrow</p>
+                  <div class="count" *ngIf="item?.count != 0">
+                    {{ item?.count }} appts
+                  </div>
+                  <div class="count text-danger" *ngIf="!item?.count">
+                    No appts
+                  </div>
+                </div>
+              </div>
+
+              <div class="button my-3" [style.opacity]="
+                  selectedHospital?.isActive && doctorDetail?.claimProfile
+                    ? '1'
+                    : '0.5'
+                ">
+                <button (click)="
+                    selectedHospital?.isActive && doctorDetail?.claimProfile
+                      ? openBottomSheet('apoointment', selectedHospital)
+                      : ''
+                  " [ngClass]="selectedHospital?.consultationFees != -1 ? '' : 'newclass'">
+                  Book Appointment
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="doctor-details__wrapper__grid__details__tab-section">
+          <ul>
+            <li *ngFor="let item of tabContent; let i = index" [ngClass]="{ active: selected == i }"
+              (click)="selected = i">
+              <svg-icon [src]="item.img" *ngIf="deviceWidth > 767"></svg-icon>
+              <span>
+                {{ item.name
+                }}<span class="count" *ngIf="item?.count">&nbsp;({{ item.count }})</span>
+              </span>
+            </li>
+          </ul>
+
+          <div class="about-tab" *ngIf="doctorId && selected == 0">
+            <nectar-about-section  [doctorDetail]="doctorDetail" [id]="doctorId" [city]="doctorDetail?.establishmentmaster?.[0]?.address?.city" (backdrop)="enableBackdrop($event)"></nectar-about-section>
+
+            <!-- video section -->
+
+            <nectar-videos-section [tab]="0" [id]="doctorId"></nectar-videos-section>
+
+            <!-- faq section -->
+            <nectar-faq-section [tab]="0" [id]="doctorId"></nectar-faq-section>
+
+            <!-- service section -->
+            <!-- <nectar-services-section [tab]="0" [id]="doctorId" class="dextop-service"></nectar-services-section> -->
+            <nectar-services-section
+            [tab]="0"
+            [id]="doctorId"
+            class="dextop-service"
+            [city]="doctorDetail?.establishmentmaster?.[0]?.address?.city"
+            [doc_procedure]="filteredDocProcedure$ | async"
+          ></nectar-services-section>
+
+            <!-- review section -->
+            <nectar-review-section [tab]="0" [id]="doctorId" [name]="doctorDetail?.fullName"
+              (valueChange)="tabChangeReview()"></nectar-review-section>
+          </div>
+
+          <!-- <div class="video-tab" *ngIf="selected == 2">
+            <nectar-doctor-procedure-section [doc_procedure]="filteredDocProcedure$ | async"  [id]="doctorId" [city]="doctorDetail?.establishmentmaster?.[0]?.address?.city" ></nectar-doctor-procedure-section>
+          </div> -->
+          <div class="video-tab" *ngIf="selected == 2">
+            <nectar-videos-section [id]="doctorId"></nectar-videos-section>
+          </div>
+          <div class="faq-tab" *ngIf="selected == 3">
+            <nectar-faq-section [id]="doctorId"></nectar-faq-section>
+          </div>
+          <div class="review-tab" *ngIf="selected == 4">
+            <nectar-review-section [tab]="1" [id]="doctorId" [name]="doctorDetail?.fullName"></nectar-review-section>
+          </div>
+          <div class="services-tab" *ngIf="selected == 1">
+            <nectar-services-section [tab]="1" [id]="doctorId" [city]="doctorDetail?.establishmentmaster?.[0]?.address?.city"
+            [doc_procedure]="filteredDocProcedure$ | async"></nectar-services-section>
+          </div>
+        </div>
+      </div>
+      <div class="doctor-details__wrapper__grid__appointment right-side-bar"
+        [style.z-index]="bookAppointment ? '10' : '0'" *ngIf="deviceWidth > 1024">
+        <nectar-clinic-visit-appointment *ngIf="estabId" [newsId]="doctorId"
+          [establishmentIds]="estabId"></nectar-clinic-visit-appointment>
+      </div>
+    </div>
+  </div>
+</section>
+<section *ngIf="bookAppointment" class="backdropClass" (click)="bookAppointment = false"></section>
+
+<!-- book Appointments footer -->
+<div class="footer" *ngIf="scrollTop > 70" (click)="doctorDetail?.claimProfile ? openBottomSheet('doctor') : ''"
+  [ngClass]="selectedHospital?.consultationFees != -1 ? '' : 'newclass'">
+  <p>Book Appointment</p>
+</div>
+
+
+<nectar-seo-content [allowDescription]="false" [data]="doctorDetail?.specialization"
+  [search]="doctorDetail?.specialization | formatarray : 'name'"
+  [city]="selectedHospital?.address?.city"></nectar-seo-content>
+
+
+
+<div class="offcanvas offcanvas-start w-auto" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+  aria-labelledby="offcanvasWithBothOptionsLabel">
+
+  <div class="offcanvas-body">
+    <div>
+      <div class="py-3 d-flex align-items-center justify-content-between" style="margin-top: -30px;">
+        <div class="d-flex gap-2 align-items-center">
+          <div class="hamber">
+            <svg-icon src="assets/images/svg/hamber.svg" class="cursor-pointer"></svg-icon>
+          </div>
+          <svg-icon src="assets/images/svg/logo.svg" routerLink="/" class="d-flex cursor-pointer"
+            style="width: 155px"></svg-icon>
+        </div>
+        <svg-icon src="assets/images/svg/back.svg" class="cursor-pointer ms-4" data-bs-dismiss="offcanvas"
+          aria-label="Close"></svg-icon>
+      </div>
+      <div class="my-2">
+
+        <!-- <button type="button" class="offcanva_login_button"
+          [routerLink]="['../../../auth/doctors/newlogin']">Login/Signup</button> -->
+          <ng-container *ngFor="let i of menus; let j = index">
+            <!-- Other Tabs -->
+            <div class="d-flex gap-2 align-items-center tabs" *ngIf="j != 3 && j != 4">
+              <img loading="lazy" [src]="i?.icon" alt="" />
+              <div [routerLink]="i?.route"  class="cursor-pointer">
+                {{ i?.name }}
+              </div>
+            </div>
+          
+            <!-- Blog/News Tab -->
+            <div class="d-flex gap-2 align-items-center tabs" *ngIf="j == 3">
+              <img loading="lazy" [src]="i?.icon" alt="" />
+              <div class="cursor-pointer">
+                <a href="https://blog.nectarplus.health/" target="_blank" rel="noopener noreferrer">
+                  {{ i?.name }}
+                </a>
+              </div>
+            </div>
+          
+            <!-- List Your Practice -->
+            <ng-container *ngIf="j == 4">
+              <div class="d-flex justify-content-between align-items-center tabs"
+                [ngClass]="{'highlight-practice': i?.name === 'List your practice for Free'}">
+                <div class="d-flex gap-2">
+                  <img loading="lazy" [src]="i?.icon" alt="" />
+                  <div class="cursor-pointer" [routerLink]="i?.route">
+                    {{ i?.name }}
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+          
+      </div>
+    </div>
+  </div>
+</div>

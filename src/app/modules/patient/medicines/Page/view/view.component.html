@@ -1,0 +1,245 @@
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="Bredcrum">
+            <div class="breadcrum_section">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" viewBox="0 0 14 12" fill="none">
+                        <path
+                            d="M5.66661 10.6667V7.33334H8.33328V10.6667C8.33328 11.0333 8.63328 11.3333 8.99994 11.3333H10.9999C11.3666 11.3333 11.6666 11.0333 11.6666 10.6667V6.00001H12.7999C13.1066 6.00001 13.2533 5.62001 13.0199 5.42001L7.44661 0.400011C7.19328 0.173344 6.80661 0.173344 6.55328 0.400011L0.979943 5.42001C0.753277 5.62001 0.893277 6.00001 1.19994 6.00001H2.33328V10.6667C2.33328 11.0333 2.63328 11.3333 2.99994 11.3333H4.99994C5.36661 11.3333 5.66661 11.0333 5.66661 10.6667Z"
+                            fill="black" />
+                    </svg>
+                </span>
+                <p [routerLink]="['']">Home</p>
+            </div>
+            <div class="breadcrum_section">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <g clip-path="url(#clip0_522_1727)">
+                            <path
+                                d="M7.15833 13.825L10.975 10L7.15833 6.175L8.33333 5L13.3333 10L8.33333 15L7.15833 13.825Z"
+                                fill="black" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_522_1727">
+                                <rect width="20" height="20" fill="white" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </span>
+                <p [routerLink]="['../../../all-medicines']" style="width: max-content; cursor: pointer;">All Categories</p>
+            </div>
+            <div class="breadcrum_section" *ngFor="let a of breadcrumb.slice(1); let i = index"> <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <g clip-path="url(#clip0_522_1727)">
+                            <path
+                                d="M7.15833 13.825L10.975 10L7.15833 6.175L8.33333 5L13.3333 10L8.33333 15L7.15833 13.825Z"
+                                fill="black" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_522_1727">
+                                <rect width="20" height="20" fill="white" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </span>
+                <p style="width: max-content;">{{a.text | truncate:30}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container contaier_format">
+    <div class="row" *ngIf="productDetails">
+        <!-- Left Column -->
+        <div class="col-md-6 px-3 details_image">
+            <div class="d-flex justify-content-center align-items-center rounded bg-white p-4 border">
+                <img class="img-fluid" [src]="productDetails?.images_hsh?.array?.[0]" alt="{{ productDetails?.name }}">
+            </div>
+
+            <div class="d-flex mt-3 justify-content-center gap-3"
+                *ngIf="productDetails.images_hsh && productDetails.images_hsh?.array.length > 0">
+                <div *ngFor="let image of productDetails.images_hsh.array | slice:0:3" style="width: 100px;
+    height: 70px;">
+                    <div class="d-flex justify-content-center align-items-center rounded bg-white p-3 border">
+                        <img class="img-fluid" role="button" src="{{image}}"  (click)="viewImage(image)" alt="Small Image" >
+                    </div>
+                </div>
+
+
+
+                <!-- Repeat for other small images -->
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-6 p-md-5 mt-4">
+            <div class="d-flex flex-column justify-content-center g-4">
+                <!-- Product Title and Rating -->
+                <div class=" d-flex flex-column gap-3">
+                    <div class="text-muted fw-bold">{{ productDetails?.otc_type }}</div>
+                    <div class="fw-bold fs-3 product-title">{{productDetails?.name}}</div>
+                    <div class="d-flex align-items-center">
+                        <!-- Rating Stars -->
+                        <div class=" rounded-pills text-white text-center fw-bold" style="background-color: #7ed321 !important;">
+                            {{ productDetails?.rating?.average || "0.0" }}
+                        </div>
+                        
+                        <star-rating 
+                            [rating]="productDetails?.rating?.average || 0" 
+                            [step]="0.1" 
+                            [showHalfStars]="true" 
+                            [readOnly]="true" 
+                            >
+                        </star-rating>
+                        
+
+                    </div>
+                </div>
+
+                <!-- Price and Discount -->
+                <div class=" Button_collection">
+                    <div class="price">{{ productDetails?.offers?.[0]?.final_price | currency: 'INR' : 'symbol' }}</div>
+                    <div class="discount-price">{{ productDetails?.offers?.[0]?.mrp | currency: 'INR' : 'symbol' }}
+                    </div>
+                    <span class="span_off"><small>{{discountPercentage}}% off</small></span>
+                </div>
+
+
+                <!-- Description -->
+                <div class=" product-description">
+                    {{productDetails?.form}}
+                </div>
+
+                <!-- Buttons -->
+                <div class=" Button_collection">
+                    <a class="btn cart_button" href="{{productDetails?.add_to_cart_url}}">
+                        <span>
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <rect width="18" height="18" fill="#1E1E1E" />
+                                <g clip-path="url(#clip0_0_1)">
+                                    <rect width="1440" height="1880" transform="translate(-762 -662)" fill="white" />
+                                    <rect x="-24" y="-15" width="162" height="48" rx="5" fill="#45197C" />
+                                    <rect x="-24" y="-15" width="162" height="48" rx="5" stroke="#45197C"
+                                        stroke-opacity="0.1" stroke-linejoin="round" />
+                                    <rect width="18" height="18" fill="url(#pattern0_0_1)" />
+                                </g>
+                                <defs>
+                                    <pattern id="pattern0_0_1" patternContentUnits="objectBoundingBox" width="1"
+                                        height="1">
+                                        <use xlink:href="#image0_0_1" transform="scale(0.0104167)" />
+                                    </pattern>
+                                    <clipPath id="clip0_0_1">
+                                        <rect width="1440" height="1880" fill="white"
+                                            transform="translate(-762 -662)" />
+                                    </clipPath>
+                                    <image id="image0_0_1" width="96" height="96"
+                                        xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAVZQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////MhOoIAAAAHJ0Uk5TAOru/P/eAvpL+bX4/iX2ivUK9GDzzRARdqwkFPftI6CpNuzLpwn9MYucIh2A6A0B2mR11gRIvTLKnQfpH2VKSb6fgQ5fZpsXpshHCN3wzpQqh98LLMSlYjdok1nVbBzXReAtkdSQlgaXK47T8vGNvLsFZYVg/gAAA0pJREFUeJzt2ftLU1EcAPBzWq3lwGWFGr2N4YrCHMRqiSBkLzRRJIteYuQ0/F+C3kER/VC5sqwkqKxYJa2HFYgRgUkZRVBhtSX52hK21X18v2fn3nMuUezA5j3f8+X7GZd7zrn3SonFjWaADPCPAJQmPokIHZEOTB1Xhib/lA5MG1WG7EPSAeewMuSgEdlAtvo3O7/JBqZHVbGYa1AyMOO7Ouj6IhmY9VUdzPkkGcid+B6ZOC35n8ULxvLoBx2QanPoR3GBzKYDGEAWvJcAkLlvUGDROxnA/H4UIIvfWgzMlDHHFvbhgHt8gIi2AvoKB4inj4g290tlTwssHesnYi1r3gsWQLJEtxtPr6qrAxxjYvWX0B42UER7tSFDbflzdV+/6Xt7dCEDrYh2pwPyhqO6GH8rfqIJALctIguS97E2AgC+p6brF+Q84gDIqm4gyNVWhnUhCDC9IGnmGAr4wzZzgAe4wsF7U9cPU/V9EeAKB4GSsKl74tX3gSBcydSCpJtjDKD0gQlgzV0oCgNmFqSSEBhGTrbxBQmYYyzA+IIEzDEWQMqgK4LRoDnGBApfGwNK7yAD6AVvbEHyOW4bBdaGjABlndgIChhakOA5xgbIOuysQr/mHjqEAus7J3HXV99qcQIbbnHXL3/IeKbDgE03ecs7/FOuMYYRwF14nav6RkrpZWYGAlR3JA8204tckkGgtiP19kL4xQUI2Kvak0c15wXrw0Bd6rTEym9YAdgrriaP8BVACNjaljyoviL+bgoCtl1I/LVVtgGjEoDUfrnlrHh9ENgeNFkMejiCANO317wA2dFqMbDznMWAfcUzawGyi56xFiC5UTNTzABASP2Qs3UUG5QByGoZwDzQQOklUkMH0y2o6fIQwL8slHgxFa/IP84onz4PBvz2rt/H3mJc4MiDgaYTig5jW+DIA4GGLuWLu3jjUaQ+Tx4I7Dmt6jYeQQCePJ79IHAYAXjyQEDz/4SmQwjAkwcCLcdU3eaDCMCT93dO0d5Tqu6+AwjAkwcCte3KcLwSewLgyYMnWpXymWX3SaQ+Vx4MBBx/TmcL3Y8CHHnIYheIBBMj8fpsvD5PHrpcN1MaJHW2AfYTWPq8/3hHywAZgLv9Am9m2WHbZaqAAAAAAElFTkSuQmCC" />
+                                </defs>
+                            </svg>
+                        </span> Add to Cart
+                    </a>
+                    <button class="wishlist_button  p-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M16.5 2.825C14.76 2.825 13.09 3.635 12 4.915C10.91 3.635 9.24 2.825 7.5 2.825C4.42 2.825 2 5.245 2 8.325C2 12.105 5.4 15.185 10.55 19.865L12 21.175L13.45 19.855C18.6 15.185 22 12.105 22 8.325C22 5.245 19.58 2.825 16.5 2.825ZM12.1 18.375L12 18.475L11.9 18.375C7.14 14.065 4 11.215 4 8.325C4 6.325 5.5 4.825 7.5 4.825C9.04 4.825 10.54 5.815 11.07 7.185H12.94C13.46 5.815 14.96 4.825 16.5 4.825C18.5 4.825 20 6.325 20 8.325C20 11.215 16.86 14.065 12.1 18.375Z"
+                                fill="#45197C" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="d-flex">
+                    <div class="text-muted fw-bold Order_list">
+                        <ul class="d-flex flex-wrap">
+                            <li><span class="fw-bold">Stock:</span>
+                                <span *ngIf="productDetails?.in_stock" class="in_stock ms-1"> In Stock</span>
+                                <span *ngIf="!productDetails?.in_stock" class="out_stock ms-1"> Out of Stock</span>
+                            </li>
+                            <li> <span class="fw-bold">MFM: </span> {{productDetails?.manufacturer?.name | capitalize }}
+                            </li>
+                            <li class="Uses_ectivity">
+                                <div class="fw-bold">Uses: </div> 
+                                <span
+                                    *ngFor="let item of productDetails?.uses?.main.concat(productDetails?.uses?.others)">
+                                    {{ item}}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Repeat for other info -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="myimage_section mt-5" *ngIf="productDetails">
+    <div class="px-3 details_image">
+        <div class="container-fluid"
+            *ngIf="productDetails.images_hsh && productDetails.images_hsh?.array.length > 0">
+            <div *ngFor="let image of productDetails.images_hsh.array | slice:0:6" class="row p-3">
+                <div class="d-flex justify-content-center align-items-center rounded bg-white p-3 border">
+                    <img class="img-fluid" src="{{image}}" alt="Small Image">
+                </div>
+            </div>
+            <!-- Repeat for other small images -->
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid border p-2 mt-5">
+    <div>
+        <h1 class="heding_text ms-2 p-2">Related Product</h1>
+    </div>
+    <div class="row_class row-cols-1 row-cols-sm-2 row-cols-md-4 " style="display: flex;">
+        <div class="col" *ngFor="let a of relateddata" (click)="viewProduct(a.product_id,a.name)">
+            <div class="card shadow-sm">
+                <div class="d-flex justify-content-center align-items-center rounded bg-white p-4 "
+                    style="height: 125px;overflow: hidden;">
+                    <img class="img-fluid image py-2" src="{{a.image}}" alt="Product Image"
+                        style="width: 120px; height: 120px;">
+                </div>
+                <div class="card-body p-3">
+                    <h6 class="card-text Small_card_text">{{a.name | truncate:30}}</h6>
+                    <!---STAR -->
+                    <div class="d-flex align-items-center">
+                        <!-- Rating Stars -->
+                        <div class=" rounded-pills text-white text-center fw-bold" style="background-color: #7ed321 !important;">
+                            {{a?.rating?.average || "0.0"}}
+                        </div>
+
+                         <star-rating 
+                            [rating]="a?.rating?.average || 0.0" 
+                            [step]="0.1" 
+                            [showHalfStars]="true" 
+                            [readOnly]="true" 
+                            >
+                        </star-rating>
+                    </div>
+                    <br>
+                    <!-- Price and Discount -->
+                    <div class="mb-1 Button_collection">
+                        <div class="price_sm">{{a.price.final_price | currency:'INR':'symbol'}}</div>
+                        <div class="discount-price_sm">{{a.price.mrp | currency:'INR':'symbol'}}</div>
+
+                        <!-- <span class="span_off">
+                            <small>
+                                {{ discountPercentage > 0 ? (discountPercentage | number:'1.0-0') + '% off' : 'No discount'
+                                }}
+                            </small>
+                        </span>                  -->
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

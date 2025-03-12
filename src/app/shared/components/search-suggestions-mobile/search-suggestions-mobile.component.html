@@ -1,0 +1,286 @@
+<div class="main">
+  <div class="p-3">
+    <img
+      src="assets/images/svg/cross.svg"
+      alt=""
+      (click)="bottomSheetRef.dismiss({ data: false })"
+    />
+  </div>
+  <div class="mx-3">
+    <div
+      class="input-box"
+      [style.display]="
+        data?.type == 'location' || data?.type == 'both' ? 'flex' : 'none'
+      "
+    >
+      <img
+        loading="lazy"
+        src="assets/images/svg/location.svg"
+        alt=""
+        height="24"
+        width="24"
+      />
+      <input
+        type="text"
+        placeholder="Search City , Pincode"
+        (input)="onCitySearch($event)"
+        [value]="selectedCity"
+        #location
+        (keydown)="pressedEnter($event)"
+        (focus)="inputFocused = 'location'"
+      />
+    </div>
+    <div
+      class="input-box"
+      [style.display]="
+        data?.type == 'symptomps' || data?.type == 'both' ? 'flex' : 'none'
+      "
+    >
+      <img
+        src="assets/images/svg/search-icon-black.svg"
+        alt=""
+        height="24"
+        width="24"
+      />
+      <input
+        type="text"
+        placeholder="Search by specialty, doctor, hospital, clinic"
+        #symptoms
+        (keydown)="pressedEnter($event)"
+        (input)="getSuggestionList($event)"
+        (focus)="inputFocused = 'symptoms'"
+      />
+    </div>
+  </div>
+
+  <div *ngIf="data?.type == 'symptoms' || inputFocused == 'symptoms'">
+    <div class="my-4">
+      <div *ngFor="let item of specialityOptions">
+        <div
+          *ngIf="item?.name"
+          class="d-flex gap-2 justify-content-between align-items-center item"
+          (click)="selectingValue(item?.name)"
+        >
+          <div class="text-16">
+            <img
+              src="assets/images/svg/Search-drop.svg"
+              alt=""
+              height="24"
+              width="24"
+            />
+            &nbsp;
+            {{ item?.name }}
+          </div>
+          <div class="opacity-80 text-12">Speciality</div>
+        </div>
+      </div>
+      <div *ngFor="let item of servicesOptions">
+        <div
+          *ngIf="item?.name"
+          class="d-flex gap-2 justify-content-between align-items-center item"
+          (click)="selectingValue(item?.name)"
+        >
+          <div class="text-16">
+            <img
+              src="assets/images/svg/Search-drop.svg"
+              alt=""
+              height="24"
+              width="24"
+            />&nbsp;
+            {{ item?.name }}
+          </div>
+          <div class="opacity-80 text-12">Service</div>
+        </div>
+      </div>
+      <div class="text-12 font-600" *ngIf="doctorsOptions.length">
+        <div class="label">Doctors</div>
+        <div
+          *ngFor="let item of doctorsOptions"
+          (click)="getSuggestion(item, 'doctor')"
+        >
+          <div class="d-flex align-items-center gap-3 item">
+            <img
+              [src]="item?.profilePic"
+              alt=""
+              height="24"
+              width="24"
+              *ngIf="item?.profilePic"
+              class="profile-icon"
+            />
+            <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+              {{ item?.name | nameInitial | async | uppercase }}
+            </div>
+            <div class="text-16">
+              <div>{{ item?.name }}</div>
+              <div class="opacity-80 text-12 opacity-80">
+                {{(item?.specialization?.[0] | titlecase) || ''}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-12 font-600" *ngIf="clinicOptions.length">
+        <div class="label">Clinic</div>
+        <div
+          *ngFor="let item of clinicOptions"
+          (click)="getSuggestion(item, 'hospital')"
+        >
+          <div class="d-flex align-items-center justify-content-between item">
+            <div class="d-flex align-items-center gap-3">
+              <img
+                [src]="item?.profilePic"
+                alt=""
+                height="24"
+                width="24"
+                *ngIf="item?.profilePic"
+                class="profile-icon"
+              />
+              <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+                {{ item?.name | nameInitial | async | uppercase }}
+              </div>
+              <div class="text-16">
+                <div>{{ item?.name }}</div>
+                <div class="opacity-80 text-12">
+                  {{ (item?.address?.locality || "N/A" | titlecase) || "" }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-12 font-600" *ngIf="hospitalsOptions.length">
+        <div class="label">Hospitals</div>
+        <div
+          *ngFor="let item of hospitalsOptions"
+          (click)="getSuggestion(item, 'hospital')"
+        >
+          <div class="d-flex align-items-center justify-content-between item">
+            <div class="d-flex align-items-center gap-3">
+              <img
+                [src]="item?.profilePic"
+                alt=""
+                height="24"
+                width="24"
+                *ngIf="item?.profilePic"
+                class="profile-icon"
+              />
+              <div class="profile-icon font-600" *ngIf="!item?.profilePic">
+                {{ item?.name | nameInitial | async | uppercase }}
+              </div>
+              <div class="text-16">
+                <div>{{ item?.name }}</div>
+                <div class="opacity-80 text-12">
+                  {{ (item?.address?.locality || "N/A" | titlecase) || "" }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="symptoms?.value?.length > 2">
+        <div
+          class="d-flex align-items-center gap-3 mx-2 item"
+          (click)="pressedEnter({ code: 'Enter' })"
+        >
+          <img
+            src="assets/images/svg/Search-drop.svg"
+            alt=""
+            height="24"
+            width="24"
+          />
+          <div class="text-16 font-400">
+            <div>Doctor Name {{ symptoms?.value }}</div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="symptoms?.value?.length > 2">
+        <div
+          class="d-flex align-items-center gap-3 mx-2 item"
+          (click)="pressedEnter({ code: 'Enter' })"
+        >
+          <img
+            src="assets/images/svg/Search-drop.svg"
+            alt=""
+            height="24"
+            width="24"
+          />
+          <div class="text-16 font-400">
+            <div>Hospital Name {{ symptoms?.value }}</div>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="symptoms?.value?.length > 2"
+        (click)="pressedEnter({ code: 'Enter' })"
+      >
+        <div class="d-flex align-items-center gap-3 mx-2 item">
+          <img
+            src="assets/images/svg/Search-drop.svg"
+            alt=""
+            height="24"
+            width="24"
+          />
+          <div class="text-16 font-400">
+            <div>Clinic Name {{ symptoms?.value }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="my-4"
+    *ngIf="
+      (data?.type == 'location' || data?.type == 'both') &&
+      inputFocused == 'location'
+    "
+  >
+    <div>
+      <div
+        class="d-flex align-items-center gap-3 item-location"
+        (click)="getCurrentCity()"
+      >
+        <img
+          src="assets/images/My location.svg"
+          alt=""
+          height="24"
+          width="24"
+        />
+        <div class="text-16 font-600 text-purple">Use current locationnn</div>
+      </div>
+    </div>
+
+    <div *ngFor="let city of filteredCities" (click)="setSelectedCity(city)">
+      <div class="d-flex align-items-center gap-3 item-location">
+        <img
+          loading="lazy"
+          src="assets/images/svg/location.svg"
+          alt=""
+          height="18"
+          width="18"
+        />
+        <div>
+          <div class="text-16 font-400">
+            {{ city }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let state of filteredStates" (click)="setSelectedState(state)">
+      <div class="d-flex align-items-center gap-3 item-location">
+        <img
+          loading="lazy"
+          src="assets/images/svg/location.svg"
+          alt=""
+          height="18"
+          width="18"
+        />
+        <div>
+          <div class="text-16 font-400">
+            {{ state }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

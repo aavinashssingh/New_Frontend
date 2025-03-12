@@ -1,0 +1,120 @@
+@import "tools.typography";
+@import "settings.colors";
+@import "variable.scss";
+
+
+@mixin ngx-pagination($background, $border) {
+  //   background-color: $background;
+  //   border: $border;
+  // }
+  // padding: 0;
+
+  // li {
+  // 	border-right: 1px solid $color-grey-medium;
+  // 	line-height: .5;
+
+  // 	&:last-child {
+  // 		border-right: 0;
+  // 	}
+  // }
+
+  // a {
+  // 	color: $color-grey-medium;
+  // 	// @include font-proxima-semibold($size: '14px, $lineheight: .5);
+
+  // 	&:hover {
+  // 		background: transparent;
+  // 	}
+  // }
+
+  // .current {
+  // 	background: transparent;
+  // 	color: $color-red-dark;
+  // }
+  // .ngx-pagination {
+  line-height: 24px !important;
+  font-size: 24px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .current {
+    border-radius: 100% !important;
+    background-color: $border !important;
+
+    span {
+      display: inline-block;
+      transform: translateY(5px);
+    }
+  }
+
+  a {
+    transform: translateY(5px);
+    text-decoration: none !important;
+
+    &:hover {
+      background: none !important;
+    }
+  }
+
+  li {
+    border-radius: 100% !important;
+    height: 45px;
+    width: 45px;
+    border: 2px solid !important;
+    border-color: $background !important;
+    margin: 10px !important;
+
+    &:first-child {
+      border: none !important;
+
+      a {
+        transform: translateY(8px) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &::before {
+          content: url("../../assets/images/leftarrow.png") !important;
+        }
+      }
+    }
+
+    &:last-child {
+      border: none !important;
+
+      a {
+        transform: translateY(8px) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &::after {
+          content: url("../../assets/images/rightarow.png") !important;
+        }
+      }
+    }
+
+    &.pagination-next.disabled {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::after {
+        content: url("../../assets/images/rightarow.png") !important;
+      }
+    }
+
+    &.pagination-previous.disabled {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::before {
+        content: url("../../assets/images/leftarrow.png") !important;
+      }
+    }
+  }
+
+  // }
+}

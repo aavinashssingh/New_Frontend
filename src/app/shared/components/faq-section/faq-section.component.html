@@ -1,0 +1,49 @@
+<section class="faq" *ngIf="!(tab == 0 && !apiData?.length)"
+  [ngClass]="{ 'border-bottom-style': tab == 0, 'pt-6': tab == 0 }">
+  <div class="faq__wrapper" *ngIf="apiData.length">
+    <h2 *ngIf="apiData?.length">
+      <!-- [style.padding-left]="type == 'doctor' ? '32px' : '0px'" -->
+      Frequently asked questions
+    </h2>
+    <hr class="m-0" *ngIf="deviceWidth > 767" />
+    <ng-container *ngIf="deviceWidth > 767">
+      <div class="faq__wrapper__ques-ans" *ngFor="let item of apiData" [class.padding-top-32]="type == 'hospital'">
+        <div class="ques">
+          Q :
+          <span> {{ item?.question }} </span>
+        </div>
+        <div class="ans" [style.margin-top]="type == 'doctor' ? '0px' : '5px'">
+          A :
+          <span>
+            {{ item?.answer }}
+          </span>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="mobile-accordians">
+      <mat-accordion *ngFor="let item of apiData; let i = index">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title class="text-16 font-400">
+              {{ item?.question }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>
+            {{ item.answer | slice: 0:(isExpanded[i] ? undefined : 150) }}
+            <span *ngIf="item.answer.length > 150">
+              ...
+              <button color="primary" (click)="toggleReadMore(i)">
+                {{ isExpanded[i] ? 'Read Less' : 'Read More' }}
+              </button>
+            </span>
+          </p>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </div>
+  </div>
+  <div *ngIf="!apiData.length">
+    <h2 class="text-danger text-center no-data">No FAQ's Found</h2>
+  </div>
+</section>

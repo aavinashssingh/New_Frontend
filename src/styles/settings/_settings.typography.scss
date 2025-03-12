@@ -1,0 +1,52 @@
+/* ==========================================================================
+   #TYPOGRAPHY-VARIABLES
+   ========================================================================== */
+
+$font-body: 'Proxima Nova', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+	Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+$base-font-size: 16px;
+$letter-spacing: 0.1em;
+$font-base-path: '/assets/fonts' !default;
+
+
+// TYPOLD
+
+@font-face {
+	font-family: 'Source Sans Pro';
+	src: url('#{$font-base-path}/sans_pro/SourceSansPro-Regular.ttf') format('truetype-variations');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Source Sans Pro';
+	src:
+		url('#{$font-base-path}/sans_pro/SourceSansPro-Regular.ttf') format('truetype-variations');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Source Sans Pro';
+	src: 
+		url('#{$font-base-path}/sans_pro/SourceSansPro-SemiBold.ttf') format('truetype-variations');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Source Sans Pro';
+	src: url('#{$font-base-path}/sans_pro/SourceSansPro-Bold.ttf') format('truetype-variations');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+$font-sans_pro: 'Source Sans Pro';
+$font-families: (
+   'sans_pro':  $font-sans_pro,
+   
+);
+

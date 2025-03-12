@@ -1,0 +1,94 @@
+<section class="top-rated">
+  <div class="top-rated__container">
+    <div class="top-rated__container__text-section">
+      <h2 *ngIf="type == 0">Top rated Dental Surgeon</h2>
+      <h2 *ngIf="type == 1">Orthopedist with the shortest wait time.</h2>
+      <p *ngIf="type == 0">
+        <span>90%</span> of patients gave these Dental Surgeon 5 stars
+      </p>
+      <p *ngIf="type == 1">
+        <span> 90% </span> of patients spent less then 30 minutes in the waiting
+        soon.
+      </p>
+      <a
+        class="cursor-pointer"
+        (click)="viewDoctor(type == 0 ? 'dental' : 'cardiologist')"
+      >
+        See more highly recommened doctor
+      </a>
+    </div>
+    <div class="top-rated__container__carousel-section">
+      <div
+        class="owlCarousal top-rated__container__carousel-section__data"
+        [id]="id"
+        *ngIf="isBrowser"
+      >
+        <owl-carousel-o
+          [options]="customOptions"
+          #owlCar
+          (translated)="onSlideActivated($event)"
+        >
+          <ng-container *ngFor="let item of topListing; let i = index">
+            <ng-template class="slide" carouselSlide [width]="cardWidth">
+              <nectar-doctor-cards
+                carouselSlide
+                [type]="type"
+                [data]="item"
+              ></nectar-doctor-cards>
+            </ng-template>
+          </ng-container>
+          <ng-template class="slide" carouselSlide [width]="cardWidth">
+            <div class="lastCard" ngSkipHydration>
+              <img
+                src="assets/images/homepage/Star outline.svg"
+                alt=""
+                height="56"
+                width="56"
+              />
+              <div class="heading">There's more!</div>
+              <span>See more top-rated </span>
+              <span [ngClass]="{'hidden': type != 0}">Dentist!</span>
+              <span [ngClass]="{'hidden': type != 1}">Orthopedist!</span>
+              <a
+                class="cursor-pointer"
+                (click)="viewDoctor(type == 0 ? 'dental' : 'orthopedist')"
+                >See more</a
+              >
+            </div>
+          </ng-template>
+        </owl-carousel-o>
+      </div>
+
+      <div class="buttons" *ngIf="width > 767">
+        <svg-icon
+          *ngIf="!leftButtonDisable"
+          class="owl-prev cursor-pointer enable"
+          (click)="scrollLeft(id)"
+          onmousedown="return false"
+          onselectstart="return false"
+          src="assets/images/svg/Keyboard-arrow-left.svg"
+        ></svg-icon>
+        <svg-icon
+          *ngIf="leftButtonDisable"
+          class="owl-prev cursor-pointer enable"
+          onselectstart="return false"
+          src="assets/images/svg/Keyboard-arrow-left-disabled.svg"
+        ></svg-icon>
+        <svg-icon
+          *ngIf="rightButtonDisable"
+          class="owl-next cursor-pointer"
+          onmousedown="return false"
+          onselectstart="return false"
+          src="assets/images/svg/Keyboard-arrow-right-disabled.svg"
+        ></svg-icon>
+        <svg-icon
+          *ngIf="!rightButtonDisable"
+          class="owl-next cursor-pointer"
+          (click)="scrollRight(id)"
+          onselectstart="return false"
+          src="assets/images/svg/Keyboard-arrow-right.svg"
+        ></svg-icon>
+      </div>
+    </div>
+  </div>
+</section>

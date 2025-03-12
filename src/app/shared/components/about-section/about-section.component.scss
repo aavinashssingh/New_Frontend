@@ -1,0 +1,593 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.badge {
+  font-size: inherit;
+
+  // line-height: 2;
+  // padding: 4px 15px;
+  &.badge-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // background-color: rgba(70, 25, 124, 0.15);
+    // color: #45197c;
+  }
+
+  &.badge-success {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // background-color: rgba(0, 128, 128, 0.15);
+    // color: #008080;
+  }
+
+  &.badge-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // background-color: rgba(229, 34, 99, 0.15);
+    // color: #e52264;
+  }
+}
+
+.hospital-list {
+  display: none;
+
+  @media screen and (max-width: 767px) {
+    display: block;
+    padding: 14px 0;
+  }
+}
+
+.about-section {
+
+  // margin-top: 30px;
+  @media screen and (max-width: 767px) {
+    margin-top: 0px;
+  }
+
+  &__wrapper {
+    &__cards {
+      border-top: 1px solid $border-color;
+      border-bottom: 1px solid $border-color;
+
+      &__details {
+        padding: $pad_24;
+        display: grid;
+        width: 100%;
+        grid-template-columns: 75% 25%;
+
+        @media screen and (max-width: 1300px) {
+          grid-template-columns: 70% 30%;
+        }
+
+        @media screen and (max-width: 776px) {
+          padding: 32px 0;
+          grid-template-columns: 1fr;
+        }
+
+        .address {
+          grid-area: address;
+
+          .heading {
+            display: flex;
+            gap: 11px;
+
+            h2 {
+              @include font-sans_pro-semibold($size: 14px);
+              color: $black;
+              margin: 0;
+              opacity: 0.8;
+
+              @media screen and (max-width: 776px) {
+                @include font-sans_pro-semibold($size: 16px);
+              }
+            }
+          }
+
+          p {
+            @include font-sans_pro-regular($size: 14px);
+            color: $black;
+            margin: 0;
+            opacity: 0.8;
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-regular($size: 16px);
+            }
+          }
+        }
+
+        .rating {
+          grid-area: rating;
+          margin-top: 5px;
+          justify-content: start;
+
+          .type {
+            @include font-sans_pro-regular($size: 14px);
+            color: $black;
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-regular($size: 16px);
+            }
+          }
+
+          ::ng-deep {
+            star-rating {
+              .star-container {
+                margin-left: 0;
+
+                svg {
+                  fill: $green !important;
+                }
+              }
+            }
+          }
+
+          img {
+            margin-bottom: 10px;
+            height: 20px;
+            width: 20px;
+            display: inline-block;
+          }
+
+          .total {
+            @include font-sans_pro-semibold(18px);
+
+            color: rgba(0, 0, 0, 0.7);
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-semibold($size: 16px);
+            }
+          }
+
+          .star {
+            color: $green;
+            @include font-sans_pro-semibold(18px);
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-semibold($size: 16px);
+            }
+          }
+
+          .review {
+            @include font-sans_pro-regular(18px);
+
+            color: rgba(0, 0, 0, 0.7);
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-regular($size: 16px);
+            }
+          }
+        }
+
+        .get-direction {
+          margin-top: 7px;
+          width: max-content;
+          grid-area: direction;
+          @include font-sans_pro-semibold($size: 14px);
+          color: $purple;
+
+          @media screen and (max-width: 776px) {
+            @include font-sans_pro-semibold($size: 16px);
+          }
+        }
+
+        .name {
+          margin-top: 17px;
+          grid-area: name;
+
+          h2 {
+            @include font-sans_pro-semibold($size: 22px);
+            color: $black;
+            margin: 0;
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-semibold($size: 20px);
+            }
+          }
+        }
+
+        .images-price {
+          margin-top: 20px;
+          grid-area: images-price;
+          display: grid;
+          grid-template-columns: 45% 55%;
+
+          @media screen and (max-width: 1024px) {
+            grid-template-columns: 60% 40%;
+          }
+
+          @media screen and (max-width: 576px) {
+            grid-template-columns: 70% 30%;
+          }
+
+          .images {
+            img {
+              height: 64px;
+              width: 64px;
+              object-fit: cover;
+              object-position: top center;
+            }
+          }
+
+          .price-box {
+            @include font-sans_pro-regular($size: 14px);
+            color: #00000080;
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-regular($size: 16px);
+            }
+
+            span {
+              @include font-sans_pro-semibold($size: 22px);
+              color: $black;
+
+              @media screen and (max-width: 776px) {
+                @include font-sans_pro-semibold($size: 20px);
+              }
+            }
+          }
+        }
+
+        .timings {
+          grid-area: timings;
+          max-height: 200px;
+          overflow-y: auto;
+          margin-bottom: 20px;
+
+          @media screen and (max-width: 776px) {
+            margin-top: 20px;
+          }
+
+          .heading {
+            @include font-sans_pro-semibold($size: 14px);
+            color: #00000080;
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-semibold($size: 16px);
+            }
+          }
+
+          .slots {
+            margin-top: 19px;
+
+            h4 {
+              @include font-sans_pro-semibold($size: 14px);
+              color: $black;
+              margin: 0;
+
+              @media screen and (max-width: 776px) {
+                @include font-sans_pro-semibold($size: 16px);
+              }
+            }
+
+            .times {
+              @include font-sans_pro-regular($size: 14px);
+              color: $black;
+              margin: 0;
+
+              @media screen and (max-width: 776px) {
+                @include font-sans_pro-regular($size: 16px);
+              }
+
+              white-space: nowrap;
+            }
+          }
+        }
+
+        .button {
+          display: flex;
+          align-items: end;
+          grid-area: button;
+
+          button {
+            border: 1px solid $purple;
+            background: $purple;
+            max-width: 200px;
+            width: 100%;
+            color: $white;
+            @include font-sans_pro-semibold($size: 14px);
+            padding: 12px 0;
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-semibold($size: 16px);
+            }
+          }
+        }
+      }
+    }
+
+    &__doctor {
+      padding: $pad_24;
+
+      @media screen and (max-width: 776px) {
+        padding: 18px 0;
+      }
+
+      h2 {
+        @include font-sans_pro-semibold($size: 22px);
+        color: $black;
+
+        @media screen and (max-width: 776px) {
+          @include font-sans_pro-semibold($size: 20px);
+        }
+      }
+
+      pre {
+        @include font-sans_pro-regular($size: 14px);
+        color: #525252;
+        width: 100%;
+        word-break: break-word;
+        white-space: break-spaces;
+
+        @media screen and (max-width: 776px) {
+          @include font-sans_pro-regular($size: 16px);
+        }
+      }
+
+      &__details {
+        display: grid;
+        grid-template-columns: 50% 50%;
+
+        @media screen and (max-width: 576px) {
+          grid-template-columns: 1fr;
+        }
+
+        .grid-item {
+          padding-bottom: $pad_16;
+          padding-top: $pad_16;
+          min-height: 200px;
+
+          @media screen and (max-width: 576px) {
+            min-height: 20px;
+            border: none;
+          }
+
+          &:nth-child(odd) {
+            border-right: 1px solid $border-color;
+
+            @media screen and (max-width: 576px) {
+              border: none;
+            }
+          }
+
+          &:nth-child(even) {
+            padding: $pad_16;
+
+            @media screen and (max-width: 576px) {
+              padding-left: 0;
+            }
+          }
+
+          border-bottom: 1px solid $border-color;
+
+          &:nth-child(5) {
+            border-bottom: none;
+          }
+
+          &:nth-child(6) {
+            border-bottom: none;
+          }
+
+          h2 {
+            @include font-sans_pro-semibold($size: 14px);
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-semibold($size: 16px);
+            }
+
+            img {
+              margin-right: 5px;
+            }
+          }
+
+          .list {
+            p {
+              @include font-sans_pro-regular($size: 14px);
+              padding: 0 0 0 33px;
+              position: relative;
+
+              &::before {
+                content: "";
+                background-image: url("../../.././../assets/images/doctor-details/right_arrow.svg");
+                background-repeat: no-repeat;
+                height: 15px;
+                width: 11px;
+                position: absolute;
+                left: 10px;
+                top: 5px;
+              }
+
+              @media screen and (max-width: 776px) {
+                @include font-sans_pro-semibold($size: 16px);
+              }
+
+              a{
+                text-decoration: none;
+                color: black;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $purple;
+  border-radius: 20px;
+}
+
+.mobile-view {
+  display: none;
+
+  @media screen and (max-width: 767px) {
+    display: block;
+  }
+}
+
+.mobile-detail-parent {
+  .hospital-profile-pic {
+    img {
+      border: 1px solid $border-color;
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      object-fit: contain;
+    }
+  }
+
+  ::ng-deep .rating.color-default .star-container .star svg {
+    fill: $green !important;
+  }
+}
+
+::ng-deep .rating.color-positive .star-container .star svg {
+  fill: $green !important;
+}
+
+.text-green {
+  color: $green !important;
+}
+
+.border-grey {
+  border: 1px solid $border-color !important;
+}
+
+.border-radius-5 {
+  border-radius: 5px !important;
+}
+
+.mobile-book-appointment {
+  width: 48%;
+  border: 1px solid $purple;
+  background: $purple;
+  color: $white;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 32px;
+  height: 55px;
+  @include font-sans_pro-semibold($size: 16px);
+  line-height: 1;
+}
+
+.mobile-get-direction {
+  width: 48%;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid $border-color;
+  background: $white;
+  height: 55px;
+  @include font-sans_pro-semibold($size: 16px);
+
+  svg {
+    path {
+      fill: $black;
+    }
+  }
+}
+
+.purple-dot {
+  min-width: 15px;
+  min-height: 15px;
+  max-height: 15px;
+  border-radius: 50%;
+  background: $purple;
+  display: block;
+  margin-top: 3px;
+}
+
+// .accordion {
+//   max-width: 96%;
+// }
+
+:host::ng-deep {
+  .accordion-item {
+    border: none !important;
+  }
+
+  .accordion-button {
+    border-top: 1px solid $border-color !important;
+    border-bottom: 1px solid $border-color !important;
+    padding: 8px 0px 8px 0 !important;
+  }
+
+  .accordion-button.collapsed {
+    border-radius: 0 !important;
+  }
+
+  .accordion-body {
+    padding: 8px 8px 8px 5px !important;
+  }
+
+  .accordion-button:not(.collapsed) {
+    background-color: transparent !important;
+    color: inherit;
+  }
+
+  button.accordion-button:focus {
+    box-shadow: inherit;
+  }
+
+  .accordion-button:not(.collapsed)::after {
+    background-image: var(--bs-accordion-btn-icon);
+  }
+}
+
+span {
+  align-items: center;
+}
+
+span img {
+  height: fit-content;
+
+}
+
+.price-box {
+  display: flex;
+  justify-content: space-around;
+}
+
+.about-section__wrapper__doctor__details {
+  background: #4b1b850d;
+  border-radius: 25px;
+  padding: inherit;
+}
+
+.image_wrapper {
+  padding: 4px;
+  border-radius: 50%;
+  background: #45197C26;
+}
+
+.video_only {
+  width: -webkit-fill-available;
+}
+.newclass{
+  background: #008080 !important;
+  width: -webkit-fill-available !important;
+}
+
+.primary{
+  border: none !important;
+  background: none !important;
+  color: blue;
+}

@@ -1,0 +1,164 @@
+<div class="header-mob">
+  <div class="d-flex justify-content-between">
+    <div>
+      <div class="text-16 font-400 opacity-50">Call us</div>
+      <div class="text-16 font-600" >+91 8810232143</div>
+    </div>
+    <div>
+      <div class="text-16 font-400 opacity-50">Email us</div>
+      <div class="text-16 font-600">{{ 'info&#64;nectarplus.health' }}</div>
+    </div>
+  </div>
+</div>
+
+<section class="surgery-section">
+  <div class="surgery-wrapper">
+    <div class="breadcrumbs d-flex align-items-center">
+      <span routerLink="/" class="text-dark cursor-pointer">Home</span>
+      &nbsp;&nbsp;>&nbsp;&nbsp; <span>Surgeries</span>
+    </div>
+    <img src="../../../../../../../assets/images/surgrey-image/Frame-doctor.png" class="logo-img w-100" />
+    <!--------main_page_top_content------>
+
+    <div class="whatsapp-logo">
+      <a [href]="whatsappLink" target="_blank">
+        <img loading="lazy" src="assets/images/svg/whatsapp.svg" alt="" /></a>
+    </div>
+
+
+  </div>
+</section>
+
+
+<div class="cotainer-fluid d-none d-md-none d-lg-block">
+  <div class="row  g-0 container_section_background">
+    <div class="main_top_container">
+      <div class="content_here_section">
+        <div class="text_content">
+          <div class="text_container_section">
+            <h1 class="tittle">Advanced Surgical Solutions, Personalized</h1>
+            <p class="subttile">
+              Experience expert surgeons, advanced facilities, and personalized care from diagnosis to recovery—making your journey stress-free.
+            </p>
+          </div>
+          <div class="box_content">
+            <div class="container_box">
+              <div class="svg">
+                <svg-icon src="assets/images/surgrey-image/rating.svg"></svg-icon>
+              </div>
+              <div class="text">High Success <br>
+                Rate
+              </div>
+            </div>
+            <div class="container_box">
+              <div class="svg">
+                <svg-icon src="assets/images/surgrey-image/medical-assistance.svg"></svg-icon>
+              </div>
+              <div class="text">Highly Experience Surgeon</div>
+            </div>
+            <div class="container_box">
+              <div class="svg">
+                <svg-icon src="assets/images/surgrey-image/healthcare.svg"></svg-icon>
+              </div>
+              <div class="text">Super Speciality Doctors</div>
+            </div>
+            <div class="container_box">
+              <div class="svg">
+                <svg-icon src="assets/images/surgrey-image/care-1.svg"></svg-icon>
+              </div>
+              <div class="text">Personal Care Assistants</div>
+            </div>
+          </div>
+        </div>
+        <div class="imag_conatner">
+          <img src="../../../../../../../assets/images/surgrey-image/doctorGroup.png" alt="">
+        </div>
+      </div>
+      <div class="form_section">
+        <!-- <nectar-enquiry></nectar-enquiry> -->
+        <nectar-enquiry [popular_sergury_Data]="popular_sergury"></nectar-enquiry>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mobile_enquriy_form">
+  <!-- <nectar-enquiry> </nectar-enquiry> -->
+  <nectar-enquiry [popular_sergury_Data]="popular_sergury"></nectar-enquiry>
+</div>
+<div class="container-fluid mt-5" style="background: #e6e4e366;">
+  <div class="row sugreys_top g-0">
+    <div class="text-container_section">
+      <h1 class="fw-bold text-center">We are experts in Surgical solutions for 50+ Surgeries.</h1>
+    </div>
+    <div class="d-flex flex-wrap gap-4 mobile-center">
+      <div class="box-wrap" *ngFor="let i of data">
+        <div class="surgery_box_section">
+          <!-- <div class="box">
+            <img [src]="i?.imageUrl" alt="" (click)="viewSurgery(i)"  class="cursor-pointer" />
+          </div>
+          <div class="text-18 mt-2 text-center cursor-pointer line-clamp-2" (click)="viewSurgery(i)">
+            {{ i?.title | truncate:25 }}
+          </div> -->
+
+          <div class="box">
+            <a [routerLink]="['/india/surgeries', i?.slug]" class="cursor-pointer links">
+              <img [src]="i?.imageUrl" alt="" />
+            </a>
+          </div>
+          <div class="text-18 mt-2 text-center line-clamp-2 box">
+            <a [routerLink]="['/india/surgeries', i?.slug]" class="cursor-pointer links">
+              {{ i?.title | truncate:25 }}
+            </a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-18 mt-3" *ngIf="data?.length >= (deviceWidth > 767 ? 14 : 8)">
+      <button class="see-more" *ngIf="payload?.size" (click)="seeMore(true)">
+        {{ deviceWidth < 767 ? "View More" : "View More" }} </button>
+          <button class="see-more" *ngIf="!payload?.size" (click)="seeMore(false)">
+            {{ deviceWidth < 767 ? "View Less" : "View Less" }} </button>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row sugreys_top g-0">
+    <div class="department-section my-5">
+      <div class="depart-wrapper">
+        <div class="text-24 font-600 text-center">
+          Department
+        </div>
+        <div class="d-flex justify-content-center flex-wrap gap-5 mobile-center">
+          <div class="department_card" *ngFor="let i of tempDeparts">
+            <div class="image_section_deparment g-0"><img [src]="i?.image" alt="" class="img-fluid cursor-pointer"
+                (click)="openDialog(i)" /></div>
+            <div class="text-section">
+              <div class="text-18 font-600 mt-1 cursor-pointer" (click)="openDialog(i)">
+                <h3 class="m-0"> {{ i?.name }} </h3>
+                <p class="m-0"> {{ i?.countOfSurgery || 0 }} Surgery</p>
+              </div>
+            </div>
+            <div class="svg_setin">
+              <svg width="8" height="15" viewBox="0 0 8 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.435547 14.5552V0.76123L7.33255 7.65823L0.435547 14.5552Z" fill="#49454F" />
+              </svg>
+
+            </div>
+          </div>
+        </div>
+        <div class="view-more mt-4">
+          <button *ngIf="!viewMoreDepart" (click)="viewMoreD()">
+            View More
+          </button>
+          <button *ngIf="viewMoreDepart" (click)="viewMoreD()">
+            View Less
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<nectar-benefits></nectar-benefits>
+
+<div class="footer" (click)="openBottomSheet()">Book Now</div>

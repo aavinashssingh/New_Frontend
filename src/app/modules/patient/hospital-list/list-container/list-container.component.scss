@@ -1,0 +1,326 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+@import "src/styles/components/_components.ngx-pagination.scss";
+
+.filters {
+  margin: 24px 0;
+
+  @media screen and (max-width: 767px) {
+    margin: 0;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    background: $white;
+    padding-bottom: 6px;
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+.list-section {
+  max-width: $content-max-width;
+  margin: auto;
+
+  @media screen and (max-width: 767px) {
+    max-width: 98%;
+    margin-top: 70px;
+    // max-height: 100vh;
+    // overflow: auto;
+  }
+
+  .popular {
+    @include font-sans_pro-regular($size: 24px);
+
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
+  }
+
+  .heading {
+    @include font-sans_pro-regular($size: 18px);
+    width: fit-content;
+    border-bottom: 2px solid $black;
+
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
+  }
+
+  h2 {
+    @include font-sans_pro-semibold($size: 20px);
+
+    @media screen and (max-width: 776px) {
+      display: none;
+    }
+  }
+
+  .hospital-section {
+    border: 1px solid $border-color;
+    margin-bottom: 14px;
+    max-width: 1155px;
+
+    @media screen and (max-width: 776px) {
+      border: none;
+      margin-bottom: 0px;
+      border-bottom: 1px solid $border-color;
+      border-top: 1px solid $border-color;
+    }
+
+    .hospital-detail {
+      padding: 24px 24px 0;
+
+      // border-bottom: 1px solid $border-color;
+      @media screen and (max-width: 776px) {
+        padding: 16px;
+        border-bottom: none;
+      }
+
+      @media screen and (max-width: 576px) {
+        padding: 16px 6px;
+        border-bottom: none;
+      }
+
+      .first {
+        align-items: center;
+
+        @media screen and (max-width: 767px) {
+          align-items: flex-start !important;
+        }
+
+        .rating {
+          margin-top: 5px;
+          justify-content: start;
+
+          @media screen and (max-width: 767px) {
+            display: none;
+          }
+
+          ::ng-deep {
+            star-rating {
+              .star-container {
+                margin-left: 0;
+
+                svg {
+                  fill: $green !important;
+                }
+              }
+            }
+          }
+
+          img {
+            margin-bottom: 10px;
+            height: 20px;
+            width: 20px;
+            display: inline-block;
+          }
+
+          .total {
+            @include font-sans_pro-semibold(14px);
+
+            color: rgba(0, 0, 0, 0.7);
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-semibold(16px);
+            }
+          }
+
+          .star {
+            color: $green;
+            @include font-sans_pro-semibold(14px);
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-semibold(16px);
+            }
+          }
+
+          .review {
+            @include font-sans_pro-regular(14px);
+
+            color: rgba(0, 0, 0, 0.7);
+
+            @media screen and (max-width: 776px) {
+              @include font-sans_pro-regular(16px);
+            }
+          }
+        }
+      }
+    }
+
+    .card-wrapper {
+      padding: 24px;
+
+      @media screen and (max-width: 776px) {
+        padding: 0px 0px 16px 16px;
+        margin: 0;
+      }
+    }
+
+    .calendar-wrapper {
+      .calendar-section {
+        border-top: 1px solid $border-color;
+      }
+    }
+  }
+}
+
+:host::ng-deep {
+  .owl-next {
+    right: -2rem;
+
+    @media screen and (max-width: 767px) {
+      right: 0rem;
+    }
+  }
+
+  .owl-next,
+  .owl-prev {
+    height: 45px !important;
+    width: 45px !important;
+    background: $white !important;
+    border-radius: 500px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .owl-prev {
+    left: -2rem;
+
+    img {
+      transform: rotate(180deg) !important;
+    }
+  }
+
+  .owl-theme .owl-nav .disabled {
+    visibility: hidden !important;
+  }
+
+  .ngx-pagination {
+    @include ngx-pagination($purple, $purple);
+  }
+}
+
+.profile-icon {
+  height: 52px;
+  width: 102px;
+  border: 1px solid $border-color;
+  @include font-sans_pro-semibold(20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $purple;
+
+  @media screen and (max-width: 767px) {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    @include font-sans_pro-semibold(18px);
+  }
+}
+
+.text-24 {
+  @media screen and (max-width: 767px) {
+    font-size: 16px !important;
+    line-height: 18px !important;
+  }
+}
+
+.sm-text-16 {
+  @media screen and (max-width: 767px) {
+    font-size: 16px !important;
+    line-height: 18px !important;
+  }
+}
+
+.sm-flex-col {
+  @media screen and (max-width: 767px) {
+    gap: 8px !important;
+  }
+}
+
+.sm-font-400 {
+  @media screen and (max-width: 767px) {
+    font-weight: 400 !important;
+  }
+}
+
+.text-green {
+  color: $green;
+}
+
+.anime-section {
+  @media screen and (min-width: 767px) {
+    animation-name: slideDown;
+    -webkit-animation-name: slideDown;
+
+    animation-duration: 0.2s;
+    -webkit-animation-duration: 0.2s;
+
+    animation-timing-function: ease;
+    -webkit-animation-timing-function: ease;
+
+    visibility: visible !important;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  50% {
+    transform: translateY(-50%);
+  }
+
+  65% {
+    transform: translateY(-35%);
+  }
+
+  80% {
+    transform: translateY(-20%);
+  }
+
+  95% {
+    transform: translateY(-5%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+
+/* Loader container - Fully centered */
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; /* Full width */
+  height: 100vh; /* Full height */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+  z-index: 1000;
+}
+
+/* Loader Image */
+.loader-gif {
+  width: 80px; /* Adjust size for responsiveness */
+  max-width: 15vw; /* Scales with screen size */
+  height: auto;
+}
+
+/* Blurred content when loading */
+.blur-content {
+  filter: blur(5px);
+  pointer-events: none; /* Prevent clicks */
+  user-select: none; /* Prevent text selection */
+}

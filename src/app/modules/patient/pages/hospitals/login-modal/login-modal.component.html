@@ -1,0 +1,332 @@
+<!-- <section class="main">
+  <div class="heading d-flex justify-content-between align-items-center">
+    <h2 *ngIf="data?.type == 'doctor'">Are you {{ data?.name || "N/A" }} ?</h2>
+    <h2 *ngIf="data?.type == 'hospital'">Is this your Hospital ?</h2>
+    <img
+      class="cursor-pointer"
+      src="assets/images/svg/cross.svg"
+      alt=""
+      height="14"
+      width="14"
+      (click)="closeDialog()"
+    />
+  </div>
+  <div class="wrapper">
+    <form [formGroup]="signForm" class="field">
+      <label for="">Mobile Number</label>
+      <input
+        type="text"
+        maxlength="10"
+        placeholder="Mobile Number"
+        formControlName="phone"
+        oninput="this.value = this.value.replace(/\D/g, '').replace(/^0/,'');"
+      />
+      <div *ngIf="signForm.get('phone')?.errors">
+        <div
+          class="form-error"
+          *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['required']"
+        >
+          This field is mandatory.
+        </div>
+        <div
+          class="form-error"
+          *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['minlength']
+           &&(!control['phone'].errors?.['required'])"
+        >
+          Please enter valid phone number.
+        </div>
+      </div>
+    </form>
+    <div class="confirm">
+      <button (click)="openVerify()">Next</button>
+    </div>
+    <div class="footer-text">
+      <span>*</span>You may receive SMS updates from Nectar
+    </div>
+  </div>
+</section> -->
+
+
+<div class="modal fade" id="enter_otp_modal" tabindex="-1" aria-labelledby="enter_otp_modalLabel" aria-hidden="true">
+  <div
+    [ngClass]="!data?.claimProfile ? 'modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered' : 'modal-dialog modal-md modal-dialog-scrollable modal-dialog-centered'">
+    <div class="modal-content">
+      <div class="modal-header d-flex">
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="data?.claimProfile">Claim Profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeDialog()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-6" *ngIf="!data.claimProfile">
+            <div class="card">
+              <div class="card-header">
+
+                <svg *ngIf="userType==1" _ngcontent-ng-c187617040="" width="24" height="24" viewBox="0 0 24 24"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g _ngcontent-ng-c187617040="" clip-path="url(#clip0_487_1800)">
+                    <path _ngcontent-ng-c187617040=""
+                      d="M9.99961 18.9997V13.9997H13.9996V18.9997C13.9996 19.5497 14.4496 19.9997 14.9996 19.9997H17.9996C18.5496 19.9997 18.9996 19.5497 18.9996 18.9997V11.9997H20.6996C21.1596 11.9997 21.3796 11.4297 21.0296 11.1297L12.6696 3.59973C12.2896 3.25973 11.7096 3.25973 11.3296 3.59973L2.96961 11.1297C2.62961 11.4297 2.83961 11.9997 3.29961 11.9997H4.99961V18.9997C4.99961 19.5497 5.44961 19.9997 5.99961 19.9997H8.99961C9.54961 19.9997 9.99961 19.5497 9.99961 18.9997Z"
+                      fill="#45197C"></path>
+                  </g>
+                  <defs _ngcontent-ng-c187617040="">
+                    <clipPath _ngcontent-ng-c187617040="" id="clip0_487_1800">
+                      <rect _ngcontent-ng-c187617040="" width="24" height="24" fill="white"></rect>
+                    </clipPath>
+                  </defs>
+                </svg>
+
+                <svg *ngIf="userType==2" width="18" height="18" viewBox="0 0 18 18" fill="none"
+                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <rect width="18" height="18" fill="url(#pattern0_491_3389)" />
+                  <defs>
+                    <pattern id="pattern0_491_3389" patternContentUnits="objectBoundingBox" width="1" height="1">
+                      <use xlink:href="#image0_491_3389" transform="scale(0.00195312)" />
+                    </pattern>
+                    <image id="image0_491_3389" width="512" height="512"
+                      xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAMAAADDpiTIAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAqxQTFRFAAAAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICAAICA7pdMugAAAOR0Uk5TAAIjTW6LprrL293NwLKTd1tVVqe7zNjPv6+UdlgzCBdTkMfz//vVo2cqATeF0umdUQspgN73swUGyeZ+DXn4nyYM7PyhJOH6kRAxyOpi+cEuYV71B6LXJRTtQiffXyvl/nE27i1152YWTOAVtiwyhtEvf2CwQ3pKyuQ+XK0efYji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" />
+                  </defs>
+                </svg>
+                {{userType==1?"In-Clinic Appointment":"Video Consultation"}}
+              </div>
+              <div class="card-body">
+                <div class="dr-info-rows">
+                  <div class="dr-info-rows-row">
+                    <img [src]="userData.profilePic" alt="" />
+                    <div class="dr-info-rows-row-text">
+                      <h3>{{userData ? userData.name: "dr" }}</h3>
+                      <p>{{ specializationList || 'No specialization available' }}</p>
+                    </div>
+                  </div>
+                  <div class="dr-info-rows-row" *ngIf="userType==1">
+                  <!-- <img [src]="userData?.establishmentDetail?.establishmentPic || 'https://placehold.co/100x100'" alt="Establishment Image" /> -->
+                  <img *ngIf="userData?.establishmentDetail?.establishmentPic; else initials" 
+                  [src]="userData?.establishmentDetail?.establishmentPic" 
+                  alt="Establishment Image" />
+             
+                    <ng-template #initials>
+                      <div class="initials">
+                        {{ (userData?.name | nameInitial | async) | uppercase }}
+                      </div>
+                    </ng-template>
+
+                    <!-- <img src="https://placehold.co/100x100" alt="" /> -->
+                    <div class="dr-info-rows-row-text">
+                      <h3>{{userData.establishmentDetail.establishmentName}}</h3>
+
+                      <div *ngIf="userType==1">
+                        <p>{{userData.establishmentDetail.address.locality +",
+                          "+userData.establishmentDetail.address.city +", "+userData.establishmentDetail.address.pincode
+                          }}</p>
+                        <p style="cursor: pointer;"
+                          (click)="  openGoogleMaps(userData.establishmentDetail)                        ">
+                          <svg _ngcontent-ng-c187617040="" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g _ngcontent-ng-c187617040="" clip-path="url(#clip0_968_7953)">
+                              <path _ngcontent-ng-c187617040=""
+                                d="M17.8413 8.82507L11.1829 2.1584C10.5329 1.5084 9.47461 1.5084 8.82461 2.1584L2.14961 8.82507C1.49961 9.47506 1.49961 10.5334 2.14961 11.1834L8.82461 17.8501C9.47461 18.5001 10.5329 18.5001 11.1829 17.8501L17.8413 11.1834C18.4996 10.5251 18.4996 9.47506 17.8413 8.82507ZM11.2496 12.0834V10.0001H8.33294V12.5001H6.66628V9.16673C6.66628 8.7084 7.04128 8.3334 7.49961 8.3334H11.2496V6.25006L14.1663 9.16673L11.2496 12.0834Z"
+                                fill="#45197C"></path>
+                            </g>
+                            <defs _ngcontent-ng-c187617040="">
+                              <clipPath _ngcontent-ng-c187617040="" id="clip0_968_7953">
+                                <rect _ngcontent-ng-c187617040="" width="20" height="20" fill="white"></rect>
+                              </clipPath>
+                            </defs>
+                          </svg>
+                          Get Directions
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="dr-info-rows-row">
+                    <div class="row align-items-center">
+                      <div class="col-6 col-md-6 align-items-center">
+                        <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+                          _ngcontent-ng-c1737108717="" aria-hidden="true">
+                          <path
+                            d="M16 2H15V0H13V2H5V0H3V2H2C0.89 2 0.00999999 2.9 0.00999999 4L0 18C0 19.1 0.89 20 2 20H16C17.1 20 18 19.1 18 18V4C18 2.9 17.1 2 16 2ZM16 18H2V7H16V18ZM4 9H9V14H4V9Z"
+                            fill="black" _ngcontent-ng-c1737108717=""></path>
+                        </svg>
+                        On <strong>{{formattedDate}}</strong>
+                      </div>
+                      <div class="col-6 col-md-6 align-items-center text-end">
+                        <svg _ngcontent-ng-c150312255="" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <g _ngcontent-ng-c150312255="" clip-path="url(#clip0_953_5573)">
+                            <path _ngcontent-ng-c150312255=""
+                              d="M11.99 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 11.99 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 11.99 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
+                              fill="black"></path>
+                            <path _ngcontent-ng-c150312255="" d="M12.5 7H11V13L16.25 16.15L17 14.92L12.5 12.25V7Z"
+                              fill="black"></path>
+                          </g>
+                          <defs _ngcontent-ng-c150312255="">
+                            <clipPath _ngcontent-ng-c150312255="" id="clip0_953_5573">
+                              <rect _ngcontent-ng-c150312255="" width="24" height="24" fill="white"></rect>
+                            </clipPath>
+                          </defs>
+                        </svg>
+                        At <strong>{{formattedTime}}</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12"><a (click)="closeDialog()">Change date and time</a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div [class]="data?.claimProfile ? 'col-lg-12' : 'col-lg-6'" style="background: #F1E7FF; padding: 15px 15px;">
+            <div class="otp-form">
+              <div class="row_profile d-flex mb-2">
+                <!-- <div class="img_container">
+                  <img [src]="data?.profile" alt="">
+                </div> -->
+                <div class="text_content">
+                  <!-- <h2>{{ data?.claimProfile ? 'Are You ' + data?.name + ' ?': 'To proceed, enter your mobile number.' }}
+                  </h2> -->
+                  <h2>To proceed, enter your mobile number.</h2>
+
+                  <!-- <p>{{data?.specializationName}}</p> -->
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- <div class="col-lg-12">
+                  <label>Mobile Number</label>
+                </div> -->
+              </div>
+              <form [formGroup]="signForm" class="field">
+                <div class="row g-0">
+                  <div class="col-lg-12">
+                    <div class="input-group">
+                      <input [ngStyle]="data.claimProfile ? { 'width': '14%' } : {}" type="text" id="country_code"
+                        class="country_code" value="+91" readonly />
+                      <input type="text" [ngStyle]="data.claimProfile ? { 'width': '85%' } : {}" maxlength="10"
+                        formControlName="phone" oninput="this.value = this.value.replace(/\D/g, '').replace(/^0/,'');"
+                        id="otp" class="otp" placeholder="Mobile Number" style="border-left: 1px solid grey;" />
+                    </div>
+                    <div *ngIf="signForm.get('phone')?.errors">
+                      <div class="form-error"
+                        *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['required']">
+                        This field is mandatory.
+                      </div>
+                      <div class="form-error" *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['minlength']
+                       &&(!control['phone'].errors?.['required'])">
+                        Please enter valid phone number.
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </form>
+              <div class="row">
+                <div class="col-lg-12">
+                  <button (click)="openVerify()" class="btn btn-primary" *ngIf="!data?.claimProfile">Send OTP</button>
+                  <button (click)="openVerify()" class="btn btn-primary" *ngIf="data?.claimProfile"> Proceed to
+                    Claim</button>
+                </div>
+              </div>
+
+
+              <div class="row" *ngIf="!data?.claimProfile">
+                <p>By booking this appointment, you agree to Nectar+ Health <a (click)="openDialog(true)">Terms and
+                    Conditions.*</a></p>
+              </div>
+            </div>
+
+          </div>
+          <div class="row g-0" *ngIf="data?.claimProfile">
+            <div class="col-lg-12 p-2">
+              <h5 class="listing_heading">
+                Benefits of joining Nectar Plus:
+              </h5>
+              <ul class="ms-2">
+                <li>Increase your practice’s online visibility.</li>
+                <li> Build trust with a verified profile.</li>
+                <li>Easily manage appointments and patient reviews.</li>
+              </ul>
+            </div>
+            <div class="row g-0 px-3 help_box_conatiner" style="background: #F1E7FF;">
+              <div class="help_box">
+                <img src="assets/images/doctor-details/Call.svg" alt="" class="me-1">
+                <a [href]="whatsappLink">+91 88102 32143</a>
+              </div>
+              <div class="help_box">
+                <img src="assets/images/doctor-details/Vector.svg" alt="" class="me-1">
+                <a [href]="mailtoLink" target="_blank">info&#64;nectarplus.health</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered forgot-passwor-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sign Up</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal('signupModal')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <p>Do you want to signup as a new patient?</p>
+          <label class="required" for="updatedValue">Full Name</label>
+          <input type="text" class="form-control" [(ngModel)]="name" />
+          <label class="required" for="updatedValue">Mobile Number</label>
+          <input type="text" class="form-control" [(ngModel)]="phone" maxlength="10" />
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-outline-secondary btn-block"
+            (click)="closeModal('signupModal')">Cancel</button>
+          <button type="button" class="btn btn-primary btn-block" (click)="signup()">Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="otp_verification_modal" tabindex="-1" aria-labelledby="otp_verification_modalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Verify OTP</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="closeModal('otp_verification_modal')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body verify-otp-modal">
+        <div class="form-group">
+          <!-- <label>{{ fieldToEdit === "phone" ? "Phone" : "Email" }}: {{ updatedValue }}</label> -->
+          <p class="text-success">Enter the verification cdoe sent to your mobile...</p>
+          <label class="updated-phone">{{ phone }}
+            <button type="button" class="btn btn-edit" (click)="changePhoneOrEmail()">
+              <img src="assets/images/svg/edit.svg" alt="" /></button></label>
+          <label>OTP</label>
+          <input type="text" class="form-control" [(ngModel)]="otp"
+            placeholder="Please enter the 6 digit OTP here to verify" />
+          <p>Didn't receive OTP? <a href="#" class="text-primary">Resend OTP</a></p>
+        </div>
+        <!-- <button type="button" class="btn btn-link" (click)="changePhoneOrEmail()">Change {{ fieldToEdit === "phone" ? "Phone" : "Email" }}</button> -->
+
+        <button type="button" class="btn btn-primary btn-block" (click)="verifyOTP()">Verify</button>
+      </div>
+    </div>
+  </div>
+</div>

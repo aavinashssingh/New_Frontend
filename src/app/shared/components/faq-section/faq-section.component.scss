@@ -1,0 +1,118 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.faq {
+  &__wrapper {
+    padding: $pad_0 $pad_24 $pad_24;
+
+    @media screen and (max-width: 776px) {
+      padding: 0;
+      margin-top: 12px;
+    }
+
+    h2 {
+      @include font-sans_pro-semibold($size: 22px);
+
+      @media screen and (max-width: 776px) {
+        padding-left: 0px !important;
+        @include font-sans_pro-semibold($size: 20px, $lineheight: 30px);
+        margin: 0;
+      }
+    }
+
+    &__ques-ans {
+      padding: $pad_12 $pad_24;
+      // padding-bottom: 30px;
+      // padding-top: 14px;
+      border-bottom: 1px solid $border-color;
+
+      @media screen and (max-width: 776px) {
+        padding: 15px 0;
+      }
+
+      .ques {
+        @include font-sans_pro-semibold($size: $font_14);
+
+        // display: grid;
+        // grid-template-columns: 3% 97%;
+        @media screen and (max-width: 776px) {
+          @include font-sans_pro-semibold($size: 16px, $lineheight: 30px);
+        }
+      }
+
+      .ans {
+        @include font-sans_pro-regular($size: $font_14);
+
+        // display: grid;
+        // grid-template-columns: 3% 97%;
+        @media screen and (max-width: 776px) {
+          @include font-sans_pro-regular($size: 16px, $lineheight: 30px);
+        }
+      }
+    }
+  }
+}
+
+.no-data {
+  @include font-sans_pro-semibold($size: 22px);
+  margin-bottom: 30px;
+
+  @media screen and (max-width: 776px) {
+    @include font-sans_pro-semibold($size: 20px, $lineheight: 30px);
+  }
+}
+
+.padding-top-32 {
+  padding: 32px 0px;
+}
+
+:host::ng-deep {
+  .mat-expansion-panel-header {
+    padding: 8px !important;
+    min-height: 48px !important;
+    height: max-content !important;
+  }
+
+  .mat-accordion .mat-expansion-panel {
+    border-radius: 0 !important;
+    border-bottom: 1px solid $border-color !important;
+  }
+
+  .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+    box-shadow: none !important;
+  }
+
+  .mat-expansion-panel-content {
+    background: $bright-gray;
+  }
+
+  .mat-expanded {
+    background: $bright-gray !important;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 8px;
+  }
+}
+
+.mobile-accordians {
+  display: none;
+
+  @media screen and (max-width: 767px) {
+    display: block;
+  }
+}
+
+button{
+  border: none !important;
+  background: none !important;
+  color: blue !important;
+}

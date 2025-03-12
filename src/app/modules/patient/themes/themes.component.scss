@@ -1,0 +1,81 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.w-60 {
+  @media screen and (max-width: 767px) {
+    width: 60% !important;
+  }
+
+  @media screen and (max-width: 576px) {
+    width: 75% !important;
+  }
+
+  @media screen and (max-width: 400px) {
+    width: 85% !important;
+    height: -webkit-fill-available !important;
+  }
+}
+
+.tabs {
+  height: 48px;
+  @include font-sans_pro-regular(18px);
+}
+
+.rotateArrow {
+  transition: all 0.2s ease-in-out;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+
+  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+}
+
+.falseClass {
+  transition: all 0.2s ease-in-out;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+}
+
+.mat-drawer {
+  position: fixed !important;
+}
+
+:host::ng-deep {
+  @media screen and (max-width: 767px) {
+
+    .mat-drawer-content,
+    .mat-drawer-container {
+      overflow: unset !important;
+    }
+  }
+}
+
+a {
+  color: $black;
+  text-decoration: none;
+}
+.offcanva_login_button {
+  border-radius: 50px;
+  color: #FFFFFF;
+  background: #45197C;
+  border: none;
+  padding: 8px 23px;
+
+}
+.highlight-practice {
+  background: #E3CCFF;
+  color: #000000; /* Example text color */
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #45197C66
+}

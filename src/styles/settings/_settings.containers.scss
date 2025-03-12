@@ -1,0 +1,13 @@
+$content-max-width: 85%;
+$content-sm-max-width: 90%;
+$content-max-width-mobile:1200px;
+$content-mobile-width-gap: 15px;
+
+
+// @mixin container(){
+//     max-width: $content-max-width-mobile;
+//     padding: 20px;
+//     @include mq-breakpoint-xl(){
+//         max-width: $content-max-width;    
+//     }
+// }

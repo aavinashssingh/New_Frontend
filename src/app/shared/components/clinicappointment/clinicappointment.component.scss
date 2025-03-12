@@ -1,0 +1,684 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.soltsCount {
+  @include font-sans_pro-regular(14px);
+  text-align: right;
+  color: $green;
+
+  @media screen and (max-width: 767px) {
+    @include font-sans_pro-regular(16px);
+  }
+}
+
+.visit-appointment {
+  background-color: white;
+  display: flex;
+  padding: 12px 24px;
+  align-items: center;
+
+  img {
+    width: 36px;
+    height: 36px;
+  }
+
+  p {
+    color: black;
+    margin-left: 12px;
+    @include font-sans_pro-semibold(22px);
+
+    @media screen and (max-width: 767px) {
+      @include font-sans_pro-semibold(18px);
+    }
+  }
+}
+
+.doctor-detail {
+  padding: 24px;
+
+  .hospital-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    img {
+      height: 7px;
+      width: 12px;
+    }
+
+    p {
+      @include font-sans_pro-semibold(14px);
+      color: $black;
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-semibold(16px);
+      }
+    }
+  }
+
+  .rating {
+    margin-top: 5px;
+    justify-content: start;
+
+    ::ng-deep {
+      star-rating {
+        .star-container {
+          margin-left: 0;
+
+          svg {
+            fill: $green !important;
+          }
+        }
+      }
+    }
+
+    img {
+      margin-bottom: 10px;
+      height: 20px;
+      width: 20px;
+      display: inline-block;
+    }
+
+    .total {
+      @include font-sans_pro-semibold(14px);
+
+      color: rgba(0, 0, 0, 0.7);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-semibold(16px);
+      }
+    }
+
+    .star {
+      color: $green;
+      @include font-sans_pro-semibold(14px);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-semibold(16px);
+      }
+    }
+
+    .review {
+      @include font-sans_pro-regular(14px);
+
+      color: rgba(0, 0, 0, 0.7);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-regular(16px);
+      }
+    }
+  }
+
+  .other-detail {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .doctor-fees {
+      span {
+        @include font-sans_pro-semibold(14px);
+        color: $black;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-semibold(16px);
+        }
+      }
+
+      p {
+        @include font-sans_pro-regular(14px);
+        color: $black;
+        opacity: 0.7;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular(16px);
+        }
+      }
+    }
+
+    .address {
+      p {
+        @include font-sans_pro-regular(14px);
+        color: $black;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular(16px);
+        }
+      }
+
+      span {
+        @include font-sans_pro-semibold(14px);
+        color: $purple;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-semibold(16px);
+        }
+      }
+    }
+  }
+}
+
+.scheduled-appointment {
+  height: 350px;
+  overflow-y: auto;
+  padding: 24px;
+
+  .morningappointment {
+    .slots {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .routine {
+        @include font-sans_pro-regular(14px);
+        color: rgba(0, 0, 0, 0.8);
+
+        img {
+          margin-left: 12px;
+        }
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular(16px);
+        }
+      }
+
+      p {
+        @include font-sans_pro-regular(14px);
+        text-align: right;
+        color: $green;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular(16px);
+        }
+      }
+    }
+  }
+}
+
+.timing {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+
+  .btn-wrap {
+    // max-width: 103px;
+    // width: 100%;
+    min-width: calc(33% - 5px);
+
+    .button-active {
+      background: rgba(69, 25, 124, 0.1);
+      height: 48px;
+      width: 100%;
+      border: none;
+      @include font-sans_pro-regular($size: 14px);
+      color: $purple;
+
+      // margin-right: 7.5px;
+      // margin-top: 10px;
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-regular(16px);
+      }
+    }
+
+    .button-active:hover {
+      background-color: $purple;
+      color: $white;
+    }
+
+    .button-inactive {
+      background: rgba(69, 25, 124, 0.1);
+      height: 35px;
+      width: 100%;
+      border: none;
+      @include font-sans_pro-regular($size: 14px);
+      color: $purple;
+      opacity: 0.5;
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-regular(16px);
+      }
+    }
+  }
+}
+
+.carousel-container {
+  // padding: 16px 52px 10px;
+  padding: 10px 52px 4px;
+
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+}
+
+.caraousel {
+  position: relative;
+
+  ::ng-deep {
+    .owl-carousel {
+      .owl-item {
+        text-align: center;
+
+        // width: fit-content !important;
+        p {
+          @include font-sans_pro-semibold($size: $font_16);
+          color: $black;
+          opacity: 0.5;
+          margin: 0;
+
+          @media screen and (max-width: 767px) {
+            @include font-sans_pro-semibold($font_16);
+          }
+        }
+
+        &.active {
+          &.center {
+            p {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+
+    .owl-prev {
+      position: absolute !important;
+      background: none !important;
+      top: -6px !important;
+      left: -34px !important;
+    }
+
+    .owl-next {
+      position: absolute !important;
+      background: none !important;
+      top: -6px !important;
+      right: -38px !important;
+    }
+
+    // .owl-carousel {
+    //   padding-left: 70px !important;
+    //   padding-right: 50px !important;
+    // }
+  }
+}
+
+.appoinment-dates {
+  max-width: 100%;
+  background: $white;
+}
+
+.other-hospital {
+  z-index: 999;
+  padding: 15px;
+  background-color: $white;
+  border: 1px solid $border-color;
+  max-height: 300px;
+  overflow-y: auto;
+
+  p {
+    @include font-sans_pro-semibold(14px);
+
+    @media screen and (max-width: 767px) {
+      @include font-sans_pro-semibold(16px);
+    }
+  }
+
+  .rating {
+    margin-top: 5px;
+    justify-content: start;
+
+    ::ng-deep {
+      star-rating {
+        .star-container {
+          margin-left: 0;
+
+          svg {
+            fill: $green !important;
+          }
+        }
+      }
+    }
+
+    img {
+      margin-bottom: 10px;
+      height: 20px;
+      width: 20px;
+      display: inline-block;
+    }
+
+    .total {
+      @include font-sans_pro-semibold(14px);
+
+      color: rgba(0, 0, 0, 0.7);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-semibold(16px);
+      }
+    }
+
+    .star {
+      color: $green;
+      @include font-sans_pro-semibold(14px);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-semibold(16px);
+      }
+    }
+
+    .review {
+      @include font-sans_pro-regular(14px);
+
+      color: rgba(0, 0, 0, 0.7);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-regular(16px);
+      }
+    }
+  }
+
+  .other-detail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .doctor-fees {
+      margin-left: 34px;
+
+      span {
+        @include font-sans_pro-semibold(14px);
+        color: $black;
+        padding: 5px 10px;
+        border: 1px solid $border-color;
+        border-radius: 4px;
+        white-space: nowrap;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-semibold(16px);
+        }
+      }
+
+      p {
+        @include font-sans_pro-regular(14px);
+        color: $black;
+        opacity: 0.7;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular(16px);
+        }
+      }
+    }
+
+    .address {
+      p {
+        @include font-sans_pro-regular(14px);
+        color: $black;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular(16px);
+        }
+      }
+
+      span {
+        @include font-sans_pro-semibold(14px);
+        color: $purple;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-semibold(16px);
+        }
+      }
+    }
+  }
+}
+
+.border-line {
+  border-bottom: 1px solid $border-color;
+  padding: 4px 0;
+}
+
+.border-line:first-child,
+.border-line:last-child {
+  border-bottom: none;
+}
+
+// .border-line:last-child {
+//   border: none;
+// }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $purple;
+  border-radius: 20px;
+}
+
+.active {
+  background-color: #45197c !important;
+}
+
+.checkbox-round {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.active-checkbox {
+  background-color: black !important;
+}
+
+.rounded-circle {
+  padding: 3px;
+  border: 3px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  // justify-content: flex-start;
+  gap: 5px;
+}
+
+.rounded-circle {
+  color: white;
+}
+
+// .tabs_bar_choose {
+//   width: calc(100%);
+//   max-width: calc(100%);
+//   border: 1px solid grey;
+//   padding: 10px 30px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   list-style-type: none;
+
+// }
+// .tabs_bar_choose li {
+//   width: calc(100%);
+//   max-width: calc(100%);
+//   display: flex;
+//   padding: 5px;
+//   background: #008080;
+// }
+
+.px-2 {
+  padding: 15px 10px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px;
+  align-items: center;
+
+  p {
+    color: #fff;
+    font-family: "Source Sans Pro";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+
+.tabs_bar_choose {
+  width: calc(100%);
+  max-width: calc(100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  padding: 10px 22px;
+  margin-bottom: 0;
+
+  li {
+    width: calc(100%);
+    max-width: calc(100%);
+    display: flex;
+    padding: 12px 30px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-right: 0px solid rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    // background: #008080;
+
+    &:first-child {
+      border-radius: 5px 0px 0px 5px;
+    }
+
+    &:last-child {
+      border-radius: 0px 5px 5px 0px;
+    }
+
+    &.active {
+      background-color: white !important;
+    }
+
+    p {
+      color: $black;
+    }
+
+    &:last-child {
+      border-right: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+    @media screen and (max-width: 767px) {
+      border-right: 1px solid rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 100%;
+
+      &:first-child {
+        border-radius: 5px;
+      }
+
+      &:last-child {
+        border-radius: 5px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+  }
+}
+
+.timing {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+
+  @media screen and (max-width: 767px) {
+    justify-content: start;
+  }
+
+  .btn-wrap {
+    justify-self: flex-start;
+    // max-width: 103px;
+    // width: 100%;
+    // min-width: calc(33% - 5px);
+    min-width: calc(24% - 5px);
+
+    .button-active {
+      // background: rgba(69, 25, 124, 0.1);
+      background: $white;
+      height: 35px;
+      width: 100%;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      @include font-sans_pro-regular($size: 15px);
+      color: $black;
+
+      // border: none;
+      // color: $purple;
+      // margin-right: 7.5px;
+      // margin-top: 10px;
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-regular(16px);
+      }
+    }
+
+    .button-active:hover {
+      background-color: $purple;
+      color: $white;
+    }
+
+    .button-inactive {
+      background: rgba(69, 25, 124, 0.1);
+      height: 35px;
+      width: 100%;
+      border: none;
+      @include font-sans_pro-regular($size: 14px);
+      color: $purple;
+      opacity: 0.5;
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-regular(16px);
+      }
+    }
+  }
+}
+
+.rounded-circle {
+  padding: 3px;
+  border: 3px solid $black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.rounded-circle {
+  color: $black;
+}
+
+.video_button {
+  border: 1px solid #008080 !important;
+  background: #0FAAAA0D !important;
+  color: #008080 !important;
+  border-radius: 5px;
+}
+.span_fees{
+  display: flex;
+  align-items: baseline;
+}
+.inclinic_button {
+  border: 1px solid #45197C !important;
+  background: #45197C0D !important;
+  color: #45197C !important;
+  border-radius: 5px;
+}

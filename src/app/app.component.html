@@ -1,0 +1,9 @@
+<!-- Custom Loader -->
+<div *ngIf="isLoading" class="loader-container">
+  <img src="assets/Nectar-Plus-Health-Icon.gif" class="loader-gif" alt="Loading..." />
+</div>
+
+<!-- Main Content (Blur when loading) -->
+<div [class.blur-content]="isLoading">
+  <router-outlet></router-outlet>
+</div>

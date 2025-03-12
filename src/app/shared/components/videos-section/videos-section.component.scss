@@ -1,0 +1,62 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.videos-wrapper {
+  padding: $pad_0 $pad_24 $pad_24;
+
+  @media screen and (max-width: 767px) {
+    padding: 32px 0px;
+  }
+
+  h2 {
+    @include font-sans_pro-semibold($size: 22px);
+
+    // margin-bottom: ;
+    @media screen and (max-width: 767px) {
+      @include font-sans_pro-semibold($size: 20px);
+    }
+  }
+
+  .videos {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+
+    @media screen and (max-width: 767px) {
+      width: calc(100vw - 20px);
+    }
+
+    .video-wrapper {
+      iframe {
+        height: 200px;
+        width: 360px;
+        border-radius: 10px;
+
+        @media screen and (max-width: 767px) {
+          height: 150px;
+          width: 250px;
+        }
+      }
+    }
+  }
+}
+
+.videos::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.videos {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}

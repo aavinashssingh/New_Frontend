@@ -1,0 +1,637 @@
+:root::-webkit-scrollbar {
+    display: none !important;
+}
+
+:root {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.Bredcrum {
+    width: calc(100%);
+    max-width: calc(100%);
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+.breadcrum_section {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2px;
+    align-items: center;
+    width: min-content;
+}
+
+.breadcrum_section p {
+    color: #000;
+    font-family: "Source Sans Pro";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: auto;
+    width: max-content;
+}
+
+.main_conatiner_flexbox {
+    width: calc(100%);
+    max-width: calc(100%);
+    display: flex;
+    gap: 10px
+}
+
+.main_conatiner_flexbox .aside {
+    width: calc(30%);
+    max-width: calc(30%);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+}
+
+.checkbox {
+    margin-right: 5px;
+}
+
+.main_continer {
+    width: calc(100%);
+    max-width: calc(100%);
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.row_class {
+    overflow: scroll;
+    scrollbar-width: none;
+    /* For Firefox */
+    -ms-overflow-style: none;
+    // height: 100vh;
+}
+
+.filter_catragory {
+    width: calc(100%);
+    max-width: calc(100%);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow: scroll;
+    scrollbar-width: none;
+    /* For Firefox */
+    -ms-overflow-style: none;
+    height: 100vh;
+}
+
+.aside {
+    width: 30%;
+    max-width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 111vh;
+    border-radius: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.30);
+    background: #FFF;
+    overflow: hidden;
+}
+
+.filter_catragory::-webkit-scrollbar {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+ul ul {
+    padding-left: 20px;
+}
+
+ul li ul li {
+    padding: 3px 1px;
+}
+
+.hidden {
+    display: none;
+}
+
+.hedding {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 10px
+}
+
+input[type="checkbox"] {
+    accent-color: #45197C;
+}
+
+
+.hedding h1 {
+    color: black;
+    text-align: center;
+    padding: 13px 0px 0px 0px;
+    font-family: "Source Sans Pro";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+li {
+    margin: 5px 0;
+    color: #000;
+    font-family: "Source Sans Pro";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+
+
+
+.Show_product {
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
+    background: #45197C;
+    color: white;
+    border: none !important;
+
+}
+
+.Toogle_button {
+    cursor: pointer;
+    border: none !important;
+    background: none;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.Product_categroy {
+    margin-top: -20px;
+}
+
+.review_card {
+
+    display: flex;
+    align-items: center;
+    align-items: center;
+}
+
+.review_card p {
+    color: #FFF;
+    background: #7ed321 !important;
+    padding: 3px 8px;
+    margin-top: 7px;
+    border-radius: 10px;
+    font-family: "Source Sans Pro";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: auto;
+}
+
+.Product_company {
+    color: #000;
+    font-family: "Source Sans Pro";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.Product_company span a {
+    color: #45197C;
+    font-family: "Source Sans Pro";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+button a {
+    color: #45197C;
+}
+
+h3 {
+    font-size: 16px;
+    color: #000;
+    font-family: "Source Sans Pro";
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.button_section {
+    width: calc(100%);
+    max-width: calc(100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart_button {
+    display: flex;
+    padding: 4.5px 9px;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    border-radius: 5px;
+    border: 1px solid rgba(69, 25, 124, 0.10);
+    text-align: center;
+    font-family: "Source Sans Pro";
+    font-size: 18px;
+    font-weight: 600;
+
+}
+
+.Ammount_section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #45197C;
+    text-align: center;
+    font-family: "Source Sans Pro";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.Ammount_section span {
+    text-align: center;
+    font-family: "Source Sans Pro";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.wrong_price {
+    color: #808080;
+    text-align: center;
+    font-family: "Source Sans Pro";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration: line-through;
+
+}
+
+.text_hedding {
+    color: #000;
+    font-family: "Source Sans Pro";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.tab-bar {
+    justify-content: flex-end;
+    overflow-x: auto;
+    padding: 7px;
+    width: 100%;
+    scrollbar-width: 0px;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+}
+
+.filter_text {
+    font-size: 20px;
+    padding: inherit;
+}
+
+.tab-bar::-webkit-scrollbar {
+    /* WebKit */
+    display: none !important;
+}
+
+.scrollable-container {
+    overflow: auto;
+}
+
+.tab-bar a {
+    text-decoration: none;
+    color: black;
+    border: none;
+    padding: 10px 20px 0px 0px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.tab-bar a.active {
+
+    padding: 6.5px 10px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 18px;
+    background: #45197C;
+    color: white;
+    margin: 0px 10px 0 -10px;
+
+}
+
+
+.tab-bar::-webkit-scrollbar {
+    height: 20px;
+}
+
+.tab-bar::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+.tab-bar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.main_tab_conteiner {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.row_class {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.col {
+    width: 232px;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.card {
+    height: 344px;
+}
+
+.filter_button {
+    display: none;
+}
+
+.button_cart_view {
+    display: flex;
+    gap: 5px;
+}
+
+@media (max-width:380px) {
+    .col {
+        width: 170px !important;
+        padding: 4px;
+    }
+
+    img {
+        margin: 20px auto !important;
+        width: 89px !important;
+        height: 75px !important;
+    }
+
+    h3,
+    .card-text {
+        margin: 0px !important;
+    }
+
+    p,
+    h3 {
+        font-size: 13px;
+    }
+
+    .review_card p,
+    .Product_company {
+        font-size: 10px !important;
+    }
+
+
+    .Product_company span a {
+        font-size: 10px !important;
+    }
+
+
+}
+
+@media (max-width:500px) {
+    .col {
+        width:195px;
+        padding: 4px;
+    }
+
+    .Ammount_section {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .Ammount_section,
+    .Ammount_section span,
+    p,
+    h3 {
+
+        font-size: 11px;
+    }
+
+    .tab-bar {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .Bredcrum {
+        overflow: auto;
+    }
+
+    .Product_company {
+        margin: 4px 0px !important;
+    }
+
+}
+
+
+
+@media (max-width: 768px) {
+    .main_tab_conteiner {
+        display: flow !important;
+    }
+
+    .review_card p {
+        padding: 1px 5px !important;
+    }
+
+    .aside {
+        height: fit-content;
+    }
+
+    .filter_button {
+        display: block !important;
+    }
+
+    .card-text {
+        margin: 2px 0px !important;
+    }
+
+    .row_class {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    :host ::ng-deep .star svg,
+    :host ::ng-deep .star i {
+        height: 15px;
+        width: 20px;
+    }
+
+    :host ::ng-deep .rating.medium .star {
+        width: 16px !important;
+    }
+
+    :host ::ng-deep .rating {
+        margin-bottom: 0px !important;
+    }
+
+    .card {
+        height: auto;
+    }
+
+    .card-body {
+        padding: 10px 10px 10px 10px !important;
+    }
+}
+
+.offcanvas {
+    width: 450px !important;
+}
+
+.filter_button {
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+}
+
+.filter_button p {
+    margin: auto
+}
+
+.button_section_load {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button_section_load .row button {
+    display: inline-flex;
+    padding: 12px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border: none !important;
+    color: white;
+    font-size: 18px;
+    border-radius: 5px;
+    background: #45197C;
+}
+
+@media (max-width: 1030px) {
+    .row_class {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
+
+
+/* Style for each list item */
+li {
+    margin-bottom: 10px;
+    /* Space between items */
+}
+
+.checkbox {
+    margin-right: 10px;
+}
+
+/* Style for labels */
+label {
+    flex: 1;
+    /* Take up remaining space */
+}
+
+/* Button for toggling visibility */
+.Toogle_button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #007bff;
+    /* Example color, adjust as needed */
+}
+
+
+
+.btn-toggle-expanded {
+    /* Styles for when the category is expanded */
+    color: #0056b3;
+    /* Example color, adjust as needed */
+}
+
+/* Hidden class for collapsed items */
+.hidden {
+    display: none;
+}
+
+/* Styles for collapsing */
+.collapse {
+    margin-top: 10px;
+    /* Space above collapsible content */
+}
+
+/* Style for collapsible content */
+ul.hidden {
+    display: none;
+}
+
+ul.btn-toggle-nav {
+    padding-left: 20px;
+    /* Indentation for nested lists */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .item-container {
+        flex-direction: column;
+        /* Stack items vertically on smaller screens */
+    }
+
+    .Toogle_button {
+        align-self: flex-start;
+        /* Align button to the start */
+    }
+}

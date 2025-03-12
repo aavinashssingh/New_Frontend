@@ -1,0 +1,67 @@
+<div class="border-bottom-style d-flex sub-head" *ngIf="login">
+  <div class="auth-nav-tab cursor-pointer" [routerLink]="routes[userType].login" routerLinkActive="active"
+    *ngIf="!this.verifyNumber">
+    Login
+  </div>
+  <div class="auth-nav-tab cursor-pointer" [routerLink]="routes[userType].register" routerLinkActive="active"
+    *ngIf="!verifyNumber">
+    Register
+  </div>
+  <div class="auth-nav-tab cursor-pointer" *ngIf="verifyNumber && !verifyEmail">
+    Number Verification
+  </div>
+  <div class="auth-nav-tab cursor-pointer" *ngIf="verifyEmail">
+    Email Verification
+  </div>
+</div>
+<section class="login-wrapper" *ngIf="login">
+  <form [formGroup]="verifyEmail ? emailVerifyForm : loginForm" class="d-flex flex-column gap-6" (ngSubmit)="submit()">
+    <div *ngIf="!verifyEmail">
+      <label for=""> Mobile Number </label>
+      <div class="border-grey d-flex align-items-center">
+        <span class="countryCode">+91</span>
+        <input class="extra-pad" maxlength="10" type="text" placeholder="Mobile Number" formControlName="phone"
+          oninput="this.value = this.value.replace(/\D/g, '').replace(/^0/,'');" style="border: none; padding: 0 5px" />
+      </div>
+      <div *ngIf="loginForm.get('phone')?.errors">
+        <div class="form-error"
+          *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['required']">
+          Please enter phone number.
+        </div>
+        <div class="form-error" *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['minlength']
+          ">
+          Please enter valid phone number.
+        </div>
+      </div>
+    </div>
+    <div *ngIf="verifyEmail">
+      <label for=""> Email Address </label>
+      <div class="position-relative">
+        <input type="text" placeholder="Email Address" formControlName="email" />
+      </div>
+      <div *ngIf="emailVerifyForm.get('email')?.errors">
+        <div class="form-error"
+          *ngIf="(control['email'].touched || submitted) && control['email'].errors?.['required']">
+          Please enter email address.
+        </div>
+        <div class="form-error"
+          *ngIf="(control['email']?.errors?.['email'] || control['email']?.errors?.['pattern']) && (control['email'].touched || submitted) ">
+          Please enter a valid email address
+        </div>
+      </div>
+    </div>
+    <div class="checkbox-div" *ngIf="!verifyNumber && !verifyEmail">
+      <input class="custom-checkbox" type="checkbox" style="width: 24px; height: 24px" formControlName="checkbox" />
+      <span class="text-14">Remember me</span>
+    </div>
+    <div>
+      <button>Send OTP</button>
+    </div>
+    <span class="text-14 opacity-50"><span class="required-hint"> * </span>You may receive SMS updates from
+      Nectar</span>
+  </form>
+</section>
+
+<div *ngIf="!login">
+  <nectar-verify-otp [updateExistUser]="this.verifyNumber"></nectar-verify-otp>
+</div>

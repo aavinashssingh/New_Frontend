@@ -1,0 +1,70 @@
+<section>
+  <!-- description -->
+  <ng-container *ngFor="let item of data?.slice(0, 1)">
+    <div class="wrap" *ngIf="item?.links">
+      <div class="description" *ngIf="allowDescription && item?.description">
+        <span [innerHtml]="sanitizeHtml(isExpanded ? item?.description : (item?.description | truncate : 1500))"></span>
+        <button  (click)="toggleDescription()">
+          {{ isExpanded ? 'Read Less' : 'Read More' }}
+        </button>
+      </div>
+      
+
+      <!-- links -->
+
+      <div class="links">
+        <div class="link-heading d-flex flex-wrap" *ngIf="deviceWidth > 767">
+          Best {{ search | titlecase }} in {{ city | titlecase }} | Average
+          Rating
+          <span class="font-600">&nbsp; 4.5</span>
+          <div class="rating">
+            <star-rating
+              [rating]="4.5"
+              [step]="0.1"
+              [showHalfStars]="true"
+              [readOnly]="true"
+            ></star-rating>
+          </div>
+        </div>
+
+        <div class="link-heading" *ngIf="deviceWidth < 767">
+          Best {{ search | titlecase }} in {{ city | titlecase }} <br />
+          <div class="d-flex">
+            Average Rating
+            <span class="font-600">&nbsp; 4.2</span>
+            <div class="rating">
+              <star-rating
+                [rating]="4"
+                [step]="0.1"
+                [showHalfStars]="true"
+                [readOnly]="true"
+              ></star-rating>
+            </div>
+          </div>
+        </div>
+        <div class="link-content mt-2">
+          <div
+            *ngIf="item?.links"
+            [innerHTML]="sanitizeHtml(item?.links)"
+          ></div>
+          <!-- <ng-container *ngIf="deviceWidth < 767">
+            <div *ngFor="let item of items" class="border-grey">
+              <mat-accordion>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title class="text-16 font-400">
+                      Top procedures in Delhi
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div *ngFor="let i of items" class="my-2">
+                    <a class="text-16">Arthroscopy in Delhi</a>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </ng-container> -->
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</section>

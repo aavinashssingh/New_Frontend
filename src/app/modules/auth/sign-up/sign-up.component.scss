@@ -1,0 +1,112 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.sub-head {
+  @media screen and (max-width: 576px) {
+    justify-content: center !important;
+  }
+}
+
+.signup-wrapper {
+  padding: 2rem;
+
+  @media screen and (max-width: 576px) {
+    padding: 2rem 10px;
+  }
+
+  .form-input {
+    label {
+      display: block;
+      @include font-sans_pro-regular($size: 14px);
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      margin-top: 16px;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid $border-color;
+      outline: none;
+      padding: 9px 20px;
+      @include font-sans_pro-regular($size: 14px);
+
+      &.doctor,
+      &.extra-pad {
+        padding: 9px 20px 9px 48px !important;
+      }
+    }
+
+    .doctorLetter {
+      @include font-sans_pro-regular($size: 14px);
+
+      left: 20px;
+      top: 25.5px;
+
+      @media screen and (max-width: 767px) {
+        top: 25.8px;
+      }
+    }
+  }
+
+  .checkbox-div {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  button {
+    cursor: pointer;
+    margin-top: 10px;
+    background: $purple;
+    border: none;
+    color: $white;
+    width: 100%;
+    padding: 12px 0;
+    @include font-sans_pro-semibold($size: 14px);
+
+    &.disabled {
+      background: $light-gray !important;
+    }
+  }
+}
+
+.auth-nav-tab {
+  font-size: 14px;
+  padding: 15px 25px;
+
+  &.active {
+    border-bottom: 4px solid $blue-violet;
+  }
+}
+
+.extra-pad-right {
+  padding: 20px 32px 20px 0;
+}
+
+.extra-pad-left {
+  padding: 20px 0 20px 32px;
+}
+
+.mobile-input {
+  margin-top: 0 !important;
+  border: none !important;
+  outline: none !important;
+  padding: 9px 20px 9px 3px !important;
+}
+
+.border-input {
+  border: 1px solid $border-color;
+}
+
+.static-number {
+  padding-left: 15px;
+  @include font-sans_pro-regular($size: 14px);
+}

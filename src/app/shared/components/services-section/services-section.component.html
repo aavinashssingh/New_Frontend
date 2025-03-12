@@ -1,0 +1,31 @@
+<section class="services" *ngIf="!(tab == 0 && !combinedList.length)" 
+  [ngClass]="{ 'border-bottom-style': tab == 0, 'pt-6': tab == 0 }">
+  
+  <h2 *ngIf="combinedList.length">Services</h2>
+
+  <div class="services__container">
+    <div *ngFor="let item of combinedList.slice(0, showAll ? combinedList.length : 10)" class="list">
+      <div class="d-flex gap-1 my-2">
+        <div>
+          <img loading="lazy" src="assets/images/serviceCheck.svg" alt="" />
+          &nbsp;
+        </div>
+        <div class="service">
+          <a class="service_link hi" 
+             [routerLink]="['/', formatName(city), formatName(item.name)]" 
+             [routerLinkActive]="'active'">
+            {{ item.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button *ngIf="combinedList.length > 10" class="btn btn-link" (click)="viewMoreServices()">
+    {{ showAll ? 'Read Less' : 'Read More' }}
+  </button>
+
+  <div *ngIf="!combinedList.length">
+    <h2 class="text-danger text-center">No Service Found</h2>
+  </div>
+</section>

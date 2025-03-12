@@ -1,0 +1,34 @@
+<section>
+  <div class="p-3">
+    <div class="d-flex justify-content-between">
+      <div class="text-24 font-600">General Surgery</div>
+      <div>
+        <img
+          src="assets/images/svg/cross.svg"
+          alt=""
+          (click)="bottomSheet.dismiss()"
+        />
+      </div>
+    </div>
+    <div class="text-16 font-400 opacity-80">{{ totalCount || 0 }} ailment</div>
+
+    <div class="surgery-section">
+      <div class="d-flex flex-wrap gap-3">
+        <div
+          *ngFor="let i of surgeryList"
+          class="box mt-3"
+          (click)="viewSurgery(i)"
+        >
+          <img
+            loading="lazy"
+            [src]="i?.imageUrl"
+            alt=""
+            height="36"
+            width="36"
+          />
+          <div class="text-16 font-400 mt-2">{{ i?.title | truncate:20}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

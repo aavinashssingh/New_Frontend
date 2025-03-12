@@ -1,0 +1,65 @@
+<div class="main">
+  <div class="wrapper">
+    <h2>Contact Us</h2>
+    <div class="d-flex sm-flex-col gap-20 w-100 align-items-center">
+      <div class="image-section">
+        <svg-icon src="assets/images/svg/contact.svg" alt="contact-us-image" class="bg-Grey"></svg-icon>
+      </div>
+      <div class="content">
+        <form [formGroup]="contactForm">
+          <div class="fields">
+            <label for="">Name <span>*</span></label>
+            <input type="text" maxlength="50" placeholder="Enter Name" formControlName="name"
+              oninput="this.value = this.value.replace(/^ $/,'');" />
+          </div>
+          <div *ngIf="contactForm.get('name')?.errors">
+            <span class="text-danger"
+              *ngIf="control['name']?.errors?.['required'] && (control['name'].touched || submitted) ">Please enter
+              name.
+            </span>
+          </div>
+          <div class="fields mt-3">
+            <label for="">Phone Number <span>*</span></label>
+            <input type="text" maxlength="10" placeholder="Enter Phone Number" formControlName="phone"
+              oninput="this.value = this.value.replace(/\D/g, '').replace(/^0/,'');" />
+          </div>
+          <div *ngIf="contactForm.get('phone')?.errors">
+            <div class="form-error"
+              *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['required']">
+              Please enter phone number.
+            </div>
+
+            <div class="form-error" *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['minlength'] 
+              && (!control['phone'].errors?.['required']) ">
+              Please enter valid phone number.
+            </div>
+          </div>
+          <div class="fields mt-3">
+            <label for="">Email </label>
+            <input type="text" placeholder="Enter Email" formControlName="email" />
+          </div>
+          <div *ngIf="contactForm.get('email')?.errors">
+            <span class="text-danger" *ngIf="(control['email']?.errors?.['email'] || control['email']?.errors?.['pattern']) 
+              && (control['email'].touched || submitted) && (!control['email'].errors?.['required']) ">Please enter a
+              valid email address
+            </span>
+          </div>
+          <div class="fields mt-3">
+            <label for="">Comment <span>*</span></label>
+            <textarea formControlName="comment" class="w-100" maxlength="100" cols="30" rows="5" placeholder="Comment"
+              oninput="this.value = this.value.replace(/^ $/,'');"></textarea>
+          </div>
+          <div *ngIf="contactForm.get('comment')?.errors">
+            <span class="text-danger"
+              *ngIf="control['comment']?.errors?.['required'] && (control['comment'].touched || submitted) ">This field
+              is required.
+            </span>
+          </div>
+          <div class="button mt-4">
+            <button (click)="submit()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

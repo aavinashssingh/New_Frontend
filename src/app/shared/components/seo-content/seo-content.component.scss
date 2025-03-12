@@ -1,0 +1,122 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+section {
+  background: rgba(69, 25, 124, 0.05);
+
+  @media screen and (max-width: 767px) {
+    background: $white;
+  }
+
+  margin-top: 20px;
+
+  .wrap {
+    max-width: $content-max-width;
+    margin: 0 auto;
+
+    @media screen and (max-width: 767px) {
+      max-width: 100%;
+    }
+
+    .description {
+      padding: 72px 0;
+      border-bottom: 1px solid $border-color;
+
+      .heading {
+        @include font-sans_pro-semibold($size: 24px);
+        opacity: 0.7;
+      }
+
+      .content {
+        @include font-sans_pro-regular($size: 16px);
+      }
+
+      @media screen and (max-width: 767px) {
+        padding: 0 15px;
+      }
+    }
+
+    .links {
+      padding: 72px 0;
+
+      @media screen and (max-width: 767px) {
+        padding: 20px 0;
+      }
+
+      .link-heading {
+        @include font-sans_pro-regular($size: 16px);
+
+        @media screen and (max-width: 767px) {
+          padding: 0 15px;
+        }
+
+        ::ng-deep {
+          star-rating {
+            .star-container {
+              margin-left: 0;
+
+              svg {
+                fill: $orange !important;
+              }
+            }
+          }
+        }
+      }
+
+      .link-content {
+        a {
+          @include font-sans_pro-regular($size: 16px);
+          color: $blue;
+
+          @media screen and (max-width: 767px) {
+            text-decoration: none;
+          }
+        }
+
+        .blue-dot {
+          height: 8px;
+          width: 8px;
+          background: $blue;
+          border-radius: 50%;
+        }
+
+        @media screen and (max-width: 767px) {
+          padding: 0 15px;
+        }
+      }
+    }
+  }
+}
+
+:host::ng-deep {
+  .mat-expansion-panel-header {
+    padding: 0 15px !important;
+  }
+
+  .mat-accordion .mat-expansion-panel:first-of-type,
+  .mat-accordion .mat-expansion-panel:last-of-type {
+    border-radius: 0 !important;
+  }
+
+  .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+    box-shadow: none !important;
+  }
+}
+
+.border-grey {
+  border-bottom: 1px solid $border-color;
+}
+
+button{
+  border-radius: 5px;
+  background: $purple;
+  color: white;
+}

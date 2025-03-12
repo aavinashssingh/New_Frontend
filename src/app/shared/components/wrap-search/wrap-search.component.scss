@@ -1,0 +1,139 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.input-text {
+  width: 100%;
+  border: 1px solid $border-color;
+  display: flex;
+  gap: 10px;
+  // justify-content: space-between;
+  align-items: center;
+  height: 48px;
+  border-radius: 20px;
+
+  span {
+    color: rgba(0, 0, 0, 0.5);
+
+    @include font-sans_pro-regular(30px);
+  }
+
+  &__container {
+    width: 45%;
+    position: relative;
+
+    .icon {
+      position: absolute;
+      left: 27px;
+      top: 14px;
+    }
+
+    .input-box {
+      border: none;
+      height: 47px;
+      width: 100%;
+      padding: 0px 0px 0px 53px;
+      box-sizing: border-box;
+      background-color: transparent;
+      text-overflow: ellipsis;
+      @include font-sans_pro-regular(14px);
+
+      &:focus {
+        outline: none;
+      }
+
+      &:focus-visible {
+        outline: none;
+      }
+
+      &:first-child {
+        &::after {
+          content: "|";
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .mat-mdc-optgroup-label {
+    // padding-left: 32px !important;
+    background: rgba(238, 238, 238, 0.93) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    min-height: 28px !important;
+    opacity: 0.8;
+  }
+
+  .mat-mdc-option.mdc-list-item {
+    // min-height: 64px !important;
+  }
+
+  .mdc-menu-surface.mat-mdc-autocomplete-panel {
+    padding: 0 !important;
+  }
+
+  .mat-mdc-optgroup .mat-mdc-option {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    background: #fff;
+  }
+
+  .mat-mdc-option .mdc-list-item__primary-text {
+    margin-right: 0;
+    width: 100% !important;
+    color: $black !important;
+  }
+
+  .mat-mdc-option {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    background: #fff;
+  }
+
+  .mdc-menu-surface.mat-mdc-autocomplete-panel.mat-mdc-autocomplete-visible {
+    border: 1px solid $purple;
+    margin: 2px 0 !important;
+  }
+
+  .mat-mdc-optgroup .mat-mdc-option:not(.mat-mdc-option-multiple) {
+    padding-left: 18px !important;
+  }
+}
+
+.profile-icon {
+  border-radius: 500px;
+  height: 24px;
+  width: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $bright-gray;
+  border: 1px solid $border-color;
+  font-size: 12px;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $border-color;
+  z-index: 4;
+}
+
+.text-purple {
+  color: $purple !important;
+}
+
+.box1 {
+  width: 55%;
+}

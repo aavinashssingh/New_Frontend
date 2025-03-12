@@ -1,0 +1,324 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.appointment-booking {
+  background-color: #e2e2e2;
+
+  &__wrapper {
+    background-color: $white;
+    max-width: 486px;
+    margin: auto;
+    padding: 31px 0px;
+
+    @media screen and (max-width: 767px) {
+      padding: 80px 0px;
+    }
+
+    &__name {
+      padding: 0 31px;
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      margin-bottom: 17px;
+
+      &.hospital {
+        align-items: start;
+      }
+
+      img {
+        border-radius: 50%;
+        height: 72px;
+        width: 72px;
+        object-fit: cover;
+      }
+
+      h2 {
+        @include font-sans_pro-semibold($size: 14px);
+        margin: 0;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-semibold($size: 16px);
+        }
+      }
+
+      p {
+        @include font-sans_pro-regular($size: 14px);
+        margin: 0;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular($size: 16px);
+        }
+      }
+
+      h4 {
+        margin: 0;
+        color: $purple;
+        @include font-sans_pro-semibold($size: 14px);
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-semibold($size: 16px);
+        }
+      }
+    }
+
+    &__timings {
+      padding: 0px 31px;
+
+      &__details {
+        display: flex;
+        padding-top: 17px;
+        justify-content: space-between;
+        border-top: 1px solid $border-color;
+        flex-wrap: wrap;
+        gap: 15px;
+
+        .date {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+
+          span {
+            @include font-sans_pro-regular($size: 14px);
+
+            @media screen and (max-width: 767px) {
+              @include font-sans_pro-regular($size: 16px);
+            }
+          }
+
+          p {
+            margin: 0;
+            @include font-sans_pro-semibold($size: 14px);
+
+            @media screen and (max-width: 767px) {
+              @include font-sans_pro-semibold($size: 16px);
+            }
+          }
+        }
+
+        .time {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+
+          span {
+            @include font-sans_pro-regular($size: 14px);
+
+            @media screen and (max-width: 767px) {
+              @include font-sans_pro-regular($size: 16px);
+            }
+          }
+
+          p {
+            margin: 0;
+            @include font-sans_pro-semibold($size: 14px);
+
+            @media screen and (max-width: 767px) {
+              @include font-sans_pro-semibold($size: 16px);
+            }
+          }
+        }
+      }
+    }
+
+    .light-line {
+      margin: 16px 0;
+      opacity: 0.1;
+    }
+
+    &__patient-details {
+      padding: 0 31px;
+
+      h3 {
+        @include font-sans_pro-semibold($size: 14px);
+        margin: 0;
+
+        // margin-top: 20px;
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-semibold($size: 16px);
+        }
+      }
+
+      p {
+        @include font-sans_pro-regular($size: 16px, $lineheight: 20px);
+        margin: 0;
+        margin-top: 15px;
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular($size: 16px);
+        }
+      }
+
+      &__selection {
+        margin-top: 16px;
+        // border: 1px solid rgba(0, 0, 0, 0.4);
+        // border-radius: 5px;
+        // ::ng-deep {
+        //   mat-radio-group {
+        //     mat-radio-button {
+        //       cursor: pointer;
+        //       padding: 3px 0px;
+        //       border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+        //       &:last-child {
+        //         border-bottom: none;
+        //       }
+        //       .mdc-radio__background {
+        //         .mdc-radio__outer-circle {
+        //           border-color: #45197c !important;
+        //         }
+        //         .mdc-radio__inner-circle {
+        //           border-color: #45197c !important;
+        //           background-color: #45197c !important;
+        //         }
+        //       }
+        //       display: block;
+        //       label {
+        //         @include font-sans_pro-regular($size: 14px);
+        //       }
+        //     }
+        //   }
+        // }
+      }
+
+      &__data {
+        h2 {
+          @include font-sans_pro-bold($size: 14px);
+
+          margin: 0;
+          margin-top: 12px;
+
+          @media screen and (max-width: 767px) {
+            @include font-sans_pro-bold($size: 16px);
+          }
+        }
+
+        p {
+          @include font-sans_pro-regular($size: 16px, $lineheight: 20px);
+
+          margin: 0;
+          margin-top: 12px;
+        }
+
+        label {
+          margin-top: 12px;
+          display: block;
+          @include font-sans_pro-regular($size: 14px);
+
+          span {
+            color: $red;
+          }
+        }
+
+        input {
+          //   background: $red;
+          border: 1px solid rgba(0, 0, 0, 0.4);
+          border-radius: 5px;
+          width: 100%;
+          box-sizing: border-box;
+          margin-top: 6px;
+          height: 48px;
+          padding-left: 20px;
+          @include font-sans_pro-regular($size: 14px);
+        }
+
+        .submit {
+          margin-top: 25px;
+
+          button {
+            background: $purple;
+            width: 100%;
+            height: 48px;
+            @include font-sans_pro-bold($size: 16px, $lineheight: 21px);
+            color: $white;
+            border: none;
+          }
+        }
+
+        .details {
+
+          // margin-top: 24px;
+          p {
+            @include font-sans_pro-regular($size: 14px);
+            margin: 0;
+            margin-bottom: 12px;
+            opacity: 0.7;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+
+            @media screen and (max-width: 767px) {
+              @include font-sans_pro-regular($size: 16px);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.customBox{
+  padding-left: 13px !important;
+  
+  height: 48px;
+  display: flex;
+  gap: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 0px 0px 5px 5px;
+
+  &:last-child {
+    // border-top: none !important;
+  }
+
+  input[type="radio"] {
+    height: 20px;
+    width: 20px;
+    accent-color: $purple;
+  }
+
+  label {
+    @include font-sans_pro-regular($size: 14px);
+  }
+}
+.box {
+  padding: 13px;
+  height: 48px;
+  display: flex;
+  gap: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 0px 0px 5px 5px;
+
+  &:last-child {
+    // border-top: none !important;
+  }
+
+  input[type="radio"] {
+    height: 20px;
+    width: 20px;
+    accent-color: $purple;
+  }
+
+  label {
+    @include font-sans_pro-regular($size: 14px);
+  }
+}
+
+.box1 {
+  border-radius: 5px 5px 0px 0px;
+}
+
+.countryCode {
+  @include font-sans_pro-regular($size: 14px);
+  position: absolute;
+  z-index: 2;
+  background: $white;
+  top: 42px;
+  left: 18px;
+}

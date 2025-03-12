@@ -1,0 +1,120 @@
+@import "tools.mediaquery";
+
+@import "settings.colors";
+
+@import "tools.typography";
+
+@import "settings.containers";
+
+@import "variable.scss";
+
+
+.main {
+  .heading {
+    padding: 17px 32px;
+    border-bottom: 1px solid $border-color;
+
+    h2 {
+      margin: 0;
+      //   padding: 0 32px;
+      @include font-sans_pro-semibold(20px);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-semibold(18px);
+      }
+    }
+  }
+
+  .wrapper {
+    margin: 32px;
+
+    .otp-text {
+      @include font-sans_pro-regular(14px);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-regular(16px);
+      }
+    }
+
+    .contact {
+      margin-top: 12px;
+      @include font-sans_pro-semibold(28px);
+
+      @media screen and (max-width: 767px) {
+        @include font-sans_pro-semibold(24px);
+      }
+    }
+
+    .field {
+      label {
+        @include font-sans_pro-regular(14px);
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular(16px);
+        }
+      }
+
+      input[type="text"] {
+        margin-top: 18px;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid $border-color;
+        padding: 12px 20px;
+        outline: none;
+        @include font-sans_pro-regular($size: 14px);
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular(16px);
+        }
+      }
+    }
+
+    .footer-text {
+      margin-top: 12px;
+      gap: 12px;
+
+      p {
+        margin: 0;
+        opacity: 0.5;
+        @include font-sans_pro-regular(14px);
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular(16px);
+        }
+      }
+
+      .resend {
+        color: $purple;
+        @include font-sans_pro-regular(14px);
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-regular(16px);
+        }
+      }
+
+      .time {
+        @include font-sans_pro-semibold(14px);
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-semibold(16px);
+        }
+      }
+    }
+
+    .confirm {
+      margin-top: 24px;
+
+      button {
+        width: 100%;
+        height: 45px;
+        background: $purple;
+        color: $white;
+        @include font-sans_pro-semibold($size: 14px);
+
+        @media screen and (max-width: 767px) {
+          @include font-sans_pro-semibold(16px);
+        }
+      }
+    }
+  }
+}

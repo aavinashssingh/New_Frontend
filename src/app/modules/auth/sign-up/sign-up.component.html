@@ -1,0 +1,147 @@
+<div
+  class="border-bottom-style text-14 d-flex justify-content-between align-items-center sub-head"
+  *ngIf="signup"
+>
+  <div class="d-flex">
+    <div
+      class="auth-nav-tab cursor-pointer"
+      [routerLink]="routes[userType].login"
+      routerLinkActive="active"
+    >
+      Login
+    </div>
+    <div
+      class="auth-nav-tab cursor-pointer"
+      [routerLink]="routes[userType].register"
+      routerLinkActive="active"
+    >
+      Register
+    </div>
+  </div>
+  <!-- <div class="extra-pad-left" *ngIf="userType == 2">Join 100,000+ doctors</div> -->
+  <div class="">
+    <!-- <span *ngIf="userType != 2 && deviceWidth > 576">
+      Are you a doctor?
+      <u
+        class="extra-pad-right text-blue-violet cursor-pointer"
+        routerLink="/auth/doctors/register"
+        >Register</u
+      >
+    </span> -->
+    <span *ngIf="userType == 2 && deviceWidth > 576" class="extra-pad-right">
+      <u
+        class="text-blue-violet cursor-pointer"
+        routerLink="/auth/patient/login"
+        >Not a doctor?</u
+      >
+    </span>
+  </div>
+</div>
+<section class="signup-wrapper" *ngIf="signup">
+  <form [formGroup]="signupForm" class="d-flex flex-column gap-3">
+    <div class="form-input">
+      <label for=""> Full Name </label>
+      <div class="position-relative">
+        <input
+          class="w-100"
+          [ngClass]="{ doctor: userType == 2 }"
+          type="text"
+          placeholder="Full Name"
+          formControlName="fullName"
+          maxlength="50"
+          oninput="this.value = this.value.replace(/^ $/,'');"
+          (keypress)="cValidator.alphabetOnly($event)"
+        />
+        <span
+          *ngIf="userType == 2"
+          class="text-14 position-absolute doctorLetter"
+          >Dr.
+        </span>
+      </div>
+      <div
+        class="form-error"
+        *ngIf="(control['fullName'].touched || submitted) && control['fullName'].errors?.['required']"
+      >
+        Please enter full name.
+      </div>
+    </div>
+    <div class="form-input">
+      <label for=""> Mobile Number </label>
+      <div class="d-flex align-items-center mt-2 border-input">
+        <span class="static-number">+91</span>
+        <input
+          class="w-100 mobile-input"
+          type="text"
+          maxlength="10"
+          placeholder="Mobile Number"
+          formControlName="phone"
+          oninput="this.value = this.value.replace(/\D/g, '').replace(/^0/,'');"
+        />
+      </div>
+      <div *ngIf="signupForm.get('phone')?.errors">
+        <div
+          class="form-error"
+          *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['required']"
+        >
+          Please enter phone number.
+        </div>
+        <div
+          class="form-error"
+          *ngIf="(control['phone'].touched || submitted) && control['phone'].errors?.['minlength'] 
+        "
+        >
+          Please enter valid phone number.
+        </div>
+      </div>
+    </div>
+    <div class="checkbox-div">
+      <input
+        class="custom-checkbox"
+        type="checkbox"
+        style="width: 24px; height: 24px"
+        formControlName="permission"
+        (change)="userType == 2 ? openDialog(false) : false"
+        *ngIf="userType == 2"
+      />
+
+      <span class="text-14 opacity-50" *ngIf="userType != 2">
+        <span class="required-hint">*</span> You may receive SMS updates from
+        Nectar
+      </span>
+      <span class="text-14 opacity-50" *ngIf="userType == 2">
+        By signing up, I agree to
+      </span>
+      <u
+        class="text-14 font-600 cursor-pointer"
+        *ngIf="userType == 2"
+        (click)="openDialog(true)"
+        >terms & condition</u
+      >
+    </div>
+    <div>
+      <button
+        (click)="submit()"
+        [ngClass]="{ disabled: !control['permission'].value && userType == 2 }"
+      >
+        Send OTP
+      </button>
+    </div>
+  </form>
+</section>
+<div
+  *ngIf="userType != 2 && deviceWidth < 576"
+  class="text-18 w-100 text-center"
+>
+  Are you a doctor?
+  <u
+    class="extra-pad-right text-blue-violet cursor-pointer"
+    routerLink="/auth/doctors/register"
+    >Register</u
+  >
+</div>
+
+<div *ngIf="!signup">
+  <nectar-verify-otp
+    [patientSignup]="userType == 1 ? true : false"
+  ></nectar-verify-otp>
+</div>

@@ -1,0 +1,60 @@
+<section class="main">
+  <div class="heading d-flex justify-content-between align-items-center">
+    <h2>Verify Mobile</h2>
+    <!-- <img loading="lazy"src="assets/images/svg/cross.svg" alt="" height="14" width="14" /> -->
+  </div>
+  <div class="wrapper">
+    <div class="otp-text">We have sent you an OTP on</div>
+    <div class="contact d-flex align-items-center gap-3">
+      <div>+91{{ data?.phone }}</div>
+
+      <img
+        class="cursor-pointer"
+        src="assets/images/svg/edit.svg"
+        alt=""
+        height="18"
+        width="18"
+        (click)="edit()"
+      />
+    </div>
+    <form [formGroup]="otpForm" class="field">
+      <label for="">OTP</label>
+      <input
+        type="text"
+        placeholder="Please enter the 6 digit OTP here to verify"
+        maxlength="6"
+        formControlName="otp"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+      />
+      <div
+        class="form-error"
+        *ngIf="(controls['otp'].touched || submitted) && controls['otp'].errors?.['required']"
+      >
+        Otp is required
+      </div>
+      <div
+        class="form-error"
+        *ngIf="(controls['otp'].touched || submitted) && controls['otp'].errors?.['minlength'] 
+      && (!controls['otp'].errors?.['required'])"
+      >
+        Otp Must be Valid.
+      </div>
+    </form>
+    <div class="footer-text d-flex align-items-center">
+      <p>Didn’t received OTP?</p>
+      <span *ngIf="resendOtpVlaue" class="text-black">
+        <b>{{ resendTime }}</b></span
+      >
+      <span
+        *ngIf="!resendOtpVlaue"
+        class="cursor-pointer resend"
+        (click)="resendOTP()"
+      >
+        Resend OTP
+      </span>
+    </div>
+    <div class="confirm">
+      <button (click)="login()">Log In</button>
+    </div>
+  </div>
+</section>

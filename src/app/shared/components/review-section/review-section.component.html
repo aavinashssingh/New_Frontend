@@ -1,0 +1,234 @@
+<section class="review-section" *ngIf="!(tab == 0 && !reviewList?.length)">
+  <div class="review-section__wrapper">
+    <h2>Patient Review for {{ name | titlecase }}</h2>
+    <p>
+      All reviews have been submitted by patients after seeing the provider.
+    </p>
+
+    <div class="review-section__wrapper__logo-section">
+      <div class="items">
+        <div class="image">
+          <img
+            loading="lazy"
+            src="assets/images/doctor-details/star 1.svg"
+            alt=""
+          />
+        </div>
+        <div class="text">Overall rating</div>
+        <div class="rating">
+          <star-rating
+            [rating]="reviewDetail?.averagePoints"
+            [step]="0.1"
+            [showHalfStars]="true"
+            [readOnly]="true"
+          ></star-rating>
+          <h2 class="star">
+            {{ reviewDetail?.averagePoints | number : "1.1-1" }}
+          </h2>
+        </div>
+      </div>
+      <div class="items">
+        <div class="image">
+          <img
+            loading="lazy"
+            src="assets/images/doctor-details/waiting-room 1.svg"
+            alt=""
+          />
+        </div>
+        <div class="text">Wait time</div>
+        <div class="rating">
+          <star-rating
+            [rating]="reviewDetail?.averageWaitTime"
+            [step]="0.1"
+            [showHalfStars]="true"
+            [readOnly]="true"
+          ></star-rating>
+          <h2 class="star">
+            {{ reviewDetail?.averageWaitTime | number : "1.1-1" }}
+          </h2>
+        </div>
+      </div>
+      <div class="items">
+        <div class="image">
+          <img
+            loading="lazy"
+            src="assets/images/doctor-details/value 1.svg"
+            alt=""
+          />
+        </div>
+        <div class="text">Value for money</div>
+        <div class="rating">
+          <star-rating
+            [rating]="reviewDetail?.valueForMoney"
+            [step]="0.1"
+            [showHalfStars]="true"
+            [readOnly]="true"
+          ></star-rating>
+          <h2 class="star">
+            {{ reviewDetail?.valueForMoney | number : "1.1-1" }}
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div class="review-section__wrapper__review">
+      <h4>{{ totalReview || 0 }} reviews</h4>
+      <div class="d-flex gap-3 flex-wrap mobile-design">
+        <div class="search-box">
+          <input
+            type="text"
+            placeholder="Search by services"
+            id="services"
+            #services
+            [value]="searchValue"
+            (keyup)="searchService($event)"
+            (keypress)="cValidator.alphabetOnly($event)"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          />
+          <img
+            loading="lazy"
+            src="assets/images/svg/search-icon-black.svg"
+            alt=""
+          />
+          <div class="dropdown">
+            <div class="dropdown-menu" aria-labelledby="services">
+              <!-- <a class="dropdown-item selected">Search by services</a> -->
+              <a
+                class="dropdown-item content"
+                *ngFor="let i of filteredServiceArray"
+                (click)="selectService(i)"
+                >{{ i?.name | titlecase }}</a
+              >
+              <a class="dropdown-item" *ngIf="!filteredServiceArray.length"
+                >No Service Found</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="select-box">
+          <div class="dropdown">
+            <button
+              class="btn dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              {{ sort }} &nbsp;&nbsp;
+              <img
+                loading="lazy"
+                src="assets/images/homepage/dropdown.svg"
+                alt=""
+              />
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a
+                class="dropdown-item cursor-pointer"
+                (click)="getSort({ name: 'Most Recent', key: 2 })"
+                >Most Recent</a
+              >
+              <a
+                class="dropdown-item cursor-pointer"
+                (click)="getSort({ name: 'Older to newest', key: 1 })"
+                >Oldest To Newest</a
+              >
+              <!-- <a
+                class="dropdown-item"
+                (click)="getSort({ name: 'Newest to older', key: 2 })"
+                >Newest to older</a
+              > -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="review-section__wrapper__review-details"
+      *ngFor="
+        let item of reviewList
+          | paginate
+            : {
+                itemsPerPage: payload.size,
+                currentPage: payload.page,
+                totalItems: totalReview
+              }
+      "
+    >
+      <div class="rating">
+        <star-rating
+          [rating]="item?.totalPoint"
+          [step]="0.1"
+          [showHalfStars]="true"
+          [readOnly]="true"
+        ></star-rating>
+      </div>
+      <div class="reason" *ngIf="type == 'hospital'">
+        <h4>
+          Visited {{ item?.doctorDetails?.name[0] | titlecase }} ({{
+            item?.doctorDetails?.specialization
+          }}) For {{ item?.treatment }}
+        </h4>
+      </div>
+      <p>
+        {{ item?.feedback }}
+      </p>
+      <div class="details">
+        <h4>{{item?.feedbackLike ? "Liked": ""}}</h4>
+        <span>
+          <img
+            loading="lazy"
+            src="assets/images/doctor-details/dot.svg"
+            alt=""
+          />
+        </span>
+        <h4>{{ item?.createdAt | date : "mediumDate" }}</h4>
+        <span>
+          <img
+            loading="lazy"
+            src="assets/images/doctor-details/dot.svg"
+            alt=""
+          />
+        </span>
+        <h4>{{ item?.patientName || "Anonymous" }}</h4>
+        <span *ngIf="type == 'doctor'">
+          <img
+            loading="lazy"
+            src="assets/images/doctor-details/dot.svg"
+            alt=""
+          />
+        </span>
+        <div *ngIf="type == 'doctor'" class="d-flex gap-1 flex-wrap list-wrap">
+          <div class="list" *ngFor="let i of item?.treatment">{{ i }}</div>
+        </div>
+      </div>
+      <div class="reply" *ngIf="item?.doctorReply">
+        <img
+          loading="lazy"
+          src="assets/images/doctor-details/arrow-border.svg"
+          alt=""
+        />
+        <div>
+          <!-- <h3>{{ item?.doctorDetails?.name[0] | titlecase }} reply</h3> -->
+          <h3>Doctor reply</h3>
+          <h4>{{ item?.doctorReply }}</h4>
+        </div>
+      </div>
+    </div>
+    <div class="button" *ngIf="tab == 0 && reviewList?.length > 5">
+      <button (click)="allStories()">View all stories</button>
+    </div>
+    <div class="pagination-section" *ngIf="tab != 0 && reviewList?.length > 10">
+      <pagination-controls
+        class="text-center"
+        [previousLabel]="' '"
+        [nextLabel]="' '"
+        (pageChange)="changingPage($event)"
+      ></pagination-controls>
+    </div>
+    <div *ngIf="!reviewList?.length" class="mt-3">
+      <h2 class="text-18 text-center text-danger">No Reviews Found</h2>
+    </div>
+  </div>
+</section>

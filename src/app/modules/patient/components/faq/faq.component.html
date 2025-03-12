@@ -1,0 +1,30 @@
+<section class="faq">
+  <div class="faq__wrapper">
+    <!-- <h2>Nectar+ Healthcare</h2> -->
+    <h3>Frequently Asked Questions</h3>
+
+    <div class="faq__wrapper__content">
+      <div class="faq__wrapper__content__image-section" *ngIf="deviceWidth > 767">
+        <img loading="lazy" src="assets/images/svg/logo-img.svg" alt="" />
+      </div>
+      <div class="faq__wrapper__content__questions">
+        <mat-accordion *ngFor="let item of questionArray; let i = index">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{ item?.question }}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>
+              {{ item.answer | slice: 0:(isExpanded[i] ? undefined : 150) }}
+              <span *ngIf="item.answer.length > 150">
+                ...
+                <button  color="primary" (click)="toggleReadMore(i)">
+                  {{ isExpanded[i] ? 'Read Less' : 'Read More' }}
+                </button>
+              </span>
+            </p> 
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+</section>
